@@ -1,116 +1,159 @@
-import { LockClosedIcon } from "@heroicons/react/20/solid";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function StudentReg() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      userID: "",
+      userName: "",
+      userEmail: "",
+      userBranch: "",
+      userNumber: "",
+      userPassword: "",
+      confirmPassword: "",
+    },
+    mode: "onBlur",
+    criteriaMode: "firstError",
+    shouldFocusError: true,
+    shouldUnregister: true,
+    reValidateMode: "onChange",
+    submitFocusError: true,
+  });
+
+  const onSubmit = (data) => {
+    axios
+      .post("http://localhost:8085/user/register", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <>
-      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8">
-          <div>
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Student Registration
-            </h2>
-          </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="space-y-2 rounded-md shadow-sm">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Student ID
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md rounded-b-md  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Student ID"
-                />
-              </div>
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Student Name
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md rounded-b-md  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Student Name"
-                />
-              </div>
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md rounded-b-md  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <select
-                  id="email-address"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md rounded-b-md  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                >
-                  <option
-                    value="IT"
-                    placeholder="Select Branch"
-                    unselectable="on"
-                  >
-                    Select Branch
-                  </option>
-                  <option value="ECE">ECE</option>
-                  <option value="ECE">IT</option>
-                  <option value="ECE">CSE</option>
-                  <option value="ECE">EEE</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="relative block w-full appearance-none rounded-none rounded-b-md rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Password"
-                />
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <LockClosedIcon
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Register
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-md mx-auto my-8 p-8 bg-white shadow-lg rounded-lg"
+    >
+      <label htmlFor="userID" className="block font-medium mb-1">
+        User ID
+      </label>
+      <input
+        type="text"
+        {...register("userID", {
+          required: "User ID is required",
+        })}
+        id="userID"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      />
+      {errors.userID && <p className="text-red-500">{errors.userID.message}</p>}
+      <label htmlFor="userName" className="block font-medium mb-1">
+        User Name
+      </label>
+      <input
+        type="text"
+        {...register("userName", {
+          required: "User Name is required",
+        })}
+        id="userName"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      />
+      {errors.userName && (
+        <p className="text-red-500">{errors.userName.message}</p>
+      )}
+      <label htmlFor="userEmail" className="block font-medium mb-1">
+        User Email
+      </label>
+      <input
+        type="email"
+        {...register("userEmail", {
+          required: "User Email is required",
+          pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: "User Email must be a valid email address",
+          },
+        })}
+        id="userEmail"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      />
+      {errors.userEmail && (
+        <p className="text-red-500">{errors.userEmail.message}</p>
+      )}
+      <label htmlFor="userBranch" className="block font-medium mb-1">
+        User Branch
+      </label>
+      <select
+        {...register("userBranch", {
+          required: "User Branch is required",
+        })}
+        id="userBranch"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      >
+        <option value="">Select Branch</option>
+        <option value="IT">Information Technology</option>
+        <option value="CS">Computer Science</option>
+        <option value="ECE">Electronics and Communication Engineering</option>
+        <option value="ME">Mechanical Engineering</option>
+      </select>
+      {errors.userBranch && (
+        <p className="text-red-500">{errors.userBranch.message}</p>
+      )}
+      <label htmlFor="userNumber" className="block font-medium mb-1">
+        User Number
+      </label>
+      <input
+        type="tel"
+        {...register("userNumber", {
+          required: "User Number is required",
+        })}
+        id="userNumber"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      />
+      {errors.userNumber && (
+        <p className="text-red-500">{errors.userNumber.message}</p>
+      )}
+      bash Copy code
+      <label htmlFor="userPassword" className="block font-medium mb-1">
+        User Password
+      </label>
+      <input
+        type="password"
+        {...register("userPassword", {
+          required: "User Password is required",
+        })}
+        id="userPassword"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      />
+      {errors.userPassword && (
+        <p className="text-red-500">{errors.userPassword.message}</p>
+      )}
+      <label htmlFor="confirmPassword" className="block font-medium mb-1">
+        Confirm Password
+      </label>
+      <input
+        type="password"
+        {...register("confirmPassword", {
+          required: "Confirm Password is required",
+          validate: (value) =>
+            value === getValues("userPassword") || "Passwords do not match",
+        })}
+        id="confirmPassword"
+        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      />
+      {errors.confirmPassword && (
+        <p className="text-red-500">{errors.confirmPassword.message}</p>
+      )}
+      <button
+        type="submit"
+        className="w-full bg-indigo-500 text-white rounded-md py-2 px-4 mt-4 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Submit
+      </button>
+    </form>
   );
 }

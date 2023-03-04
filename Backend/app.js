@@ -34,6 +34,4 @@ mongoose
 // ! Test Route
 app.get("/", (req, res) => {
   res.send("EndPoints And Backend Working");
-  try {
-  } catch (error) {}
 });
