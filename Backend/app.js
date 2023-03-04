@@ -1,19 +1,20 @@
-// ! imports
+//  imports
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const UserRoutes = require("./Routes/UserRoutes");
+const AdminRoutes = require("./Routes/AdminRoutes");
 const app = express();
-// ! MiddleWare
+
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 app.use("/user", UserRoutes);
-// ! Server
-const PORT = 8085;
+app.use("/admin", AdminRoutes);
+const PORT = 8087;
 app.listen(PORT, () => {
-  console.log("Server UP and Running");
+  console.log("http://localhost:8087/");
 });
-// ! DB Connection
+//  DB Connection
 mongoose.set("strictQuery", true);
 // mongoose
 //   .connect(
@@ -31,7 +32,7 @@ mongoose
   })
   .then(() => console.log("DB connected"))
   .catch((error) => console.error(error));
-// ! Test Route
+// Test Route
 app.get("/", (req, res) => {
   res.send("EndPoints And Backend Working");
 });
