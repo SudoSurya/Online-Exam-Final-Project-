@@ -1,48 +1,50 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../../App";
+
 export default function AdminNav() {
   const [adminToken, setAdminToken] = useContext(store);
+
   return (
-    <nav className="bg-gray-800 py-4">
-      <div className="container mx-auto flex justify-between">
+    <nav className="bg-gradient-to-r from-purple-700 via-pink-500 to-red-500 py-4  px-4">
+      <div className="container mx-auto flex justify-between items-center">
         <Link
           to="/admin/dashboard"
-          className="text-white text-xl font-semibold"
+          className="text-white text-lg font-semibold tracking-widest"
         >
-          Admin
+          ADMIN
         </Link>
-        <div className="flex">
+        <div className="flex items-center">
           <Link
             to="/admin/appove/students"
-            className="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className="text-gray-100 hover:text-white ml-8 mr-4 font-medium tracking-wide"
           >
             Students
           </Link>
-          <a
-            href="#"
-            className="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          <Link
+            to="/admin/appove/faculty"
+            className="text-gray-100 hover:text-white mr-4 font-medium tracking-wide"
           >
             Faculty
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          </Link>
+          <Link
+            to="/admin/results"
+            className="text-gray-100 hover:text-white mr-4 font-medium tracking-wide"
           >
             Results
-          </a>
-          <a
-            href="#"
-            className="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          </Link>
+          <Link
+            to="/admin/feedback"
+            className="text-gray-100 hover:text-white mr-8 font-medium tracking-wide"
           >
             Feedback
-          </a>
+          </Link>
           <button
             onClick={() => {
               setAdminToken(null);
               localStorage.removeItem("admintoken");
             }}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium ml-4"
+            className="bg-pink-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium"
           >
             Logout
           </button>

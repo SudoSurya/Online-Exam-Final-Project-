@@ -2,10 +2,9 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import { userStore } from "../../App";
-
-export default function StudentLogin() {
-  const [studentToken, setStudentToken] = useContext(userStore);
+import { facultyStore } from "../../App";
+export default function FacultyLogin() {
+  const [facultyToken, setFacultyToken] = useContext(facultyStore);
   const {
     register,
     handleSubmit,
@@ -15,18 +14,18 @@ export default function StudentLogin() {
 
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:8088/user/login", data)
+      .post("http://localhost:8088/faculty/login", data)
       .then((res) => {
-        localStorage.setItem("studenttoken", res.data.token);
-        setStudentToken(localStorage.getItem("studenttoken"));
+        localStorage.setItem("facultytoken", res.data.token);
+        setStudentToken(localStorage.getItem("facultytoken"));
       })
       .catch((res) => {
         // alert(res.message);
         alert(res.response.data.message);
       });
   };
-  if (studentToken) {
-    return <Navigate to="/student/dashboard" />;
+  if (facultyToken) {
+    return <Navigate to="/faculty/dashboard" />;
   }
 
   return (
@@ -36,7 +35,7 @@ export default function StudentLogin() {
         className="bg-white p-10 rounded-lg shadow-md"
       >
         <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">
-          Student Login
+          Faculty Login
         </h2>
         {loginError && (
           <p className="text-red-500 mb-4 text-center">{loginError}</p>
@@ -46,32 +45,32 @@ export default function StudentLogin() {
             className="block text-gray-700 font-medium mb-2"
             htmlFor="userID"
           >
-            Student ID
+            Faculty Email
           </label>
           <input
-            {...register("userID", { required: true })}
+            {...register("facultyEmail", { required: true })}
             className="border rounded-lg px-3 py-2 w-full"
-            type="text"
-            id="userID"
+            type="email"
+            id="facultyEmail"
           />
-          {errors.userID && (
-            <p className="text-red-500 mt-1">Student ID is required</p>
+          {errors.facultyEmail && (
+            <p className="text-red-500 mt-1">Email is required</p>
           )}
         </div>
         <div className="mb-6">
           <label
             className="block text-gray-700 font-medium mb-2"
-            htmlFor="userPassword"
+            htmlFor="password"
           >
             Password
           </label>
           <input
-            {...register("userPassword", { required: true })}
+            {...register("password", { required: true })}
             className="border rounded-lg px-3 py-2 w-full"
             type="password"
-            id="userPassword"
+            id="password"
           />
-          {errors.userPassword && (
+          {errors.password && (
             <p className="text-red-500 mt-1">Password is required</p>
           )}
         </div>
@@ -82,7 +81,7 @@ export default function StudentLogin() {
           Login
         </button>
         <div className="flex justify-between mt-4 text-sm">
-          <Link to="/student/register" className="text-blue-500">
+          <Link to="/faculty/register" className="text-blue-500">
             Create an account
           </Link>
         </div>

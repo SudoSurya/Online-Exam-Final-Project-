@@ -4,16 +4,22 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const UserRoutes = require("./Routes/UserRoutes");
 const AdminRoutes = require("./Routes/AdminRoutes");
+const FacultySchema = require("./Routes/FacultyRoutes");
 const PendingStudents = require("./Routes/PendingStudents");
 const ApproveStudents = require("./Routes/ApproveStudents");
-const app = express();
 
+const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
+
+
 app.use("/user", UserRoutes);
 app.use("/admin", AdminRoutes);
+app.use("/faculty", FacultySchema);
 app.use("", PendingStudents);
 app.use("", ApproveStudents);
+
+
 const PORT = 8088;
 app.listen(PORT, () => {
   console.log("http://localhost:8088/");

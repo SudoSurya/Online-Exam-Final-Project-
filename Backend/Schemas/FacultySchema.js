@@ -26,3 +26,5 @@ const FacultySchema = new mongoose.Schema({
     default: "PENDING",
   },
 });
+
+module.exports = mongoose.model("FacultySchema", FacultySchema);

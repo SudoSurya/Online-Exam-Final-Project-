@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { store } from "../../App";
+
 function AdminLogin() {
   const [adminToken, setAdminToken] = useContext(store);
   const {
@@ -18,17 +19,20 @@ function AdminLogin() {
       setAdminToken(localStorage.getItem("admintoken"));
     });
   };
+
   if (adminToken) {
     return <Navigate to="/admin/dashboard" />;
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-10 rounded-lg shadow-md"
+        className="bg-white p-10 rounded-lg shadow-md w-80"
       >
-        <h2 className="text-xl font-medium mb-6">Admin Login</h2>
+        <h2 className="text-2xl font-medium mb-6 text-center text-gray-800">
+          Admin Login
+        </h2>
         {loginError && <p className="text-red-500 mb-4">{loginError}</p>}
         <div className="mb-4">
           <label
@@ -66,10 +70,19 @@ function AdminLogin() {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600"
+          className="bg-pink-600 text-white rounded-lg px-4 py-2 hover:bg-pink-700 w-full"
         >
           Login
         </button>
+        <p className="text-center text-gray-800 mt-4">
+          Don't have an account?{" "}
+          <Link
+            to="/admin/register"
+            className="text-blue-600 hover:text-blue-700"
+          >
+            Register here
+          </Link>
+        </p>
       </form>
     </div>
   );
