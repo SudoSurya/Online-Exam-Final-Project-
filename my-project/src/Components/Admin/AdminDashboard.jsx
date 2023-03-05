@@ -2,6 +2,7 @@ import { store } from "../../App";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
+import AdminNav from "./AdminNav";
 export default function AdminDashboard() {
   const [adminToken] = useContext(store);
   const [data, setData] = useState();
@@ -24,11 +25,13 @@ export default function AdminDashboard() {
     return <Navigate to="/" />;
   }
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-      {/* <div>{data.adminID}</div> */}
-      <h1>{data && data.adminPass}</h1>
-      <h1>{data && data.adminID}</h1>
-    </div>
+    <>
+      <AdminNav />
+      <div>
+        <h1>Admin Dashboard</h1>
+        <h1>{data && data.adminPass}</h1>
+        <h1>{data && data.adminID}</h1>
+      </div>
+    </>
   );
 }

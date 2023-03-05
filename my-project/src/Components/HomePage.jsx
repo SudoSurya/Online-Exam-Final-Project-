@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: "Admin", href: "admin" },
+  { name: "Admin", href: "admin/login" },
   { name: "Faculty", href: "#" },
   { name: "Student", href: "/user/register" },
   { name: "Results", href: "#" },
@@ -13,7 +13,7 @@ const navigation = [
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+
   return (
     <div className="isolate bg-white">
       <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">

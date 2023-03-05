@@ -18,7 +18,9 @@ router.post("/register", async (req, res) => {
     } = req.body;
     let exist = await UserSchema.findOne({ userEmail: userEmail });
     if (exist) {
-      return res.status(400).send("User Already Exist");
+      // return res.status(400).send("User Already Exist");
+      return res.status(400).send({ message: "Email already exists" });
+      
     }
     if (userPassword != confirmPassword) {
       return res.status(400).send("Password MisMacth");

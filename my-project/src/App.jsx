@@ -5,6 +5,7 @@ import StudentReg from "./Components/Student/StudentReg";
 import AdminLogin from "./Components/Admin/AdminLogin";
 import { createContext, useContext, useState } from "react";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
+import ApproveStudents from "./Components/Admin/ApproveStudents";
 export const store = createContext();
 function App() {
   const [adminToken, setAdminToken] = useState(
@@ -18,6 +19,7 @@ function App() {
           <Route path="/user/register" element={<StudentReg />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/appove/students" element={<ApproveStudents />} />
         </Routes>
       </BrowserRouter>
     </store.Provider>

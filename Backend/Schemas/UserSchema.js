@@ -29,9 +29,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  access: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    default: "PENDING",
   },
 });
 
