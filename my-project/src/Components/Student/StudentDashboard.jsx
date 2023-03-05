@@ -27,10 +27,46 @@ export default function StudentDashboard() {
   return (
     <>
       <StudentNav />
-      <section>
-        <h1>{studentData && studentData.userName}</h1>
-        <h1>{studentData && studentData.userEmail}</h1>
-        <h1>{studentData && studentData.userBranch}</h1>
+      <section class="flex flex-col items-center">
+        <h1 class="text-4xl font-bold mb-4">
+          {studentData && studentData.userName}
+        </h1>
+        <table class="table-auto border-collapse border border-gray-500">
+          <tbody>
+            <tr>
+              <td class="border border-gray-500 px-4 py-2 font-semibold">
+                StudentID:
+              </td>
+              <td class="border border-gray-500 px-4 py-2">
+                {studentData && studentData.userID}
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-gray-500 px-4 py-2 font-semibold">
+                Email:
+              </td>
+              <td class="border border-gray-500 px-4 py-2">
+                {studentData && studentData.userEmail}
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-gray-500 px-4 py-2 font-semibold">
+                Branch:
+              </td>
+              <td class="border border-gray-500 px-4 py-2">
+                {studentData && studentData.userBranch}
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-gray-500 px-4 py-2 font-semibold">
+                Number:
+              </td>
+              <td class="border border-gray-500 px-4 py-2">
+                {studentData && studentData.userNumber}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </>
   );
