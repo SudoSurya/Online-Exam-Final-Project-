@@ -40,6 +40,7 @@ export default function ApproveStudents() {
   const filterRequests = pendingRequests.filter(
     (user) => user.status == "PENDING"
   );
+
   return (
     <section>
       <AdminNav />

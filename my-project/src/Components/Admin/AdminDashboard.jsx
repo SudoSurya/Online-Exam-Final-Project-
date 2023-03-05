@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   console.log(data);
   useEffect(() => {
     axios
-      .get("http://localhost:8087/admin/dashboard", {
+      .get("http://localhost:8088/admin/dashboard", {
         headers: {
           "x-token": adminToken,
         },

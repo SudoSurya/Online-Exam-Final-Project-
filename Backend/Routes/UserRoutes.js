@@ -20,7 +20,6 @@ router.post("/register", async (req, res) => {
     if (exist) {
       // return res.status(400).send("User Already Exist");
       return res.status(400).send({ message: "Email already exists" });
-      
     }
     if (userPassword != confirmPassword) {
       return res.status(400).send("Password MisMacth");
@@ -49,6 +48,9 @@ router.post("/login", async (req, res) => {
     let exist = await UserSchema.findOne({ userID: userID });
     if (!exist) {
       return res.status(500).send("user Not found");
+    }
+    if (exist.status == "PENDING") {
+      return res.status(400).send({ message: "Account under approval" });
     }
     if (exist.userPassword !== userPassword) {
       return res.status(500).send("invalid password");

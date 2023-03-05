@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import { store } from "../../App";
-function AdminLogin() {
-  const [adminToken, setAdminToken] = useContext(store);
+import { userStore } from "../../App";
+export default function StudentLogin() {
+  const [studentToken, setStudentToken] = useContext(userStore);
   const {
     register,
     handleSubmit,
@@ -13,55 +13,60 @@ function AdminLogin() {
   const [loginError, setLoginError] = useState("");
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:8088/admin/login", data).then((res) => {
-      localStorage.setItem("admintoken", res.data.token);
-      setAdminToken(localStorage.getItem("admintoken"));
-    });
+    axios
+      .post("http://localhost:8088/user/login", data)
+      .then((res) => {
+        localStorage.setItem("studenttoken", res.data.token);
+        setStudentToken(localStorage.getItem("admintoken"));
+      })
+      .catch((res) => {
+        // alert(res.message);
+        alert(res.response.data.message);
+      });
   };
-  if (adminToken) {
-    return <Navigate to="/admin/dashboard" />;
+  if (studentToken) {
+    return <Navigate to="/student/dashboard" />;
   }
-
   return (
     <div className="flex items-center justify-center h-screen">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-10 rounded-lg shadow-md"
       >
-        <h2 className="text-xl font-medium mb-6">Admin Login</h2>
+        <h2 className="text-xl font-medium mb-6">Student Login</h2>
         {loginError && <p className="text-red-500 mb-4">{loginError}</p>}
         <div className="mb-4">
           <label
             className="block text-gray-700 font-medium mb-2"
-            htmlFor="adminID"
+            htmlFor="userID"
           >
-            Admin ID
+            Student ID
           </label>
           <input
-            {...register("adminID", { required: true })}
+            {...register("userID", { required: true })}
             className="border rounded-lg px-3 py-2 w-full"
             type="text"
-            id="adminID"
+            id="userID"
           />
-          {errors.adminID && (
-            <p className="text-red-500 mt-1">Admin ID is required</p>
+          {errors.userID && (
+            <p className="text-red-500 mt-1">Student ID is required</p>
           )}
         </div>
         <div className="mb-6">
           <label
             className="block text-gray-700 font-medium mb-2"
-            htmlFor="adminPass"
+            htmlFor="userPassword"
           >
-            Admin Password
+            Password
           </label>
           <input
-            {...register("adminPass", { required: true })}
+            {...register("userPassword", { required: true })}
             className="border rounded-lg px-3 py-2 w-full"
             type="password"
-            id="adminPass"
+            id="userPassword"
           />
-          {errors.adminPass && (
-            <p className="text-red-500 mt-1">Admin Password is required</p>
+          {errors.userPassword && (
+            <p className="text-red-500 mt-1">Password is required</p>
           )}
         </div>
         <button
@@ -74,5 +79,3 @@ function AdminLogin() {
     </div>
   );
 }
-
-export default AdminLogin;
