@@ -7,18 +7,20 @@ const AdminRoutes = require("./Routes/AdminRoutes");
 const FacultySchema = require("./Routes/FacultyRoutes");
 const PendingStudents = require("./Routes/PendingStudents");
 const ApproveStudents = require("./Routes/ApproveStudents");
+const ApproveFaculty = require("./Routes/ApproveFaculty");
+const PendingFaculty = require("./Routes/PendingFaculty");
 
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-
 app.use("/user", UserRoutes);
 app.use("/admin", AdminRoutes);
+app.use("/faculty", PendingFaculty);
 app.use("/faculty", FacultySchema);
 app.use("", PendingStudents);
 app.use("", ApproveStudents);
-
+app.use("", ApproveFaculty);
 
 const PORT = 8088;
 app.listen(PORT, () => {

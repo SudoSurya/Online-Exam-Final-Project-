@@ -16,13 +16,13 @@ export default function AdminNav() {
         </Link>
         <div className="flex items-center">
           <Link
-            to="/admin/appove/students"
+            to="/admin/approve/students"
             className="text-gray-100 hover:text-white ml-8 mr-4 font-medium tracking-wide"
           >
             Students
           </Link>
           <Link
-            to="/admin/appove/faculty"
+            to="/admin/approve/faculty"
             className="text-gray-100 hover:text-white mr-4 font-medium tracking-wide"
           >
             Faculty

@@ -1,5 +1,3 @@
-
-
 import StudentNav from "./StudentNav";
 import { userStore } from "../../App";
 import { useContext } from "react";

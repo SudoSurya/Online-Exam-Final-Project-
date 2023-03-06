@@ -1,12 +1,12 @@
 const express = require("express");
-const UserSchema = require("../Schemas/UserSchema");
+const FacultySchema = require("../Schemas/FacultySchema");
 let router = express.Router();
 router.use(express.json());
 
-router.put("/admin/:id/approve/student", async (req, res) => {
+router.put("/admin/:id/approve/faculty", async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserSchema.findByIdAndUpdate(id, {
+    const user = await FacultySchema.findByIdAndUpdate(id, {
       status: "approved",
     });
     res.json(user);
@@ -15,10 +15,10 @@ router.put("/admin/:id/approve/student", async (req, res) => {
   }
 });
 
-router.put("/admin/:id/reject/student", async (req, res) => {
+router.put("/admin/:id/reject/faculty", async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await UserSchema.findByIdAndUpdate(id, {
+    const user = await FacultySchema.findByIdAndUpdate(id, {
       status: "Rejected",
     });
     res.json(user);

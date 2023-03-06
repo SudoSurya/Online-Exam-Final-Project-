@@ -7,13 +7,13 @@ export default function ApproveStudents() {
   console.log(pendingRequests);
   useEffect(() => {
     axios
-      .get("http://localhost:8088/user-requests")
+      .get("http://localhost:8088/student/pending")
       .then((res) => setPendingRequests(res.data))
       .catch((error) => console.log(error));
   }, []);
   const handleApprove = (id) => {
     axios
-      .put(`http://localhost:8088/admin/${id}/approve`)
+      .put(`http://localhost:8088/admin/${id}/approve/student`)
       .then((response) => {
         setPendingRequests((prevUsers) =>
           prevUsers.filter((user) => user._id !== id)
@@ -26,7 +26,7 @@ export default function ApproveStudents() {
 
   const handleReject = (id) => {
     axios
-      .put(`http://localhost:8088/admin/${id}/reject`)
+      .put(`http://localhost:8088/admin/${id}/reject/student`)
       .then((response) => {
         setPendingRequests((prevUsers) =>
           prevUsers.filter((user) => user._id !== id)
@@ -45,7 +45,7 @@ export default function ApproveStudents() {
     <section>
       <AdminNav />
       <article>
-        <div className="flex flex-col justify-center items-center bg-gray-100 h-screen">
+        <div className="flex flex-col justify-center items-center bg-gray-100 ">
           <h1 className="text-3xl font-bold mb-4 text-center">Pending Users</h1>
           <div className="w-full max-w-3xl">
             <table className="table-auto w-full border shadow-md">

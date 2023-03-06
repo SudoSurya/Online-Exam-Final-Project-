@@ -1,16 +1,16 @@
 const express = require("express");
-const UserSchema = require("../Schemas/UserSchema");
+const FacultySchema = require("../Schemas/FacultySchema");
 let router = express.Router();
 router.use(express.json());
 
-router.get("/student/pending", async (req, res) => {
+router.get("/pending", async (req, res) => {
   try {
-    const userData = await UserSchema.find({ status: "PENDING" });
+    const facultyData = await FacultySchema.find({ status: "PENDING" });
 
-    if (userData.length < 1) {
+    if (facultyData.length < 1) {
       res.status(200).send("No Pending Requests Available");
     }
-    res.send(userData);
+    res.send(facultyData);
   } catch (error) {
     console.log(error);
     return res.status(500).send("internal server Error");

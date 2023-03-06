@@ -17,11 +17,12 @@ export default function FacultyLogin() {
       .post("http://localhost:8088/faculty/login", data)
       .then((res) => {
         localStorage.setItem("facultytoken", res.data.token);
-        setStudentToken(localStorage.getItem("facultytoken"));
+        setFacultyToken(localStorage.getItem("facultytoken"));
       })
       .catch((res) => {
         // alert(res.message);
-        alert(res.response.data.message);
+        alert(res);
+        console.log(res);
       });
   };
   if (facultyToken) {
