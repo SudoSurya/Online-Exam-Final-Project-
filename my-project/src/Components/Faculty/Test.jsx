@@ -2,65 +2,44 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import Papa from "papaparse";
 import axios from "axios";
-import { csvToJson } from "./utils";
 
 function Test() {
   const [csvData, setCsvData] = useState([]);
   const [jsonOutput, setJsonOutput] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(csvData);
-  
+
   const handleCsvUpload = (files) => {
-    const reader = new FileReader();
+    setLoading(true);
 
-    reader.onload = () => {
-      const csvData = reader.result;
-      const jsonData = csvToJson(csvData);
-      setJsonOutput(jsonData);
-      setCsvData(csvData);
-    };
-
-    reader.readAsText(files[0]);
+    Papa.parse(files[0], {
+      complete: (result) => {
+        setCsvData(result.data);
+        setLoading(false);
+      },
+      header: true,
+      dynamicTyping: true,
+    });
   };
 
-  async function postDataToMongoDB() {
+  const postDataToMongoDB = () => {
     setLoading(true);
 
     try {
-      // Convert CSV data to JSON
-      const json = await csvToJson(csvData);
-
-      console.log("JSON:", json);
-
-      // Check data format
-      if (!Array.isArray(json)) {
-        console.error("Invalid data format");
-        setLoading(false);
-        return;
-      }
-
-      // Send data to server
-      const response = await axios.post(
-        "http://localhost:8088/api/csv-to-json",
-        { data: json },
-        { headers: { "Content-Type": "application/json" } }
-      );
-
-      console.log("Response:", response);
-
-      setJsonOutput(response.data);
+      let filterData = csvData.filter((item) => item.name != null);
+      axios.post("http://localhost:8088/api/csv-to-mongo", filterData);
+      console.log("new", csvData);
       setLoading(false);
     } catch (error) {
-      console.error("Error:", error);
-      setLoading(false);
+      console.error(error);
     }
-  }
+  };
 
   const fetchDataFromMongoDB = async () => {
     setLoading(true);
 
     try {
       const response = await axios.get("http://localhost:8088/api/fetch-data");
+      console.log("output", response.data[0].name);
       setJsonOutput(response.data);
       setLoading(false);
     } catch (error) {

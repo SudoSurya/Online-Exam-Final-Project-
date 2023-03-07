@@ -14,6 +14,7 @@ import FacultyLogin from "./Components/Faculty/FacultyLogin";
 import ApproveFaculty from "./Components/Admin/ApproveFaculty";
 import FacultyDashboard from "./Components/Faculty/FacultyDashboard";
 import Test from "./Components/Faculty/Test";
+import CreateExam from "./Components/Faculty/CreateExam";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -56,6 +57,7 @@ function App() {
               <Route path="/faculty/register" element={<FacultyRegister />} />
               <Route path="/faculty/login" element={<FacultyLogin />} />
               <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
+              <Route path="/faculty/create-exam" element={<CreateExam />} />
               <Route path="/test" element={<Test />} />
             </Routes>
           </BrowserRouter>
@@ -66,4 +68,3 @@ function App() {
 }
 
 export default App;
-

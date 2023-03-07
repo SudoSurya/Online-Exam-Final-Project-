@@ -11,7 +11,9 @@ const PendingStudents = require("./Routes/PendingStudents");
 const ApproveStudents = require("./Routes/ApproveStudents");
 const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
+const AddExam = require("./Routes/AddExam");
 const bodyParser = require("body-parser");
+const csvtojson = require("csvtojson");
 const app = express();
 const upload = multer();
 app.use(bodyParser.json());
@@ -22,6 +24,7 @@ app.use(cors({ origin: "*" }));
 app.use("/user", UserRoutes);
 app.use("/admin", AdminRoutes);
 app.use("/faculty", PendingFaculty);
+app.use("", AddExam);
 app.use("/faculty", FacultySchema);
 app.use("", PendingStudents);
 app.use("", ApproveStudents);
@@ -55,35 +58,34 @@ app.get("/", (req, res) => {
 });
 
 const myDataSchema = new mongoose.Schema({
-  name: String,
-  age: String,
+  name: [
+    {
+      name: { type: String, required: true },
+      age: { type: String, required: true },
+    },
+  ],
 });
 
 const MyData = mongoose.model("MyData", myDataSchema);
 
 // API endpoint for CSV to MongoDB
 app.post("/api/csv-to-mongo", async (req, res) => {
-  const data = req.body;
-
+  // console.log(data);
   try {
-    // Save each row of data to MongoDB
-    for (let i = 0; i < data.length; i++) {
-      const myData = new MyData({
-        name: data[i].Name,
-        age: data[i].Age,
-      });
-      await myData.save();
-    }
-    const results = await MyData.find({}).exec();
-
-    // Convert the data to JSON format
-    const jsonOutput = results.map((result) => ({
-      Name: result.name,
-      Age: result.age,
-    }));
-
+    const data = new MyData({
+      name: req.body,
+    });
+    data.save((err, savedData) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(savedData);
+      }
+    });
+    const results = await MyData.find();
+    console.log(results);
     // Return the JSON output
-    res.json(jsonOutput);
+    res.json(results);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -93,14 +95,14 @@ app.post("/api/csv-to-mongo", async (req, res) => {
 app.get("/api/fetch-data", async (req, res) => {
   try {
     const results = await MyData.find({}).exec();
-
+    console.log(results);
     // Convert the data to JSON format
-    const jsonOutput = results.map((result) => ({
-      Name: result.name,
-      Age: result.age,
-    }));
+    // const jsonOutput = results.map((result) => ({
+    //   Name: result.name,
+    //   Age: result.age,
+    // }));
 
-    res.json(jsonOutput);
+    res.json(results);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
