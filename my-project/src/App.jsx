@@ -36,28 +36,63 @@ function App() {
             <Routes>
               <Route path="/*" element={<HomePage />} />
               <Route path="/" element={<HomePage />} />
-              <Route path="/student/register" element={<StudentReg />} />
+
               <Route path="/student/login" element={<StudentLogin />} />
-              <Route path="/student/dashboard" element={<StudentDashboard />} />
-              <Route path="/student/profile" element={<StudentProfile />} />
+              <Route path="/student">
+                {studentToken ? (
+                  <>
+                    <Route
+                      path="/student/dashboard"
+                      element={<StudentDashboard />}
+                    />
+                    <Route
+                      path="/student/profile"
+                      element={<StudentProfile />}
+                    />
+                  </>
+                ) : (
+                  <Route path="/student/register" element={<StudentReg />} />
+                )}
+              </Route>
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              {adminToken && (
-                <Route
-                  path="/admin/approve/students"
-                  element={<ApproveStudents />}
-                />
-              )}
-              {adminToken && (
-                <Route
-                  path="/admin/approve/faculty"
-                  element={<ApproveFaculty />}
-                />
-              )}
-              <Route path="/faculty/register" element={<FacultyRegister />} />
+              <Route path="/admin">
+                {adminToken && (
+                  <>
+                    <Route
+                      path="/admin/approve/students"
+                      element={<ApproveStudents />}
+                    />
+                    <Route
+                      path="/admin/approve/faculty"
+                      element={<ApproveFaculty />}
+                    />
+                    <Route
+                      path="/admin/dashboard"
+                      element={<AdminDashboard />}
+                    />
+                  </>
+                )}
+              </Route>
               <Route path="/faculty/login" element={<FacultyLogin />} />
-              <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
-              <Route path="/faculty/create-exam" element={<CreateExam />} />
+              <Route to="/faculty">
+                {facultyToken ? (
+                  <>
+                    <Route
+                      path="/faculty/dashboard"
+                      element={<FacultyDashboard />}
+                    />
+                    <Route
+                      path="/faculty/create-exam"
+                      element={<CreateExam />}
+                    />
+                  </>
+                ) : (
+                  <Route
+                    path="/faculty/register"
+                    element={<FacultyRegister />}
+                  />
+                )}
+              </Route>
               <Route path="/test" element={<Test />} />
             </Routes>
           </BrowserRouter>
