@@ -12,17 +12,13 @@ const CreateExam = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const [submitting, setSubmitting] = useState(false);
   const [csvData, setCsvData] = useState([]);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   console.log(csvData);
 
   const onSubmit = async (data) => {
     console.log(data);
-    setSubmitting(true);
     setError(null);
-    setSuccess(false);
 
     try {
       let filterData = csvData.filter((item) => item.Question != null);
@@ -33,8 +29,6 @@ const CreateExam = () => {
         NewData
       );
       console.log(response.data);
-      setSubmitting(false);
-      setSuccess(true);
       reset();
     } catch (err) {
       console.error(err);

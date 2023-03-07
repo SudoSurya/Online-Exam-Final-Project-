@@ -25,7 +25,7 @@ export default function FacultyNav() {
                 Dashboard
               </Link>
               <Link
-                to="/faculty/add-exams"
+                to="/faculty/create-exam"
                 className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Add Exams

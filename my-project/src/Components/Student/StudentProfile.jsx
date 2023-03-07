@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function StudentProfile() {
   const [studentToken, setStudentToken] = useContext(userStore);

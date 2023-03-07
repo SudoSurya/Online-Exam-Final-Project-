@@ -24,7 +24,7 @@ export default function FacultyDashboard() {
                   Add and manage student exams
                 </p>
                 <Link
-                  to="/student/add-exam"
+                  to="/faculty/create-exam"
                   className={classNames(
                     "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded",
                     "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2",

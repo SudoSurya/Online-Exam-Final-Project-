@@ -22,7 +22,7 @@ export default function AdminDashboard() {
   }, []);
 
   if (!adminToken) {
-    return <Navigate to="/" />;
+    return <Navigate to="/admin/login" />;
   }
 
   return (
