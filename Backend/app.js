@@ -101,7 +101,7 @@ app.get("/api/fetch-data", async (req, res) => {
     //   Name: result.name,
     //   Age: result.age,
     // }));
-
+    z;
     res.json(results);
   } catch (error) {
     console.error(error);
