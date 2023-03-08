@@ -14,7 +14,6 @@ const CreateExam = () => {
   } = useForm();
   const [csvData, setCsvData] = useState([]);
   const [error, setError] = useState(null);
-  console.log(csvData);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -23,12 +22,10 @@ const CreateExam = () => {
     try {
       let filterData = csvData.filter((item) => item.Question != null);
       let NewData = { ...data, Questions: filterData };
-      console.log(NewData);
       const response = await axios.post(
         "http://localhost:8088/faculty/add-exam",
         NewData
       );
-      console.log(response.data);
       reset();
     } catch (err) {
       console.error(err);

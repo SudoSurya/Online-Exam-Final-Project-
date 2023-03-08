@@ -36,7 +36,7 @@ function App() {
             <Routes>
               <Route path="/*" element={<HomePage />} />
               <Route path="/" element={<HomePage />} />
-
+              {/* Student Routes */}
               <Route path="/student/login" element={<StudentLogin />} />
               <Route path="/student">
                 {studentToken ? (
@@ -54,6 +54,7 @@ function App() {
                   <Route path="/student/register" element={<StudentReg />} />
                 )}
               </Route>
+              {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin">
                 {adminToken && (
@@ -73,6 +74,7 @@ function App() {
                   </>
                 )}
               </Route>
+              {/* Faculty Routes */}
               <Route path="/faculty/login" element={<FacultyLogin />} />
               <Route to="/faculty">
                 {facultyToken ? (
@@ -93,6 +95,7 @@ function App() {
                   />
                 )}
               </Route>
+              {/* Testing Routes */}
               <Route path="/test" element={<Test />} />
             </Routes>
           </BrowserRouter>

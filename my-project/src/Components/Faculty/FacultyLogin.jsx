@@ -19,10 +19,9 @@ export default function FacultyLogin() {
         localStorage.setItem("facultytoken", res.data.token);
         setFacultyToken(localStorage.getItem("facultytoken"));
       })
-      .catch((res) => {
-        // alert(res.message);
-        alert(res);
-        console.log(res);
+      .catch((error) => {
+        alert(error.response.data);
+        console.log(error.response.data);
       });
   };
   if (facultyToken) {

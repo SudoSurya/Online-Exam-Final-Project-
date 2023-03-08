@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 export default function StudentReg() {
   const [loading, setLoading] = useState(false);
@@ -193,7 +193,13 @@ export default function StudentReg() {
         >
           {loading ? "Loading..." : "Register"}
         </button>
+        <div className="flex justify-between mt-4 text-sm">
+          <Link to="/student/login" className="text-blue-500">
+            Existing User? Login
+          </Link>
+        </div>
       </form>
     </div>
   );
 }
+
