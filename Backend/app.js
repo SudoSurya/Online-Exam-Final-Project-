@@ -11,6 +11,7 @@ const PendingStudents = require("./Routes/PendingStudents");
 const ApproveStudents = require("./Routes/ApproveStudents");
 const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
+const AssignSubject = require("./Routes/AssignSubject");
 const AddExam = require("./Routes/AddExam");
 const bodyParser = require("body-parser");
 const csvtojson = require("csvtojson");
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 app.use("/user", UserRoutes);
-app.use("/admin", AdminRoutes);
+app.use("/admin", AdminRoutes, AssignSubject);
 app.use("/faculty", PendingFaculty);
 app.use("/faculty", FacultySchema);
 app.use("/faculty", AddExam);
