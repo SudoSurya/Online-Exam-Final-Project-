@@ -25,6 +25,15 @@ const FacultySchema = new mongoose.Schema({
     type: String,
     default: "PENDING",
   },
+  Questions: {
+    type: [
+      {
+        SubjectID: { type: String, required: true },
+        SubjectName: { type: String, required: true },
+      },
+    ],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("FacultySchema", FacultySchema);

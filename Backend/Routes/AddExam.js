@@ -3,7 +3,7 @@ const ExamSchema = require("../Schemas/ExamSchema");
 let router = express.Router();
 router.use(express.json());
 
-router.post("/faculty/add-exam", async (req, res) => {
+router.post("/add-exam", async (req, res) => {
   try {
     const { subjectID, subjectName, Branch, marks, time, Questions } = req.body;
 

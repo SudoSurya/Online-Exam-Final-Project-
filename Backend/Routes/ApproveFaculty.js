@@ -27,4 +27,6 @@ router.put("/admin/:id/reject/faculty", async (req, res) => {
   }
 });
 
+
+
 module.exports = router;
