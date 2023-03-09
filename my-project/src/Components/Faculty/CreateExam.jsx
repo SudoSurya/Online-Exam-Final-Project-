@@ -4,7 +4,7 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import Papa from "papaparse";
 import FacultyNav from "./FacultyNav";
-
+import useFaculty from "./useFaculty";
 const CreateExam = () => {
   const {
     register,
@@ -15,6 +15,9 @@ const CreateExam = () => {
   const [csvData, setCsvData] = useState([]);
   const [error, setError] = useState(null);
 
+  const [subjectList] = useFaculty();
+  console.log(subjectList);
+  // console.log(GetFaculty);
   const onSubmit = async (data) => {
     console.log(data);
     setError(null);
@@ -43,6 +46,10 @@ const CreateExam = () => {
       dynamicTyping: true,
     });
   };
+
+
+
+
 
   return (
     <>

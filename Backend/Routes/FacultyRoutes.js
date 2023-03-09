@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
       return res.status(400).send({ message: "Faculty Already Exist" });
     }
     if (password != confirmPassword) {
-      return res.status(400).send("Password MisMacth");
+      return res.status(400).send({ message: "Password Mismacth" });
     }
     let newFaculty = new FacultySchema({
       facultyName,
@@ -29,9 +29,11 @@ router.post("/register", async (req, res) => {
       confirmPassword,
     });
     await newFaculty.save();
-    res.status(200).send("Faculty Registration Completed Succesfully");
+    res
+      .status(200)
+      .send({ message: "Faculty Registration Completed Succesfully" });
   } catch (error) {
-    res.status(500).send("You Messed Up");
+    res.status(500).send({ message: "You Messed Up" });
     console.log(error);
   }
 });

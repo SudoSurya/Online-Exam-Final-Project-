@@ -18,7 +18,7 @@ export default function SubjectForm({
     try {
       const res = await axios.patch(
         `http://localhost:8088/admin/add-subject/faculty/${selectedFaculty._id}`,
-        { Questions: [data] }
+        { Subjects: [data] }
       );
       setFaculty((prevFaculty) =>
         prevFaculty.map((f) => (f._id === selectedFaculty._id ? res.data : f))

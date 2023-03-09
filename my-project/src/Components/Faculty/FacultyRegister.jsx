@@ -20,6 +20,7 @@ const FacultyRegister = () => {
       })
       .catch((error) => {
         alert(error.response.data.message);
+        console.log(error.response.data.message);
         console.log(error);
       });
     setSubmitting(false);

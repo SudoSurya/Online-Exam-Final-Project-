@@ -25,7 +25,7 @@ const FacultySchema = new mongoose.Schema({
     type: String,
     default: "PENDING",
   },
-  Questions: {
+  Subjects: {
     type: [
       {
         SubjectID: { type: String, required: true },

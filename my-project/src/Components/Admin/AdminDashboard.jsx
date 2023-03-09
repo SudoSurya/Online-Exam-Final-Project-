@@ -83,7 +83,7 @@ export default function AdminDashboard() {
               {/* Faculty */}
 
               <div className="bg-white shadow-md rounded-lg p-6">
-                <h2 className="text-xl font-bold mb-2">Students</h2>
+                <h2 className="text-xl font-bold mb-2">Faculty</h2>
                 <p className="text-gray-600 mb-4">
                   View and Approve your Faculty
                 </p>
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
                     "text-sm font-medium"
                   )}
                 >
-                  View Students
+                  View Faculty
                 </Link>
               </div>
               {/* student results */}
