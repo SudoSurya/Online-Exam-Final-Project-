@@ -12,6 +12,7 @@ const ApproveStudents = require("./Routes/ApproveStudents");
 const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
 const AssignSubject = require("./Routes/AssignSubject");
+const GetExams = require("./Routes/GetExams");
 const AddExam = require("./Routes/AddExam");
 const bodyParser = require("body-parser");
 const csvtojson = require("csvtojson");
@@ -22,7 +23,7 @@ const storage = multer.memoryStorage();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-app.use("/user", UserRoutes);
+app.use("/user", UserRoutes, GetExams);
 app.use("/admin", AdminRoutes, AssignSubject);
 app.use("/faculty", PendingFaculty, FacultySchema, AddExam);
 

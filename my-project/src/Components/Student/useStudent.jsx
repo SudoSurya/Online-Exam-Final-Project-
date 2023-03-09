@@ -14,6 +14,7 @@ export default function useStudent() {
       })
       .then((res) => {
         setStudent(res.data);
+        localStorage.setItem("studentbranch", res.data.userBranch);
       })
       .catch((err) => console.log(err));
   }, []);

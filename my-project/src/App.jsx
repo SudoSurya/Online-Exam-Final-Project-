@@ -17,6 +17,7 @@ import FacultyList from "./Components/Admin/FacultyList";
 import Test from "./Components/Faculty/Test";
 import CreateExam from "./Components/Faculty/CreateExam";
 import ViewStudents from "./Components/Admin/ViewStudents";
+import GetExams from "./Components/Student/GetExams";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -51,6 +52,7 @@ function App() {
                       path="/student/profile"
                       element={<StudentProfile />}
                     />
+                    <Route path="/student/exams" element={<GetExams />} />
                   </>
                 ) : (
                   <Route path="/student/register" element={<StudentReg />} />
