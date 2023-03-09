@@ -13,6 +13,7 @@ import FacultyRegister from "./Components/Faculty/FacultyRegister";
 import FacultyLogin from "./Components/Faculty/FacultyLogin";
 import ApproveFaculty from "./Components/Admin/ApproveFaculty";
 import FacultyDashboard from "./Components/Faculty/FacultyDashboard";
+import FacultyList from "./Components/Admin/FacultyList";
 import Test from "./Components/Faculty/Test";
 import CreateExam from "./Components/Faculty/CreateExam";
 export const store = createContext();
@@ -70,6 +71,10 @@ function App() {
                     <Route
                       path="/admin/dashboard"
                       element={<AdminDashboard />}
+                    />
+                    <Route
+                      path="/admin/view/faculty"
+                      element={<FacultyList />}
                     />
                   </>
                 )}

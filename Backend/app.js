@@ -24,9 +24,8 @@ app.use(cors({ origin: "*" }));
 
 app.use("/user", UserRoutes);
 app.use("/admin", AdminRoutes, AssignSubject);
-app.use("/faculty", PendingFaculty);
-app.use("/faculty", FacultySchema);
-app.use("/faculty", AddExam);
+app.use("/faculty", PendingFaculty, FacultySchema, AddExam);
+
 app.use("", PendingStudents);
 app.use("", ApproveStudents);
 app.use("", ApproveFaculty);
