@@ -17,7 +17,14 @@ const CreateExam = () => {
 
   const [subjectList] = useFaculty();
   console.log(subjectList);
-  // console.log(GetFaculty);
+  let subjectIDs = [];
+  let subjectNames = [];
+  if (subjectList) {
+    subjectIDs = subjectList.map((subject) => subject.subjectID);
+    subjectNames = subjectList.map((subject) => subject.subjectName);
+  }
+  // let subjectIds = subjectList.find((item) => item.SubjectID);
+  // console.log(subjectIds);
   const onSubmit = async (data) => {
     console.log(data);
     setError(null);
@@ -29,11 +36,12 @@ const CreateExam = () => {
         "http://localhost:8088/faculty/add-exam",
         NewData
       );
+      alert(response.data.message);
       reset();
     } catch (err) {
+      alert(err.response.data.message);
       console.error(err);
       setError("Something went wrong. Please try again later.");
-      setSubmitting(false);
     }
   };
 
@@ -46,10 +54,6 @@ const CreateExam = () => {
       dynamicTyping: true,
     });
   };
-
-
-
-
 
   return (
     <>
@@ -71,12 +75,25 @@ const CreateExam = () => {
               >
                 Subject ID:
               </label>
-              <input
-                type="text"
+              <select
+                disabled={!subjectIDs.length}
                 id="subjectID"
                 className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 {...register("subjectID", { required: true })}
-              />
+              >
+                <option value="">Select a Subject</option>
+                {subjectIDs.map((id, index) => (
+                  <option key={index} value={id}>
+                    {id}
+                  </option>
+                ))}
+              </select>
+              {!subjectIDs.length && (
+                <span className="text-red-600 mt-1">
+                  No Subjects are assigned to you
+                </span>
+              )}
+
               {errors.subjectID && (
                 <span className="text-red-600 mt-1">Subject ID required</span>
               )}
@@ -84,22 +101,33 @@ const CreateExam = () => {
 
             <div className="flex flex-col">
               <label
-                htmlFor="subjectName"
+                htmlFor="subjectID"
                 className="text-gray-800 font-semibold mb-2"
               >
                 Subject Name:
               </label>
-              <input
-                type="text"
+              <select
+                disabled={!subjectNames.length}
                 id="subjectName"
                 className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 {...register("subjectName", { required: true })}
-              />
+              >
+                {subjectNames.map((breed, index) => (
+                  <option key={index} value={breed}>
+                    {breed}
+                  </option>
+                ))}
+              </select>
+              {!subjectNames.length && (
+                <span className="text-red-600 mt-1">
+                  No Subjects are assigned to you
+                </span>
+              )}
+
               {errors.subjectName && (
-                <span className="text-red-600 mt-1">Subject Name required</span>
+                <span className="text-red-600 mt-1">Subject ID required</span>
               )}
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="branch"
@@ -108,9 +136,9 @@ const CreateExam = () => {
                 Branch:
               </label>
               <select
-                id="branch"
+                id="Branch"
                 className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                {...register("branch", { required: true })}
+                {...register("Branch", { required: true })}
               >
                 <option value="">Select a branch</option>
                 <option value="Computer Science and Engineering">
@@ -124,7 +152,7 @@ const CreateExam = () => {
                 </option>
                 <option value="Civil Engineering">Civil Engineering</option>
               </select>
-              {errors.branch && (
+              {errors.Branch && (
                 <span className="text-red-600 mt-1">Branch required</span>
               )}
             </div>

@@ -23,9 +23,11 @@ router.post("/add-exam", async (req, res) => {
     });
     await Exam.save();
 
-    return res.status(200).send("Exam Added Completed Succesfully");
+    return res
+      .status(200)
+      .send({ message: "Exam Added Completed Succesfully" });
   } catch (error) {
-    res.status(500).json({ error: "you messed up man" });
+    res.status(500).json({ message: "you messed up man" });
     console.log(error);
   }
 });
