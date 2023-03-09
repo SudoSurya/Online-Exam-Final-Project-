@@ -5,7 +5,15 @@ router.use(express.json());
 
 router.post("/add-exam", async (req, res) => {
   try {
-    const { subjectID, subjectName, Branch, marks, time, Questions } = req.body;
+    const {
+      subjectID,
+      subjectName,
+      Branch,
+      TotalQuestions,
+      marks,
+      time,
+      Questions,
+    } = req.body;
 
     const exist = await ExamSchema.findOne({ subjectID: subjectID });
 
@@ -17,6 +25,7 @@ router.post("/add-exam", async (req, res) => {
       subjectID,
       subjectName,
       Branch,
+      TotalQuestions,
       marks,
       time,
       Questions,

@@ -13,6 +13,10 @@ const ExamSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  TotalQuestions: {
+    type: Number,
+    required: true,
+  },
   marks: {
     type: Number,
     required: true,

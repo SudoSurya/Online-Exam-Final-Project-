@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Dropzone from "react-dropzone";
 import Papa from "papaparse";
+import Dropzone from "react-dropzone";
 import FacultyNav from "./FacultyNav";
 import useFaculty from "./useFaculty";
 const CreateExam = () => {
@@ -154,6 +154,25 @@ const CreateExam = () => {
               </select>
               {errors.Branch && (
                 <span className="text-red-600 mt-1">Branch required</span>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="TotalQuestions"
+                className="text-gray-800 font-semibold mb-2"
+              >
+                Total Questions:
+              </label>
+              <input
+                type="number"
+                id="TotalQuestions"
+                className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                {...register("TotalQuestions", { required: true })}
+              />
+              {errors.TotalQuestions && (
+                <span className="text-red-600 mt-1">
+                  TotalQuestions Required
+                </span>
               )}
             </div>
 
