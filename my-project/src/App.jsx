@@ -16,6 +16,7 @@ import FacultyDashboard from "./Components/Faculty/FacultyDashboard";
 import FacultyList from "./Components/Admin/FacultyList";
 import Test from "./Components/Faculty/Test";
 import CreateExam from "./Components/Faculty/CreateExam";
+import ViewStudents from "./Components/Admin/ViewStudents";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -75,6 +76,10 @@ function App() {
                     <Route
                       path="/admin/view/faculty"
                       element={<FacultyList />}
+                    />
+                    <Route
+                      path="/admin/view/students"
+                      element={<ViewStudents />}
                     />
                   </>
                 )}

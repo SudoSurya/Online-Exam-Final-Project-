@@ -42,7 +42,7 @@ export default function AdminDashboard() {
                   Assign and manage Subjects to Faculty
                 </p>
                 <Link
-                  to="/faculty/create-exam"
+                  to="/admin/view/faculty"
                   className={classNames(
                     "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded",
                     "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2",
