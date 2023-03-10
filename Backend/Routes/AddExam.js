@@ -42,3 +42,5 @@ router.post("/add-exam", async (req, res) => {
 });
 
 module.exports = router;
+
+// create a time based quiz app using react where id takes subject name ,time,total questions and Questions and answers from api using axios , style with tailwind css it sends result to mongo db quiz should end after time limit and user should able to go back and forth to navigate questions

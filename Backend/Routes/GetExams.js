@@ -17,4 +17,17 @@ router.get("/get-exams/:Branch", async (req, res) => {
   }
 });
 
+router.get("/exam/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ExamData = await ExamSchema.findById(id);
+    if (!ExamData) {
+      res.status(200).send("No Exam Available");
+    }
+    res.send(ExamData);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
