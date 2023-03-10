@@ -26,7 +26,7 @@ export default function StudentNav() {
                 Dashboard
               </Link>
               <Link
-                to="/student/courses"
+                to="/student/exams"
                 className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Exams
