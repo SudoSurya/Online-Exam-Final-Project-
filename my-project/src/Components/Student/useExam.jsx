@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
 export default function useExam({ id }) {
@@ -44,19 +44,23 @@ export default function useExam({ id }) {
     fetchData();
   }, [id]);
 
-  const formattedQuestions = questions.map((questionObj) => {
-    const { Question, option1, option2, option3, option4, answer } =
-      questionObj;
+  const formattedQuestions = useMemo(
+    () =>
+      questions.map((questionObj) => {
+        const { Question, option1, option2, option3, option4, answer } =
+          questionObj;
 
-    const answers = [option1, option2, option3, option4];
-    const correctAnswerIndex = answers.indexOf(answer);
+        const answers = [option1, option2, option3, option4];
+        const correctAnswerIndex = answers.indexOf(answer);
 
-    return {
-      question: Question,
-      answers: answers,
-      correctAnswerIndex: correctAnswerIndex,
-    };
-  });
+        return {
+          question: Question,
+          answers: answers,
+          correctAnswerIndex: correctAnswerIndex,
+        };
+      }),
+    [questions]
+  );
 
   function generateRandomQuestions(number) {
     const randomIndices = [];
@@ -70,7 +74,10 @@ export default function useExam({ id }) {
     return randomObjects;
   }
 
-  const randomQuestions = generateRandomQuestions(totalQuestions);
+  const randomQuestions = useMemo(
+    () => generateRandomQuestions(totalQuestions),
+    [totalQuestions, formattedQuestions]
+  );
 
   return [
     loading,
