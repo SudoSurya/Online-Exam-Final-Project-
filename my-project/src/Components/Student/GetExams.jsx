@@ -19,17 +19,19 @@ export default function GetExams() {
   return (
     <>
       <StudentNav />
-      {exams.map((item) => (
-        <QuizInfo
-          key={item._id}
-          examID={item._id}
-          subjectID={item.subjectID}
-          subjectName={item.subjectName}
-          marks={item.marks}
-          totalDuration={item.time}
-          totalQuestions={item.TotalQuestions}
-        />
-      ))}
+      <div className="flex justify-between m-10">
+        {exams.map((item) => (
+          <QuizInfo
+            key={item._id}
+            examID={item._id}
+            subjectID={item.subjectID}
+            subjectName={item.subjectName}
+            marks={item.marks}
+            totalDuration={item.time}
+            totalQuestions={item.TotalQuestions}
+          />
+        ))}
+      </div>
     </>
   );
 }

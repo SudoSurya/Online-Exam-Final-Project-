@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 const QuizInfo = ({
   examID,
   subjectID,
@@ -8,9 +9,18 @@ const QuizInfo = ({
   totalDuration,
   totalQuestions,
 }) => {
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const handleFullScreen = () => {
+    const element = document.documentElement; // get the root element of the document
+    if (!isFullScreen) {
+      element.requestFullscreen(); // request full screen mode
+      setIsFullScreen(true); // update the state variable
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1  md:grid-cols-2 gap-4 justify-items-center">
-      <div className="bg-white rounded-lg p-8 mb-8">
+    <div className="flex flex-wrap justify-center">
+      <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4">
         <h2 className="text-2xl font-bold mb-4">{subjectName}</h2>
         <div className="flex flex-col">
           <div className="flex justify-between mb-4">
@@ -32,7 +42,8 @@ const QuizInfo = ({
         </div>
         <Link
           to={`/student/exam/${examID}`}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
+          onClick={handleFullScreen}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
         >
           Start Exam
         </Link>
