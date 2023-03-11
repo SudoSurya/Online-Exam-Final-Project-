@@ -99,61 +99,234 @@
 //   );
 // }
 
-import { useForm } from "react-hook-form";
-import axios from "axios";
+// import { useForm } from "react-hook-form";
+// import axios from "axios";
 
-function Test({ facultyId }) {
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-    } = useForm();
+// function Test({ facultyId }) {
+//   const {
+//     register,
+//     handleSubmit,
+//     reset,
+//     formState: { errors },
+//   } = useForm();
 
+//   const onSubmit = async (data) => {
+//     try {
+//       const response = await axios.patch(`/add-subject/faculty/${facultyId}`, {
+//         Questions: [data.subject],
+//       });
+//       console.log(response.data);
+//       reset();
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.patch(`/add-subject/faculty/${facultyId}`, {
-        Questions: [data.subject],
-      });
-      console.log(response.data);
-      reset();
-    } catch (error) {
-      console.error(error);
-    }
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
+//       <div className="flex flex-wrap -mx-3 mb-6">
+//         <div className="w-full px-3 mb-6 md:mb-0">
+//           <label
+//             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+//             htmlFor="subject"
+//           >
+//             Subject
+//           </label>
+//           <input
+//             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+//             id="subject"
+//             type="text"
+//             placeholder="Enter subject"
+//             {...register("subject", { required: true })}
+//           />
+//           {errors.subject && (
+//             <p className="text-red-500 text-xs italic">Subject is required.</p>
+//           )}
+//         </div>
+//       </div>
+//       <div className="flex justify-end">
+//         <button
+//           type="submit"
+//           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+//         >
+//           Add Subject
+//         </button>
+//       </div>
+//     </form>
+//   );
+// }
+// export default Test;
+
+import "../../App.css";
+import React, { useState, useEffect, useRef } from "react";
+
+const firstData = [
+  {
+    Question: "What is the derivative of x^2?",
+    option1: "2x",
+    option2: "x^2",
+    option3: "1",
+    option4: "0",
+    answer: "2x",
+    _id: "640a108a9be1f7c9a6f82997",
+  },
+  {
+    Question: "What is the capital of France?",
+    option1: "Berlin",
+    option2: "Paris",
+    option3: "London",
+    option4: "Rome",
+    answer: "Paris",
+    _id: "640a108a9be1f7c9a6f82998",
+  },
+  {
+    Question: "What is the boiling point of water?",
+    option1: "50°C",
+    option2: "100°C",
+    option3: "0°C",
+    option4: "-100°C",
+    answer: "100°C",
+    _id: "640a108a9be1f7c9a6f82999",
+  },
+  {
+    Question: 'Who wrote the novel "Pride and Prejudice"?',
+    option1:
+      "CCharles DickensCharles DickensCharles ickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles DickeickensCharles DickensCharles Dicke DickensCharles DickensCharles DickensCharles Dickensharles Dickens",
+    option2: "Emily Bronte",
+    option3:
+      "Charlotte Bronte  Who wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novelWho wrote the novel",
+    option4: "Jane Austen",
+    answer: "Jane Austen",
+    _id: "640a108a9be1f7c9a6f8299a",
+  },
+];
+const secondData = firstData.map((questionObj) => {
+  const { Question, option1, option2, option3, option4, answer } = questionObj;
+
+  const answers = [option1, option2, option3, option4];
+  const correctAnswerIndex = answers.indexOf(answer);
+
+  return {
+    question: Question,
+    answers: answers,
+    correctAnswerIndex: correctAnswerIndex,
+  };
+});
+
+function Test() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [timeRemaining, setTimeRemaining] = useState(100);
+
+  const intervalIdRef = useRef(null);
+
+  useEffect(() => {
+    intervalIdRef.current = setInterval(() => {
+      setTimeRemaining((timeRemaining) => timeRemaining - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalIdRef.current);
+  }, []);
+
+  const handleAnswerSelect = (questionIndex, answerIndex) => {
+    setUserAnswers({ ...userAnswers, [questionIndex]: answerIndex });
   };
 
+  const handleNextQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+  };
+
+  const handlePrevQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+  };
+
+  const calculateScore = () => {
+    const score = Object.entries(userAnswers).reduce(
+      (totalScore, [questionIndex, answerIndex]) => {
+        const correctAnswerIndex = secondData[questionIndex].correctAnswerIndex;
+        return totalScore + (answerIndex === correctAnswerIndex ? 1 : 0);
+      },
+      0
+    );
+    return score;
+  };
+
+  if (timeRemaining <= 0 || currentQuestionIndex >= secondData.length) {
+    const score = calculateScore();
+    return (
+      <div className="quiz-container">
+        <h1>Your score is: {score}</h1>
+      </div>
+    );
+  }
+
+  const currentQuestion = secondData[currentQuestionIndex];
+  console.log(currentQuestion);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="subject"
-          >
-            Subject
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="subject"
-            type="text"
-            placeholder="Enter subject"
-            {...register("subject", { required: true })}
-          />
-          {errors.subject && (
-            <p className="text-red-500 text-xs italic">Subject is required.</p>
-          )}
+    <>
+      <div className="flex justify-between items-center mb-4 bg-blue-500 p-4 rounded-lg shadow-md">
+        <div className="text-white font-medium text-lg w-1/4">
+          Subject: Maths
+        </div>
+        <div className="text-white font-medium text-lg w-1/4">Time: 10 min</div>
+        <div className="text-white font-medium text-lg w-1/4">
+          Total Questions: 10
+        </div>
+        <div className="text-white font-medium text-lg w-1/4">
+          Subject ID: 19070
         </div>
       </div>
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Add Subject
-        </button>
+
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <h1 className="text-gray-900 font-bold text-2xl mb-4">
+          Time remaining: {timeRemaining}
+        </h1>
+        <div className="text-gray-900 text-lg font-medium mb-4">
+          {currentQuestion.question}
+        </div>
+        {currentQuestion.answers.map((answer, index) => (
+          <div className="mb-2" key={index}>
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                name={`question${currentQuestionIndex}`}
+                value={index}
+                onChange={() => handleAnswerSelect(currentQuestionIndex, index)}
+                checked={userAnswers[currentQuestionIndex] === index}
+                className="form-radio h-5 w-5 text-blue-600"
+              />
+              <span className="ml-2 text-gray-900 text-lg font-medium">
+                {answer}
+              </span>
+            </label>
+          </div>
+        ))}
+        <div className="flex justify-between mt-6">
+          <button
+            className={`bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ${
+              currentQuestionIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handlePrevQuestion}
+            disabled={currentQuestionIndex === 0}
+          >
+            Previous
+          </button>
+          <button
+            className={`bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow ${
+              userAnswers[currentQuestionIndex] === undefined
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+            onClick={handleNextQuestion}
+            disabled={userAnswers[currentQuestionIndex] === undefined}
+          >
+            {currentQuestionIndex === secondData.length - 1 ? "Submit" : "next"}
+          </button>
+        </div>
       </div>
-    </form>
+    </>
   );
 }
+
 export default Test;

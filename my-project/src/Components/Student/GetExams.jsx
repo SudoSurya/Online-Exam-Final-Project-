@@ -22,6 +22,7 @@ export default function GetExams() {
       {exams.map((item) => (
         <QuizInfo
           key={item._id}
+          examID={item._id}
           subjectID={item.subjectID}
           subjectName={item.subjectName}
           marks={item.marks}

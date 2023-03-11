@@ -14,7 +14,7 @@ const CreateExam = () => {
   } = useForm();
   const [csvData, setCsvData] = useState([]);
   const [error, setError] = useState(null);
-
+  console.log(csvData);
   const [subjectList] = useFaculty();
   console.log(subjectList);
   let subjectIDs = [];
@@ -130,7 +130,7 @@ const CreateExam = () => {
             </div>
             <div className="flex flex-col">
               <label
-                htmlFor="branch"
+                htmlFor="Branch"
                 className="text-gray-800 font-semibold mb-2"
               >
                 Branch:
