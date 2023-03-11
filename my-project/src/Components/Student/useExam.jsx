@@ -57,7 +57,20 @@ export default function useExam({ id }) {
       correctAnswerIndex: correctAnswerIndex,
     };
   });
-  
+
+  function generateRandomQuestions(number) {
+    const randomIndices = [];
+    while (randomIndices.length < number) {
+      const index = Math.floor(Math.random() * formattedQuestions.length);
+      if (!randomIndices.includes(index)) {
+        randomIndices.push(index);
+      }
+    }
+    const randomObjects = randomIndices.map((i) => formattedQuestions[i]);
+    return randomObjects;
+  }
+
+  const randomQuestions = generateRandomQuestions(totalQuestions);
 
   return [
     loading,
@@ -68,6 +81,6 @@ export default function useExam({ id }) {
     totalQuestions,
     marks,
     duration,
-    formattedQuestions,
+    randomQuestions,
   ];
 }
