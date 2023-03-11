@@ -16,6 +16,14 @@ export default function GetExams() {
       .then((res) => setExams(res.data))
       .catch((error) => console.log(error));
   }, [Branch]);
+  if (exams.length < 1) {
+    return (
+      <>
+        <StudentNav />
+        <div>Loading...</div>;
+      </>
+    );
+  }
   return (
     <>
       <StudentNav />
