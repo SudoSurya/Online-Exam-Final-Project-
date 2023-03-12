@@ -1,15 +1,15 @@
-import useStudent from "./useStudent";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import StudentNav from "./StudentNav";
 import QuizInfo from "./QuizInfo";
+import useResults from "./useResults";
+import CompletedExamInfo from "./CompletedExamInfo";
 export default function GetExams() {
-  const [student] = useStudent();
   const [exams, setExams] = useState([]);
+  const [results, subjectIDS] = useResults();
   const [Branch] = useState(localStorage.getItem("studentbranch"));
-  //   let Branch = student && student.userBranch;
+  console.log(subjectIDS);
   console.log(exams);
-
   useEffect(() => {
     axios
       .get(`http://localhost:8088/user/get-exams/${Branch}`)
@@ -24,11 +24,15 @@ export default function GetExams() {
       </>
     );
   }
+  const examsNotIncluded = exams.filter(
+    (item) => !subjectIDS.includes(item.subjectID)
+  );
   return (
     <>
       <StudentNav />
-      <div className="flex justify-between m-10">
-        {exams.map((item) => (
+      <h1 className="text-2xl font-semibold my-10">Pending Exams</h1>
+      <div className="flex justify-center m-10">
+        {examsNotIncluded.map((item) => (
           <QuizInfo
             key={item._id}
             examID={item._id}
@@ -39,6 +43,24 @@ export default function GetExams() {
             totalQuestions={item.TotalQuestions}
           />
         ))}
+      </div>
+      <h1 className="text-2xl font-semibold my-10">Completed Exams</h1>
+      <div className="flex justify-center m-10">
+        {exams.map((item) => {
+          if (subjectIDS.includes(item.subjectID)) {
+            return (
+              <CompletedExamInfo
+                key={item._id}
+                examID={item._id}
+                subjectID={item.subjectID}
+                subjectName={item.subjectName}
+                marks={item.marks}
+                totalDuration={item.time}
+                totalQuestions={item.TotalQuestions}
+              />
+            );
+          }
+        })}
       </div>
     </>
   );

@@ -19,6 +19,7 @@ import CreateExam from "./Components/Faculty/CreateExam";
 import ViewStudents from "./Components/Admin/ViewStudents";
 import GetExams from "./Components/Student/GetExams";
 import Exam from "./Components/Student/Exam";
+import ExamResults from "./Components/Student/ExamResults";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -55,6 +56,7 @@ function App() {
                     />
                     <Route path="/student/exams" element={<GetExams />} />
                     <Route path="/student/exam/:id" element={<Exam />} />
+                    <Route path="/student/results" element={<ExamResults />} />
                   </>
                 ) : (
                   <Route path="/student/register" element={<StudentReg />} />

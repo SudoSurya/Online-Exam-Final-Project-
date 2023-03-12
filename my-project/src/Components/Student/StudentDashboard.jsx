@@ -62,7 +62,7 @@ function StudentDashboard() {
                 View your grades for your enrolled courses.
               </p>
               <Link
-                to="/student/grades"
+                to="/student/results"
                 className={classNames(
                   "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",

@@ -74,7 +74,7 @@ export default function Exam() {
       <ScoreCard
         subjectID={subjectID}
         subjectName={subjectName}
-        duration={duration}
+        duration={duration * 60}
         totalQuestions={totalQuestions}
         score={score}
         timeTaken={timeTaken}

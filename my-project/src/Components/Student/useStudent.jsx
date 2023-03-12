@@ -15,6 +15,7 @@ export default function useStudent() {
       .then((res) => {
         setStudent(res.data);
         localStorage.setItem("studentbranch", res.data.userBranch);
+        localStorage.setItem("studentid", res.data.userID);
       })
       .catch((err) => console.log(err));
   }, []);
