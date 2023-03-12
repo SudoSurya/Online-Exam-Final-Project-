@@ -3,6 +3,7 @@ const UserSchema = require("../Schemas/UserSchema");
 let router = express.Router();
 const jwt = require("jsonwebtoken");
 const AuthMiddleware = require("../Middleware/AuthMiddleware");
+const StudentResults = require("../Schemas/StudentResults");
 router.use(express.json());
 // ! User Registration Route
 router.post("/register", async (req, res) => {
@@ -34,6 +35,13 @@ router.post("/register", async (req, res) => {
       confirmPassword,
     });
     await NewUser.save();
+    let newResult = new StudentResults({
+      userID,
+      userName,
+      userEmail,
+      userBranch,
+    });
+    await newResult.save();
     res.status(200).send("User Registration Completed Succesfully");
   } catch (error) {
     res.status(500).send("Internal Server Error");
