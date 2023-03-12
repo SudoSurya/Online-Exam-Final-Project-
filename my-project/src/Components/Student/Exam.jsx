@@ -31,6 +31,8 @@ export default function Exam() {
 
     return () => clearInterval(intervalIdRef.current);
   }, []);
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
 
   const handleAnswerSelect = (questionIndex, answerIndex) => {
     setUserAnswers({ ...userAnswers, [questionIndex]: answerIndex });
@@ -69,22 +71,25 @@ export default function Exam() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4 bg-blue-500 p-4 rounded-lg shadow-md">
+      <div className="flex flex-col mb-4 bg-blue-500 p-4  shadow-md">
         <div className="text-white font-medium text-lg w-1/4">
-          Subject: Maths
-        </div>
-        <div className="text-white font-medium text-lg w-1/4">Time: 10 min</div>
-        <div className="text-white font-medium text-lg w-1/4">
-          Total Questions: 10
+          Subject ID: {subjectID}
         </div>
         <div className="text-white font-medium text-lg w-1/4">
-          Subject ID: 19070
+          Subject: {subjectName}
+        </div>
+        <div className="text-white font-medium text-lg w-1/4">
+          Time: {duration}
+        </div>
+        <div className="text-white font-medium text-lg w-1/4">
+          Total Questions: {totalQuestions}
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="bg-white p-6  shadow-lg">
         <h1 className="text-gray-900 font-bold text-2xl mb-4">
-          Time remaining: {timeRemaining}
+          Time remaining: {minutes}:{seconds < 10 ? "0" : ""}
+          {seconds} Minutes
         </h1>
         <div className="text-gray-900 text-lg font-medium mb-4">
           {currentQuestion.question}
