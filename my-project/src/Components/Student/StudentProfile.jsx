@@ -1,7 +1,6 @@
 import StudentNav from "./StudentNav";
 import { userStore } from "../../App";
 import { useContext, useState, useEffect } from "react";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
 import React from "react";
 import useStudent from "./useStudent";
