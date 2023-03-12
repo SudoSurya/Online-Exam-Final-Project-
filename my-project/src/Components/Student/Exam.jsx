@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useExam from "./useExam";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import classNames from "classnames";
 export default function Exam() {
   const { id } = useParams();
   const [
@@ -17,6 +18,7 @@ export default function Exam() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [timeRemaining, setTimeRemaining] = useState(duration * 60);
+  const [timeTaken, setTimeTaken] = useState(null);
 
   useEffect(() => {
     setTimeRemaining(duration * 60);
@@ -25,12 +27,17 @@ export default function Exam() {
   const intervalIdRef = useRef(null);
   console.log(timeRemaining);
   useEffect(() => {
-    intervalIdRef.current = setInterval(() => {
-      setTimeRemaining((timeRemaining) => timeRemaining - 1);
-    }, 1000);
+    if (timeRemaining <= 0 || currentQuestionIndex >= randomQuestions.length) {
+      clearInterval(intervalIdRef.current);
+    } else {
+      intervalIdRef.current = setInterval(() => {
+        setTimeRemaining((timeRemaining) => timeRemaining - 1);
+      }, 1000);
+    }
 
     return () => clearInterval(intervalIdRef.current);
-  }, []);
+  }, [timeRemaining, currentQuestionIndex, randomQuestions.length]);
+
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = timeRemaining % 60;
 
@@ -46,7 +53,7 @@ export default function Exam() {
     setCurrentQuestionIndex(currentQuestionIndex - 1);
   };
 
-  const calculateScore = () => {
+  const score = useMemo(() => {
     const score = Object.entries(userAnswers).reduce(
       (totalScore, [questionIndex, answerIndex]) => {
         const correctAnswerIndex =
@@ -55,14 +62,119 @@ export default function Exam() {
       },
       0
     );
+
+    const timeTaken = duration * 60 - timeRemaining;
+    setTimeTaken(timeTaken);
+
     return score;
-  };
+  }, [duration, timeRemaining, randomQuestions, userAnswers]);
 
   if (timeRemaining <= 0 || currentQuestionIndex >= randomQuestions.length) {
-    const score = calculateScore();
     return (
-      <div className="quiz-container">
-        <h1>Your score is: {score}</h1>
+      <div
+        className={classNames(
+          "bg-gradient-to-br",
+          "from-purple-500",
+          "to-pink-500",
+          "h-screen"
+        )}
+      >
+        <div
+          className={classNames(
+            "flex",
+            "justify-center",
+            "items-center",
+            "h-full"
+          )}
+        >
+          <div
+            className={classNames(
+              "quiz-container",
+              "bg-white",
+              "p-4",
+              "shadow-md",
+              "rounded-lg",
+              "w-1/3"
+            )}
+          >
+            <h1
+              className={classNames(
+                "text-2xl",
+                "font-bold",
+                "text-center",
+                "mb-6",
+                "text-gray-800"
+              )}
+            >
+              Exam Result
+            </h1>
+            <div
+              className={classNames(
+                "text-gray-800",
+                "font-medium",
+                "text-lg",
+                "mb-2"
+              )}
+            >
+              Subject ID: {subjectID}
+            </div>
+            <div
+              className={classNames(
+                "text-gray-800",
+                "font-medium",
+                "text-lg",
+                "mb-2"
+              )}
+            >
+              Subject: {subjectName}
+            </div>
+            <div
+              className={classNames(
+                "text-gray-800",
+                "font-medium",
+                "text-lg",
+                "mb-2"
+              )}
+            >
+              Time: {duration}
+            </div>
+            <div
+              className={classNames(
+                "text-gray-800",
+                "font-medium",
+                "text-lg",
+                "mb-2"
+              )}
+            >
+              Total Questions: {totalQuestions}
+            </div>
+            <div
+              className={classNames(
+                "text-gray-800",
+                "font-medium",
+                "text-lg",
+                "mb-2"
+              )}
+            >
+              Time Taken: {timeTaken}
+            </div>
+            <div
+              className={classNames("text-gray-800", "font-medium", "text-lg")}
+            >
+              <h2
+                className={classNames(
+                  "text-3xl",
+                  "font-bold",
+                  "text-center",
+                  "mt-8",
+                  "mb-4"
+                )}
+              >
+                Your score is: {score}
+              </h2>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -87,12 +199,18 @@ export default function Exam() {
       </div>
 
       <div className="bg-white p-6  shadow-lg">
-        <h1 className="text-gray-900 font-bold text-2xl mb-4">
-          Time remaining: {minutes}:{seconds < 10 ? "0" : ""}
-          {seconds} Minutes
-        </h1>
+        <div className="flex justify-between">
+          <h1 className="text-gray-900 font-bold text-2xl mb-4">
+            Current Question {currentQuestionIndex + 1} -{" "}
+            {randomQuestions.length}
+          </h1>
+          <h1 className="text-gray-900 font-bold text-2xl mb-4">
+            Time remaining: {minutes}:{seconds < 10 ? "0" : ""}
+            {seconds} Minutes
+          </h1>
+        </div>
         <div className="text-gray-900 text-lg font-medium mb-4">
-          {currentQuestion.question}
+          {currentQuestionIndex + 1} . {currentQuestion.question}
         </div>
         {currentQuestion.answers.map((answer, index) => (
           <div className="mb-2" key={index}>
