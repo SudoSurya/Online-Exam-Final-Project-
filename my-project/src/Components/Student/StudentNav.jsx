@@ -50,6 +50,8 @@ export default function StudentNav() {
               onClick={() => {
                 setStudentToken(null);
                 localStorage.clear("studenttoken");
+                localStorage.clear("studentid");
+                localStorage.clear("studentbranch");
               }}
               className="bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-md text-sm font-medium"
             >
