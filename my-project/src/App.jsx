@@ -21,6 +21,7 @@ import GetExams from "./Components/Student/GetExams";
 import Exam from "./Components/Student/Exam";
 import ExamResults from "./Components/Student/ExamResults";
 import SubjectResult from "./Components/Student/SubjectResult";
+import PostFeedback from "./Components/Student/PostFeedback";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -62,6 +63,10 @@ function App() {
                       element={<SubjectResult />}
                     />
                     <Route path="/student/results" element={<ExamResults />} />
+                    <Route
+                      path="/student/feedback"
+                      element={<PostFeedback />}
+                    />
                   </>
                 ) : (
                   <Route path="/student/register" element={<StudentReg />} />
