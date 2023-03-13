@@ -2,7 +2,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const multer = require("multer");
 const UserRoutes = require("./Routes/UserRoutes");
 const AdminRoutes = require("./Routes/AdminRoutes");
 const FacultySchema = require("./Routes/FacultyRoutes");
@@ -11,6 +10,7 @@ const ApproveStudents = require("./Routes/ApproveStudents");
 const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
 const AssignSubject = require("./Routes/AssignSubject");
+const Feedback = require("./Routes/Feedback");
 const ExamResult = require("./Routes/ExamResult");
 const GetExams = require("./Routes/GetExams");
 const AddExam = require("./Routes/AddExam");
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-app.use("/user", UserRoutes, GetExams, ExamResult);
+app.use("/user", UserRoutes, GetExams, ExamResult, Feedback);
 app.use("/admin", AdminRoutes, AssignSubject);
 app.use("/faculty", PendingFaculty, FacultySchema, AddExam);
 
