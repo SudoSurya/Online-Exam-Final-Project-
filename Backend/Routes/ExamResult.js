@@ -39,4 +39,23 @@ router.get("/result/:id", async (req, res) => {
   }
 });
 
+router.get("/result/:id/:subjectID", async (req, res) => {
+  const userID = req.params.id;
+  const SubjectID = req.params.subjectID;
+  try {
+    const student = await StudentResults.find({ userID: userID });
+    const filteredSubjects = student[0].Results.filter(
+      (subject) => subject.SubjectID === SubjectID
+    );
+
+    if (student.length === 0) {
+      return res.status(404).json({ message: "Faculty member not found" });
+    }
+
+    res.json(filteredSubjects);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 module.exports = router;
