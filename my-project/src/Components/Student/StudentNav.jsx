@@ -32,6 +32,12 @@ export default function StudentNav() {
                 Exams
               </Link>
               <Link
+                to="/student/results"
+                className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Results
+              </Link>
+              <Link
                 to="/student/profile"
                 className="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium"
               >
