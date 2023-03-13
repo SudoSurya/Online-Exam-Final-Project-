@@ -27,40 +27,46 @@ export default function GetExams() {
   const examsNotIncluded = exams.filter(
     (item) => !subjectIDS.includes(item.subjectID)
   );
+  console.log(examsNotIncluded.length);
   return (
     <>
       <StudentNav />
       <h1 className="text-2xl font-semibold my-10">Pending Exams</h1>
       <div className="flex justify-center m-10">
-        {examsNotIncluded.map((item) => (
-          <QuizInfo
-            key={item._id}
-            examID={item._id}
-            subjectID={item.subjectID}
-            subjectName={item.subjectName}
-            marks={item.marks}
-            totalDuration={item.time}
-            totalQuestions={item.TotalQuestions}
-          />
-        ))}
+        {examsNotIncluded.length > 0 ? (
+          examsNotIncluded.map((item) => (
+            <QuizInfo
+              key={item._id}
+              examID={item._id}
+              subjectID={item.subjectID}
+              subjectName={item.subjectName}
+              marks={item.marks}
+              totalDuration={item.time}
+              totalQuestions={item.TotalQuestions}
+            />
+          ))
+        ) : (
+          <div>No Pending Exams</div>
+        )}
       </div>
       <h1 className="text-2xl font-semibold my-10">Completed Exams</h1>
       <div className="flex justify-center m-10">
-        {exams.map((item) => {
-          if (subjectIDS.includes(item.subjectID)) {
-            return (
-              <CompletedExamInfo
-                key={item._id}
-                examID={item._id}
-                subjectID={item.subjectID}
-                subjectName={item.subjectName}
-                marks={item.marks}
-                totalDuration={item.time}
-                totalQuestions={item.TotalQuestions}
-              />
-            );
-          }
-        })}
+        {exams.length > 0 &&
+          exams.map((item) => {
+            if (subjectIDS.includes(item.subjectID)) {
+              return (
+                <CompletedExamInfo
+                  key={item._id}
+                  examID={item._id}
+                  subjectID={item.subjectID}
+                  subjectName={item.subjectName}
+                  marks={item.marks}
+                  totalDuration={item.time}
+                  totalQuestions={item.TotalQuestions}
+                />
+              );
+            }
+          })}
       </div>
     </>
   );

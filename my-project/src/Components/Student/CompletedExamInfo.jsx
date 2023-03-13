@@ -9,6 +9,7 @@ const CompletedExamInfo = ({
   totalDuration,
   totalQuestions,
 }) => {
+  const handleViewResult = () => {};
   return (
     <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4 w-1/3">
       <h2 className="text-2xl font-bold mb-4">{subjectName}</h2>
@@ -30,8 +31,15 @@ const CompletedExamInfo = ({
           <p>{totalQuestions}</p>
         </div>
       </div>
-      <Link className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block">
+      <Link className="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block">
         Exam Completed
+      </Link>
+      <Link
+        to={`/student/result/${subjectID}`}
+        onClick={handleViewResult}
+        className="bg-blue-500 hover:bg-blue-700 mx-6 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
+      >
+        View Result Exam
       </Link>
     </div>
   );
