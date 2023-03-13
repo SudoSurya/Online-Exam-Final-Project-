@@ -26,7 +26,7 @@ export default function StudentLogin() {
       });
   };
   if (studentToken) {
-    return <Navigate to="/student/dashboard" />;
+    return <Navigate to="/student/profile" />;
   }
 
   return (
