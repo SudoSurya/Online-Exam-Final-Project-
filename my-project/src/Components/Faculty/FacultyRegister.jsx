@@ -15,13 +15,13 @@ const FacultyRegister = () => {
     axios
       .post("http://localhost:8088/faculty/register", data)
       .then((response) => {
-        alert(response.data);
-        setRegistered(true);
+        console.log(response);
+        alert(response.data.message);
       })
       .catch((error) => {
+        console.log(error);
         alert(error.response.data.message);
         console.log(error.response.data.message);
-        console.log(error);
       });
     setSubmitting(false);
   };

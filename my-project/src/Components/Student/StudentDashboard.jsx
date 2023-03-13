@@ -44,7 +44,7 @@ function StudentDashboard() {
                 View and submit your feedbacks
               </p>
               <Link
-                to="/student/assignments"
+                to="/student/feedback"
                 className={classNames(
                   "bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2",
