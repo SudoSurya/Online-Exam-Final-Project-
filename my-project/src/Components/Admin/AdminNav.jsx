@@ -34,7 +34,7 @@ export default function AdminNav() {
             Results
           </Link>
           <Link
-            to="/admin/feedback"
+            to="/admin/view/feedbacks"
             className="text-gray-100 hover:text-white mr-8 font-medium tracking-wide"
           >
             Feedback

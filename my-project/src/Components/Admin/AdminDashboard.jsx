@@ -117,12 +117,29 @@ export default function AdminDashboard() {
                 <Link
                   to="/faculty/grades"
                   className={classNames(
-                    "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded",
-                    "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",
+                    "bg-slate-600 hover:bg-slate-700 text-white py-2 px-4 rounded",
+                    "focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2",
                     "text-sm font-medium"
                   )}
                 >
                   View Grades
+                </Link>
+              </div>
+              {/* Feedbacks */}
+              <div className="bg-white shadow-md rounded-lg p-6">
+                <h2 className="text-xl font-bold mb-2">Feedbacks</h2>
+                <p className="text-gray-600 mb-4">
+                  View Student Feedbacks On Faculty.
+                </p>
+                <Link
+                  to="/admin/view/feedbacks"
+                  className={classNames(
+                    "bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded",
+                    "focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2",
+                    "text-sm font-medium"
+                  )}
+                >
+                  View Feedbacks
                 </Link>
               </div>
             </div>
