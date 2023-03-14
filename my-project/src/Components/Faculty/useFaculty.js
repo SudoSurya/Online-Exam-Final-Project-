@@ -16,6 +16,7 @@ export default function useFaculty() {
       })
       .then((res) => {
         setFaculty(res.data);
+        localStorage.setItem("facultyname", res.data.facultyName);
       })
       .catch((err) => console.error(err));
   }, []);

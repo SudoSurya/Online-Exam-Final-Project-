@@ -3,7 +3,9 @@ import { Link, Navigate } from "react-router-dom";
 import { facultyStore } from "../../App";
 import classNames from "classnames";
 import { useContext } from "react";
+import useFaculty from "./useFaculty";
 export default function FacultyDashboard() {
+  const [subjectList] = useFaculty();
   const [facultyToken, setFacultyToken] = useContext(facultyStore);
   if (!facultyToken) {
     return <Navigate to="/" />;
@@ -42,7 +44,7 @@ export default function FacultyDashboard() {
                   View and submit your feedbacks
                 </p>
                 <Link
-                  to="/faculty/feedbacks"
+                  to="/faculty/feebacks"
                   className={classNames(
                     "bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded",
                     "focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2",
