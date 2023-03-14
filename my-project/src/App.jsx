@@ -22,6 +22,8 @@ import Exam from "./Components/Student/Exam";
 import ExamResults from "./Components/Student/ExamResults";
 import SubjectResult from "./Components/Student/SubjectResult";
 import PostFeedback from "./Components/Student/PostFeedback";
+import Feedbacks from "./Components/Faculty/Feedbacks";
+import FacultyFeedbacks from "./Components/Admin/FacultyFeedbacks";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -97,6 +99,10 @@ function App() {
                       path="/admin/view/students"
                       element={<ViewStudents />}
                     />
+                    <Route
+                      path="/admin/view/feedbacks"
+                      element={<FacultyFeedbacks />}
+                    />
                   </>
                 )}
               </Route>
@@ -113,6 +119,7 @@ function App() {
                       path="/faculty/create-exam"
                       element={<CreateExam />}
                     />
+                    <Route path="/faculty/feebacks" element={<Feedbacks />} />
                   </>
                 ) : (
                   <Route
