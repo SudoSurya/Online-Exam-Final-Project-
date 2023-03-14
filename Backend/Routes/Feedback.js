@@ -20,4 +20,16 @@ router.post("/post/feedback", async (req, res) => {
   }
 });
 
+router.get("/feedback/:facultyName", async (req, res) => {
+  const facultyName = req.params.facultyName;
+  try {
+    const facultyFeedback = await FeedbackSchema.find({
+      facultyName: facultyName,
+    });
+    res.json(facultyFeedback);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 module.exports = router;
