@@ -28,7 +28,17 @@ function StudentDashboard() {
               <Link
                 to="/student/exams"
                 className={classNames(
-                  "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded",
+                  "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 mr-4 rounded",
+                  "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2",
+                  "text-sm font-medium"
+                )}
+              >
+                View Exams
+              </Link>
+              <Link
+                to="/student/unit/exams"
+                className={classNames(
+                  "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 ml-4 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2",
                   "text-sm font-medium"
                 )}

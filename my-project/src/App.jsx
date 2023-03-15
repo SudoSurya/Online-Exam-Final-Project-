@@ -25,6 +25,8 @@ import PostFeedback from "./Components/Student/PostFeedback";
 import Feedbacks from "./Components/Faculty/Feedbacks";
 import FacultyFeedbacks from "./Components/Admin/FacultyFeedbacks";
 import CreateUnitExam from "./Components/Faculty/CreateUnitExam";
+import GetUnitExams from "./Components/Student/GetUnitExams";
+import UnitExam from "./Components/Student/UnitExam";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -60,7 +62,15 @@ function App() {
                       element={<StudentProfile />}
                     />
                     <Route path="/student/exams" element={<GetExams />} />
+                    <Route
+                      path="/student/unit/exams"
+                      element={<GetUnitExams />}
+                    />
                     <Route path="/student/exam/:id" element={<Exam />} />
+                    <Route
+                      path="/student/unit/exam/:id"
+                      element={<UnitExam />}
+                    />
                     <Route
                       path="/student/result/:subjectID"
                       element={<SubjectResult />}
