@@ -10,18 +10,28 @@ const ApproveStudents = require("./Routes/ApproveStudents");
 const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
 const AssignSubject = require("./Routes/AssignSubject");
+const UnitExamResult = require("./Routes/UnitExamResult");
 const AddUnitExam = require("./Routes/AddUnitExam");
 const Feedback = require("./Routes/Feedback");
 const ExamResult = require("./Routes/ExamResult");
 const GetExams = require("./Routes/GetExams");
 const AddExam = require("./Routes/AddExam");
 const bodyParser = require("body-parser");
+const UnitExams = require("./Routes/UnitExams");
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-app.use("/user", UserRoutes, GetExams, ExamResult, Feedback);
+app.use(
+  "/user",
+  UserRoutes,
+  GetExams,
+  ExamResult,
+  Feedback,
+  UnitExams,
+  UnitExamResult
+);
 app.use("/admin", AdminRoutes, AssignSubject);
 app.use("/faculty", PendingFaculty, FacultySchema, AddExam, AddUnitExam);
 
