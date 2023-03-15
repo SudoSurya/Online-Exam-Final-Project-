@@ -24,6 +24,7 @@ import SubjectResult from "./Components/Student/SubjectResult";
 import PostFeedback from "./Components/Student/PostFeedback";
 import Feedbacks from "./Components/Faculty/Feedbacks";
 import FacultyFeedbacks from "./Components/Admin/FacultyFeedbacks";
+import CreateUnitExam from "./Components/Faculty/CreateUnitExam";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -118,6 +119,10 @@ function App() {
                     <Route
                       path="/faculty/create-exam"
                       element={<CreateExam />}
+                    />
+                    <Route
+                      path="/faculty/add-unit-exam"
+                      element={<CreateUnitExam />}
                     />
                     <Route path="/faculty/feebacks" element={<Feedbacks />} />
                   </>

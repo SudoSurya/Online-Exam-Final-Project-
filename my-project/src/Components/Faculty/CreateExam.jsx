@@ -23,8 +23,6 @@ const CreateExam = () => {
     subjectIDs = subjectList.map((subject) => subject.subjectID);
     subjectNames = subjectList.map((subject) => subject.subjectName);
   }
-  // let subjectIds = subjectList.find((item) => item.SubjectID);
-  // console.log(subjectIds);
   const onSubmit = async (data) => {
     console.log(data);
     setError(null);
