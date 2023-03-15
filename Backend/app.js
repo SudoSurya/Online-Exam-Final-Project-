@@ -10,6 +10,7 @@ const ApproveStudents = require("./Routes/ApproveStudents");
 const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
 const AssignSubject = require("./Routes/AssignSubject");
+const AddUnitExam = require("./Routes/AddUnitExam");
 const Feedback = require("./Routes/Feedback");
 const ExamResult = require("./Routes/ExamResult");
 const GetExams = require("./Routes/GetExams");
@@ -22,7 +23,7 @@ app.use(cors({ origin: "*" }));
 
 app.use("/user", UserRoutes, GetExams, ExamResult, Feedback);
 app.use("/admin", AdminRoutes, AssignSubject);
-app.use("/faculty", PendingFaculty, FacultySchema, AddExam);
+app.use("/faculty", PendingFaculty, FacultySchema, AddExam, AddUnitExam);
 
 app.use("", PendingStudents);
 app.use("", ApproveStudents);
