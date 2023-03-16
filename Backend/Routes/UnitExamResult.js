@@ -23,7 +23,7 @@ router.patch("/submit/unit/result/:id", async (req, res) => {
   }
 });
 
-router.get("/result/:id", async (req, res) => {
+router.get("/unit/result/:id", async (req, res) => {
   const userID = req.params.id;
   try {
     const student = await UnitResults.find({ userID: userID });
@@ -39,7 +39,7 @@ router.get("/result/:id", async (req, res) => {
   }
 });
 
-router.get("/result/:id/:subjectID", async (req, res) => {
+router.get("/unit/result/:id/:subjectID", async (req, res) => {
   const userID = req.params.id;
   const SubjectID = req.params.subjectID;
   try {
