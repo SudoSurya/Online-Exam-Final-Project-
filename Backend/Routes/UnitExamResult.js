@@ -45,11 +45,11 @@ router.get("/unit/result/:id/:subjectID", async (req, res) => {
   try {
     const student = await UnitResults.find({ userID: userID });
     const filteredSubjects = student[0].Results.filter(
-      (subject) => subject.SubjectID === SubjectID
+      (subject) => subject.SubjectName === SubjectID
     );
 
     if (student.length === 0) {
-      return res.status(404).json({ message: "Faculty member not found" });
+      return res.status(404).json({ message: "Student member not found" });
     }
 
     res.json(filteredSubjects);
