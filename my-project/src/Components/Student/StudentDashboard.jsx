@@ -74,12 +74,22 @@ function StudentDashboard() {
               <Link
                 to="/student/results"
                 className={classNames(
-                  "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded",
+                  "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 mr-4 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",
                   "text-sm font-medium"
                 )}
               >
                 View Grades
+              </Link>
+              <Link
+                to="/student/unit/results"
+                className={classNames(
+                  "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 ml-4 rounded",
+                  "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",
+                  "text-sm font-medium"
+                )}
+              >
+                View Unit Grades
               </Link>
             </div>
           </div>
