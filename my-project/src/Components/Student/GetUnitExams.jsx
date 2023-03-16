@@ -1,21 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import StudentNav from "./StudentNav";
-import useResults from "./useResults";
 import CompletedExamInfo from "./CompletedExamInfo";
 import UnitTestInfo from "./UnitTestInfo";
-export default function GetUnitExams() {
-  const [exams, setExams] = useState([]);
-  const [results, subjectIDS] = useResults();
-  const [Branch] = useState(localStorage.getItem("studentbranch"));
-  console.log(subjectIDS);
-  console.log(exams);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8088/user/get-unit-exams/${Branch}`)
-      .then((res) => setExams(res.data))
-      .catch((error) => console.log(error));
-  }, [Branch]);
+import useUnitResults from "./useUnitResults";
+import useFilterData from "./useFilterData";
+export default function GetUnitExams({ exams }) {
+  const [unitResults, subjectData] = useUnitResults();
+  const [filteredData] = useFilterData({ exams, subjectData });
+  console.log(filteredData);
+
   if (exams.length < 1) {
     return (
       <>
@@ -24,15 +18,10 @@ export default function GetUnitExams() {
       </>
     );
   }
-  const examsNotIncluded = exams.filter(
-    (item) => !subjectIDS.includes(item.subjectID)
-  );
-  console.log(examsNotIncluded.length);
   return (
     <>
-      <StudentNav />
-      <h1 className="text-2xl font-semibold my-10">Pending Exams</h1>
-      <div className="flex justify-center m-10">
+      <h1 className="text-2xl font-semibold center my-10">Pending Exams</h1>
+      <div className="flex justify-center flex-wrap m-10">
         {exams.length > 0 ? (
           exams.map((item) => (
             <UnitTestInfo

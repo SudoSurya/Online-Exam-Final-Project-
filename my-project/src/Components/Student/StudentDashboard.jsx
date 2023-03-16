@@ -43,7 +43,7 @@ function StudentDashboard() {
                   "text-sm font-medium"
                 )}
               >
-                View Exams
+                View Unit Exams
               </Link>
             </div>
 
