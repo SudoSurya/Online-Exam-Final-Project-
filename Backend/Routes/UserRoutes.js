@@ -49,6 +49,7 @@ router.post("/register", async (req, res) => {
       userBranch,
     });
     await newUnitResult.save();
+    await newResult.save();
     res.status(200).send("User Registration Completed Succesfully");
   } catch (error) {
     res.status(500).send("Internal Server Error");
