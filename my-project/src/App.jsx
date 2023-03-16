@@ -29,6 +29,7 @@ import GetUnitExams from "./Components/Student/GetUnitExams";
 import UnitExam from "./Components/Student/UnitExam";
 import GetUnitResults from "./Components/Student/GetUnitResult";
 import UnitExamSearch from "./Components/Student/UnitExamSearch";
+import UnitResult from "./Components/Student/UnitResult";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -76,6 +77,10 @@ function App() {
                     <Route
                       path="/student/result/:subjectID"
                       element={<SubjectResult />}
+                    />
+                    <Route
+                      path="/student/unit/result/:subjectID"
+                      element={<UnitResult />}
                     />
                     <Route path="/student/results" element={<ExamResults />} />
                     <Route
