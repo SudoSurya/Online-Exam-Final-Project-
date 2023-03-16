@@ -7,8 +7,7 @@ import useUnitResults from "./useUnitResults";
 import useFilterData from "./useFilterData";
 export default function GetUnitExams({ exams }) {
   const [unitResults, subjectData] = useUnitResults();
-  const [filteredData] = useFilterData({ exams, subjectData });
-  console.log(filteredData);
+  const [CompletedExams, PendingExams] = useFilterData({ exams, subjectData });
 
   if (exams.length < 1) {
     return (
@@ -22,8 +21,8 @@ export default function GetUnitExams({ exams }) {
     <>
       <h1 className="text-2xl font-semibold center my-10">Pending Exams</h1>
       <div className="flex justify-center flex-wrap m-10">
-        {exams.length > 0 ? (
-          exams.map((item) => (
+        {PendingExams.length > 0 ? (
+          PendingExams.map((item) => (
             <UnitTestInfo
               key={item._id}
               examID={item._id}
@@ -39,25 +38,23 @@ export default function GetUnitExams({ exams }) {
           <div>No Pending Exams</div>
         )}
       </div>
-      {/* <h1 className="text-2xl font-semibold my-10">Completed Exams</h1>
+      <h1 className="text-2xl font-semibold my-10">Completed Exams</h1>
       <div className="flex justify-center m-10">
-        {exams.length > 0 &&
-          exams.map((item) => {
-            if (subjectIDS.includes(item.subjectID)) {
-              return (
-                <CompletedExamInfo
-                  key={item._id}
-                  examID={item._id}
-                  subjectID={item.subjectID}
-                  subjectName={item.subjectName}
-                  marks={item.marks}
-                  totalDuration={item.time}
-                  totalQuestions={item.TotalQuestions}
-                />
-              );
-            }
+        {CompletedExams.length > 0 &&
+          CompletedExams.map((item) => {
+            return (
+              <CompletedExamInfo
+                key={item._id}
+                examID={item._id}
+                subjectID={item.subjectID}
+                subjectName={item.subjectName}
+                marks={item.marks}
+                totalDuration={item.time}
+                totalQuestions={item.TotalQuestions}
+              />
+            );
           })}
-      </div> */}
+      </div>
     </>
   );
 }

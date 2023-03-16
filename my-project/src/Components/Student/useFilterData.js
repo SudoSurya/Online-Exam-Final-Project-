@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 export default function useFilterData({ exams, subjectData }) {
-  const [filteredData, setFilteredData] = useState([]);
-
+  const [CompletedExams, setFilteredData] = useState([]);
+  const [PendingExams, setPending] = useState([]);
   useEffect(() => {
     setFilteredData(
       exams.filter((obj) => {
@@ -17,7 +17,20 @@ export default function useFilterData({ exams, subjectData }) {
         return false;
       })
     );
+    setPending(
+      exams.filter((obj) => {
+        for (let i = 0; i < subjectData.length; i++) {
+          if (
+            obj.subjectID === subjectData[i][0] &&
+            obj.unit === subjectData[i][1]
+          ) {
+            return false;
+          }
+        }
+        return true;
+      })
+    );
   }, [exams, subjectData]);
 
-  return filteredData;
+  return [CompletedExams, PendingExams];
 }
