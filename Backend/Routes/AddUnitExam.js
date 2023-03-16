@@ -16,10 +16,13 @@ router.post("/add-exam/unit", async (req, res) => {
       Questions,
     } = req.body;
 
-    const exist = await UnitExam.findOne({ subjectID: subjectID });
+    const existingExam = await UnitExam.findOne({ subjectID, unit, Branch });
 
-    if (exist.unit == unit) {
-      return res.status(400).send({ message: "Unit already exists" });
+    if (existingExam) {
+      return res.status(400).send({
+        message:
+          "An exam with the same subject, unit, and branch already exists",
+      });
     }
 
     let Exam = new UnitExam({
