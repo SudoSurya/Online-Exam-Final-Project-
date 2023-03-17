@@ -79,7 +79,7 @@ function App() {
                       element={<SubjectResult />}
                     />
                     <Route
-                      path="/student/unit/result/:subjectID"
+                      path="/student/unit/result/:subjectName"
                       element={<UnitResult />}
                     />
                     <Route path="/student/results" element={<ExamResults />} />
