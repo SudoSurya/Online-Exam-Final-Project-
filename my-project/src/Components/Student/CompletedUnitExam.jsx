@@ -38,7 +38,7 @@ const CompletedUnitExam = ({
         Exam Completed
       </Link>
       <Link
-        to={`/student/unit/result/${subjectID}`}
+        to={`/student/unit/result/${subjectName}`}
         onClick={handleViewResult}
         className="bg-blue-500 hover:bg-blue-700 mx-6 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
