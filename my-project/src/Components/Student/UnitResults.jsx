@@ -8,6 +8,10 @@ const UnitResults = ({ results }) => {
       </>
     );
   }
+
+  const totalScore = results.reduce((acc, result) => acc + result.score, 0);
+  const avgScore = totalScore / results.length;
+
   return (
     <>
       <div className="p-8">
@@ -34,10 +38,20 @@ const UnitResults = ({ results }) => {
                 <td className="border px-4 py-2">
                   {result.duration / 60} Minutes
                 </td>
-                <td className="border px-4 py-2">{result.timeTaken} Seconds</td>
+                <td className="border px-4 py-2">
+                  {(result.timeTaken / 60).toFixed(2)} Minutes
+                </td>
                 <td className="border px-4 py-2">{result.score}</td>
               </tr>
             ))}
+            <tr>
+              <td colSpan="5" className="border px-4 py-2 font-bold">
+                Average Score:
+              </td>
+              <td className="border px-4 py-2 font-bold">
+                {avgScore.toFixed(2)}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

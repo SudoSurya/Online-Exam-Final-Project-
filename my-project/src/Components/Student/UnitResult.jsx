@@ -3,18 +3,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 export default function UnitResult() {
-  const { subjectID } = useParams();
+  const { subjectName } = useParams();
   const [subjectResult, setSubjectResult] = useState();
   const [studentID] = useState(localStorage.getItem("studentid"));
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `http://localhost:8088/user/unit/result/${studentID}/${subjectID}`
+        `http://localhost:8088/user/unit/result/${studentID}/${subjectName}`
       );
       setSubjectResult(response.data[0]);
     };
     fetchData();
-  }, [subjectID]);
+  }, [subjectName]);
   return (
     <div
       className={classNames(
