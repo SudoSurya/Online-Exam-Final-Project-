@@ -59,7 +59,7 @@ export default function UnitExamSearch() {
                     errors.faculty ? "border-red-500" : ""
                   }`}
                 >
-                  <option value="">Select a faculty member</option>
+                  <option value="">Select Subject Name</option>
                   {subjects &&
                     subjects.map((option, index) => (
                       <option key={index} value={option}>
