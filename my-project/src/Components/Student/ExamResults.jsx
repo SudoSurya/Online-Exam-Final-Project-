@@ -28,7 +28,9 @@ const ExamResults = () => {
                 <td className="border px-4 py-2">
                   {result.duration / 60} Minutes
                 </td>
-                <td className="border px-4 py-2">{result.timeTaken} Seconds</td>
+                <td className="border px-4 py-2">
+                  {(result.timeTaken / 60).toFixed(2)} Minutes
+                </td>
                 <td className="border px-4 py-2">{result.score}</td>
               </tr>
             ))}
