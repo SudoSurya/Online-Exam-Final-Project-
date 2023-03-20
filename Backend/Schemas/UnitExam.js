@@ -29,6 +29,10 @@ const UnitExam = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  facultyName: {
+    type: String,
+    required: true,
+  },
   Questions: [
     {
       Question: { type: String, required: true },

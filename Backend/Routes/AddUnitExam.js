@@ -13,6 +13,7 @@ router.post("/add-exam/unit", async (req, res) => {
       TotalQuestions,
       marks,
       time,
+      facultyName,
       Questions,
     } = req.body;
 
@@ -33,6 +34,7 @@ router.post("/add-exam/unit", async (req, res) => {
       TotalQuestions,
       marks,
       time,
+      facultyName,
       Questions,
     });
     await Exam.save();

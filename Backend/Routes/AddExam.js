@@ -12,10 +12,11 @@ router.post("/add-exam", async (req, res) => {
       TotalQuestions,
       marks,
       time,
+      facultyName,
       Questions,
     } = req.body;
 
-    const exist = await ExamSchema.findOne({ subjectID: subjectID });
+    const exist = await ExamSchema.findOne({ subjectID, Branch });
 
     if (exist) {
       return res.status(400).send({ message: "Exam already exists" });
@@ -28,6 +29,7 @@ router.post("/add-exam", async (req, res) => {
       TotalQuestions,
       marks,
       time,
+      facultyName,
       Questions,
     });
     await Exam.save();

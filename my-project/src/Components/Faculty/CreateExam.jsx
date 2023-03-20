@@ -12,17 +12,17 @@ const CreateExam = () => {
     formState: { errors },
     reset,
   } = useForm();
+
   const [csvData, setCsvData] = useState([]);
   const [error, setError] = useState(null);
-  console.log(csvData);
   const [subjectList] = useFaculty();
-  console.log(subjectList);
   let subjectIDs = [];
   let subjectNames = [];
   if (subjectList) {
     subjectIDs = subjectList.map((subject) => subject.subjectID);
     subjectNames = subjectList.map((subject) => subject.subjectName);
   }
+
   const onSubmit = async (data) => {
     console.log(data);
     setError(null);
@@ -210,6 +210,22 @@ const CreateExam = () => {
                   Exam Duration is Required
                 </span>
               )}
+            </div>
+
+            <div className="hidden">
+              <label
+                htmlFor="facultyName"
+                className="text-gray-800 font-semibold mb-2"
+              >
+                Exam Duration:
+              </label>
+              <input
+                type="text"
+                id="facultyName"
+                value={localStorage.getItem("facultyname")}
+                className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                {...register("facultyName", { required: true })}
+              />
             </div>
 
             <div className="mb-4">

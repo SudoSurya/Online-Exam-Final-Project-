@@ -94,7 +94,6 @@ const CreateUnitExam = () => {
                 <span className="text-red-600 mt-1">Subject ID required</span>
               )}
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="subjectID"
@@ -194,7 +193,6 @@ const CreateUnitExam = () => {
                 </span>
               )}
             </div>
-
             <div className="flex flex-col">
               <label
                 htmlFor="marks"
@@ -212,7 +210,21 @@ const CreateUnitExam = () => {
                 <span className="text-red-600 mt-1">Marks Required</span>
               )}
             </div>
-
+            <div className="hidden">
+              <label
+                htmlFor="facultyName"
+                className="text-gray-800 font-semibold mb-2"
+              >
+                Exam Duration:
+              </label>
+              <input
+                type="text"
+                id="facultyName"
+                value={localStorage.getItem("facultyname")}
+                className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                {...register("facultyName", { required: true })}
+              />
+            </div>
             <div className="flex flex-col">
               <label
                 htmlFor="time"
@@ -232,7 +244,21 @@ const CreateUnitExam = () => {
                 </span>
               )}
             </div>
-
+            <div className="hidden">
+              <label
+                htmlFor="facultyName"
+                className="text-gray-800 font-semibold mb-2"
+              >
+                Exam Duration:
+              </label>
+              <input
+                type="text"
+                id="facultyName"
+                value={localStorage.getItem("facultyname")}
+                className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                {...register("facultyName", { required: true })}
+              />
+            </div>
             <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
@@ -258,7 +284,6 @@ const CreateUnitExam = () => {
                 <span className="text-red-500"> Question Bank is Required</span>
               )}
             </div>
-
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="mt-8">
               <button
