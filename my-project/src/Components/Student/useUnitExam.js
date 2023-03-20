@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
-import { useTransition } from "react";
 
 export default function useUnitExam({ id }) {
   const [loading, setLoading] = useState(true);
@@ -13,6 +12,7 @@ export default function useUnitExam({ id }) {
   const [marks, setMarks] = useState(0);
   const [duration, setDuration] = useState(0);
   const [questions, setQuestions] = useState([]);
+  const [facultyName, setFacultyName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +28,7 @@ export default function useUnitExam({ id }) {
           TotalQuestions,
           marks,
           time,
+          facultyName,
           Questions,
         } = response.data;
         setSubjectID(subjectID);
@@ -37,6 +38,7 @@ export default function useUnitExam({ id }) {
         setTotalQuestions(TotalQuestions);
         setMarks(marks);
         setDuration(time);
+        setFacultyName(facultyName);
         setQuestions(Questions);
       } catch (error) {
         setError(error.message);
@@ -93,6 +95,7 @@ export default function useUnitExam({ id }) {
     totalQuestions,
     marks,
     duration,
+    facultyName,
     randomQuestions,
   ];
 }

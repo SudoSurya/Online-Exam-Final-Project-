@@ -14,6 +14,7 @@ export default function UnitExam() {
     totalQuestions,
     marks,
     duration,
+    facultyname,
     randomQuestions,
   ] = useUnitExam({ id });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -80,6 +81,7 @@ export default function UnitExam() {
         totalQuestions={totalQuestions}
         score={score}
         timeTaken={timeTaken}
+        facultyname={facultyname}
       />
     );
   }

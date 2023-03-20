@@ -13,6 +13,7 @@ export default function Exam() {
     totalQuestions,
     marks,
     duration,
+    facultyName,
     randomQuestions,
   ] = useExam({ id });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -78,6 +79,7 @@ export default function Exam() {
         totalQuestions={totalQuestions}
         score={score}
         timeTaken={timeTaken}
+        facultyName={facultyName}
       />
     );
   }

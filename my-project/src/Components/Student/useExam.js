@@ -11,6 +11,7 @@ export default function useExam({ id }) {
   const [marks, setMarks] = useState(0);
   const [duration, setDuration] = useState(0);
   const [questions, setQuestions] = useState([]);
+  const [facultyName, setFacultyName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,7 @@ export default function useExam({ id }) {
           TotalQuestions,
           marks,
           time,
+          facultyName,
           Questions,
         } = response.data;
         setSubjectID(subjectID);
@@ -33,6 +35,7 @@ export default function useExam({ id }) {
         setTotalQuestions(TotalQuestions);
         setMarks(marks);
         setDuration(time);
+        setFacultyName(facultyName);
         setQuestions(Questions);
       } catch (error) {
         setError(error.message);
@@ -88,6 +91,7 @@ export default function useExam({ id }) {
     totalQuestions,
     marks,
     duration,
+    facultyName,
     randomQuestions,
   ];
 }

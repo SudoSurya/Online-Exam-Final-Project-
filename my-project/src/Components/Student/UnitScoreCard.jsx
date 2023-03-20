@@ -10,6 +10,7 @@ export default function UnitScoreCard({
   totalQuestions,
   score,
   timeTaken,
+  facultyName,
 }) {
   const [studentID] = useState(localStorage.getItem("studentid"));
   const [resultSubmited, setResultSubmited] = useState(false);
@@ -24,6 +25,7 @@ export default function UnitScoreCard({
       duration: duration,
       timeTaken: timeTaken,
       score: score,
+      facultyName: facultyName,
     };
 
     try {
