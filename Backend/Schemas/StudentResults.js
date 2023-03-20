@@ -26,6 +26,7 @@ const StudentResults = new mongoose.Schema({
         duration: { type: Number, required: true },
         timeTaken: { type: Number, required: true },
         score: { type: Number, required: true },
+        facultyName: { type: String, required: true },
       },
     ],
     default: [],
