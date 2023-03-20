@@ -11,6 +11,7 @@ const ApproveFaculty = require("./Routes/ApproveFaculty");
 const PendingFaculty = require("./Routes/PendingFaculty");
 const AssignSubject = require("./Routes/AssignSubject");
 const UnitExamResult = require("./Routes/UnitExamResult");
+const FacultyExams = require("./Routes/FacultyExams");
 const AddUnitExam = require("./Routes/AddUnitExam");
 const Feedback = require("./Routes/Feedback");
 const ExamResult = require("./Routes/ExamResult");
@@ -32,7 +33,7 @@ app.use(
   UnitExams,
   UnitExamResult
 );
-app.use("/admin", AdminRoutes, AssignSubject);
+app.use("/admin", AdminRoutes, AssignSubject, FacultyExams);
 app.use("/faculty", PendingFaculty, FacultySchema, AddExam, AddUnitExam);
 
 app.use("", PendingStudents);
