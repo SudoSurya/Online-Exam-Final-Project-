@@ -30,6 +30,7 @@ import UnitExam from "./Components/Student/UnitExam";
 import GetUnitResults from "./Components/Student/GetUnitResult";
 import UnitExamSearch from "./Components/Student/UnitExamSearch";
 import UnitResult from "./Components/Student/UnitResult";
+import FacultyExams from "./Components/Admin/FacultyExams";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -124,6 +125,10 @@ function App() {
                     <Route
                       path="/admin/view/feedbacks"
                       element={<FacultyFeedbacks />}
+                    />
+                    <Route
+                      path="/admin/faculty/exams"
+                      element={<FacultyExams />}
                     />
                   </>
                 )}
