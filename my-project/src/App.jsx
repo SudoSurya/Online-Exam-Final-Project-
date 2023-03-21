@@ -31,6 +31,7 @@ import GetUnitResults from "./Components/Student/GetUnitResult";
 import UnitExamSearch from "./Components/Student/UnitExamSearch";
 import UnitResult from "./Components/Student/UnitResult";
 import FacultyExams from "./Components/Admin/FacultyExams";
+import ResultsTable from "./Components/Admin/ResultsTable";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -129,6 +130,10 @@ function App() {
                     <Route
                       path="/admin/faculty/exams"
                       element={<FacultyExams />}
+                    />
+                    <Route
+                      path="/admin/exam/result/:subjectID/:facultyName"
+                      element={<ResultsTable />}
                     />
                   </>
                 )}

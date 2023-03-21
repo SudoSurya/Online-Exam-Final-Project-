@@ -41,7 +41,7 @@ const ExamInfo = ({
         View Stats
       </Link>
       <Link
-        to={`/student/result/${subjectID}`}
+        to={`/admin/exam/result/${subjectID}/${facultyName}`}
         className="bg-blue-500 hover:bg-blue-700 mx-6 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
         View Exam Results

@@ -17,6 +17,7 @@ export default function ScoreCard({
   const seconds = timeTaken % 60;
   const handleSubmit = async () => {
     const data = {
+      studentID: studentID,
       SubjectID: subjectID,
       SubjectName: subjectName,
       totalQuestions: totalQuestions,
@@ -25,6 +26,7 @@ export default function ScoreCard({
       score: score,
       facultyName: facultyName,
     };
+    console.log(data);
 
     try {
       const res = await axios.patch(
