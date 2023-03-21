@@ -75,7 +75,7 @@ export default function FacultyExams() {
         </div>
       </div>
       <h1 className="text-2xl font-semibold my-10 text-center">
-        Completed Exams
+        Conducted Exams
       </h1>
       <div className="flex justify-center m-10">
         {conductedExams.length ? (

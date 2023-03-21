@@ -115,7 +115,7 @@ export default function AdminDashboard() {
                   View your grades for your enrolled courses.
                 </p>
                 <Link
-                  to="/faculty/grades"
+                  to="/admin/reports"
                   className={classNames(
                     "bg-slate-600 hover:bg-slate-700 text-white py-2 px-4 rounded",
                     "focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2",
