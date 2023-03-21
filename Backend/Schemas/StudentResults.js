@@ -20,6 +20,7 @@ const StudentResults = new mongoose.Schema({
   Results: {
     type: [
       {
+        studentID: { type: String, required: true },
         SubjectID: { type: String, required: true },
         SubjectName: { type: String, required: true },
         totalQuestions: { type: Number, required: true },
@@ -31,6 +32,14 @@ const StudentResults = new mongoose.Schema({
     ],
     default: [],
   },
+});
+
+StudentResults.pre("save", function (next) {
+  const studentResults = this;
+  studentResults.Results.forEach((result) => {
+    result.studentID = studentResults.userID;
+  });
+  next();
 });
 
 module.exports = mongoose.model("StudentResults", StudentResults);
