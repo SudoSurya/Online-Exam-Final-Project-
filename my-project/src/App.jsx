@@ -33,6 +33,7 @@ import UnitResult from "./Components/Student/UnitResult";
 import FacultyExams from "./Components/Admin/FacultyExams";
 import ResultsTable from "./Components/Admin/ResultsTable";
 import AdminReports from "./Components/Admin/AdminReports";
+import ConductedExams from "./Components/Faculty/ConductedExams";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -158,6 +159,10 @@ function App() {
                       element={<CreateUnitExam />}
                     />
                     <Route path="/faculty/feebacks" element={<Feedbacks />} />
+                    <Route
+                      path="/faculty/conducted-exams"
+                      element={<ConductedExams />}
+                    />
                   </>
                 ) : (
                   <Route

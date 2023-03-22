@@ -66,7 +66,7 @@ export default function FacultyDashboard() {
               </div>
 
               {/* student results */}
-              <div className="bg-white shadow-md rounded-lg p-6">
+              {/* <div className="bg-white shadow-md rounded-lg p-6">
                 <h2 className="text-xl font-bold mb-2">Grades</h2>
                 <p className="text-gray-600 mb-4">
                   View your grades for your enrolled courses.
@@ -80,6 +80,23 @@ export default function FacultyDashboard() {
                   )}
                 >
                   View Grades
+                </Link>
+              </div> */}
+
+              <div className="bg-white shadow-md rounded-lg p-6">
+                <h2 className="text-xl font-bold mb-2">Conducted Exams</h2>
+                <p className="text-gray-600 mb-4">
+                  View Conducted Exams and Respective Results
+                </p>
+                <Link
+                  to="/faculty/conducted-exams"
+                  className={classNames(
+                    "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded",
+                    "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",
+                    "text-sm font-medium"
+                  )}
+                >
+                  View Exams
                 </Link>
               </div>
             </div>
