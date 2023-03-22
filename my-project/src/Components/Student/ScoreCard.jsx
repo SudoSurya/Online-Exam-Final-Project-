@@ -7,6 +7,7 @@ export default function ScoreCard({
   subjectName,
   duration,
   totalQuestions,
+  marks,
   score,
   timeTaken,
   facultyName,
@@ -23,6 +24,7 @@ export default function ScoreCard({
       totalQuestions: totalQuestions,
       duration: duration,
       timeTaken: timeTaken,
+      marks: marks,
       score: score,
       facultyName: facultyName,
     };

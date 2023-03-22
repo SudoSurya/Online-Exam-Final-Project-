@@ -79,6 +79,7 @@ export default function UnitExam() {
         unit={unit}
         duration={duration * 60}
         totalQuestions={totalQuestions}
+        marks={marks}
         score={score}
         timeTaken={timeTaken}
         facultyname={facultyname}

@@ -8,6 +8,7 @@ export default function UnitScoreCard({
   unit,
   duration,
   totalQuestions,
+  marks,
   score,
   timeTaken,
   facultyName,
@@ -24,6 +25,7 @@ export default function UnitScoreCard({
       totalQuestions: totalQuestions,
       duration: duration,
       timeTaken: timeTaken,
+      marks: marks,
       score: score,
       facultyName: facultyName,
     };

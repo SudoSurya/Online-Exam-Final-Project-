@@ -77,6 +77,7 @@ export default function Exam() {
         subjectName={subjectName}
         duration={duration * 60}
         totalQuestions={totalQuestions}
+        marks={marks}
         score={score}
         timeTaken={timeTaken}
         facultyName={facultyName}

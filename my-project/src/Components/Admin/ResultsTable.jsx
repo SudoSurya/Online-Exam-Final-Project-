@@ -27,7 +27,7 @@ export default function ResultsTable() {
 
   return (
     <>
-      <AdminNav />{" "}
+      {/* <AdminNav />{" "} */}
       <div className="w-full overflow-x-auto my-4">
         <h1 className="text-3xl font-bold mb-4">Results</h1>
         <table className="w-full table-auto border border-gray-200">
