@@ -10,7 +10,7 @@ router.patch("/submit/result/:id", async (req, res) => {
     const student = await StudentResults.find({ userID: userID });
 
     if (student.length === 0) {
-      return res.status(404).json({ message: "Faculty member not found" });
+      return res.status(404).json({ message: "Student member not found" });
     }
 
     student[0].Results.push(newResult);
