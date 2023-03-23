@@ -8,6 +8,7 @@ const ExamInfo = ({
   totalDuration,
   totalQuestions,
   facultyName,
+  branch,
 }) => {
   return (
     <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4 w-1/3">
@@ -35,7 +36,7 @@ const ExamInfo = ({
         </div>
       </div>
       <Link
-        to={`/student/result/${subjectID}`}
+        to={`/stats/${branch}/${subjectID}/${facultyName}`}
         className="bg-green-500  hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
         View Stats
