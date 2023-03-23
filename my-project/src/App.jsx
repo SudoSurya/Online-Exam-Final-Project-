@@ -134,10 +134,7 @@ function App() {
                       path="/admin/faculty/exams"
                       element={<FacultyExams />}
                     />
-                    <Route
-                      path="/admin/exam/result/:subjectID/:facultyName"
-                      element={<ResultsTable />}
-                    />
+
                     <Route path="/admin/reports" element={<AdminReports />} />
                   </>
                 )}
@@ -177,6 +174,10 @@ function App() {
               <Route
                 path="/stats/:branch/:subjectID/:facultyName"
                 element={<SubjectStats />}
+              />
+              <Route
+                path="/exam/result/:subjectID/:facultyName"
+                element={<ResultsTable />}
               />
             </Routes>
           </BrowserRouter>
