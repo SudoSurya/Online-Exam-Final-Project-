@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import ExamInfo from "./ExamInfo";
 export default function FacultyExams() {
   const [conductedExams, setConductedExams] = useState([]);
+  console.log(conductedExams);
   const [error, setError] = useState("");
   const [faculty] = useFeedback();
   const {
@@ -90,6 +91,7 @@ export default function FacultyExams() {
                 totalDuration={item.time}
                 totalQuestions={item.TotalQuestions}
                 facultyName={item.facultyName}
+                branch={item.Branch}
               />
             );
           })

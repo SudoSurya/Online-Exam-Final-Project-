@@ -38,6 +38,7 @@ export default function ConductedExams() {
                 totalDuration={item.time}
                 totalQuestions={item.TotalQuestions}
                 facultyName={item.facultyName}
+                branch={item.Branch}
               />
             );
           })
