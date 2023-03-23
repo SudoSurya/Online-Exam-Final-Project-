@@ -13,6 +13,7 @@ const AssignSubject = require("./Routes/AssignSubject");
 const UnitExamResult = require("./Routes/UnitExamResult");
 const FacultyExams = require("./Routes/FacultyExams");
 const AddUnitExam = require("./Routes/AddUnitExam");
+const BranchResults = require("./Routes/BranchResults");
 const Feedback = require("./Routes/Feedback");
 const ExamResult = require("./Routes/ExamResult");
 const GetExams = require("./Routes/GetExams");
@@ -39,6 +40,7 @@ app.use("/faculty", PendingFaculty, FacultySchema, AddExam, AddUnitExam);
 app.use("", PendingStudents);
 app.use("", ApproveStudents);
 app.use("", ApproveFaculty);
+app.use("", BranchResults);
 
 const PORT = 8088;
 app.listen(PORT, () => {
