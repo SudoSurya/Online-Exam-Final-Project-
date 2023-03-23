@@ -34,6 +34,7 @@ import FacultyExams from "./Components/Admin/FacultyExams";
 import ResultsTable from "./Components/Admin/ResultsTable";
 import AdminReports from "./Components/Admin/AdminReports";
 import ConductedExams from "./Components/Faculty/ConductedExams";
+import SubjectStats from "./Components/Admin/SubjectStats";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -173,6 +174,10 @@ function App() {
               </Route>
               {/* Testing Routes */}
               <Route path="/test" element={<Test />} />
+              <Route
+                path="/stats/:branch/:subjectID/:facultyName"
+                element={<SubjectStats />}
+              />
             </Routes>
           </BrowserRouter>
         </store.Provider>
