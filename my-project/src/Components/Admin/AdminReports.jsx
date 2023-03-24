@@ -39,19 +39,19 @@ export default function AdminReports() {
 
             {/* Assignments */}
             <div className="bg-white shadow-md rounded-lg p-6">
-              <h2 className="text-xl font-bold mb-2">FeedBacks</h2>
+              <h2 className="text-xl font-bold mb-2">Student Results</h2>
               <p className="text-gray-600 mb-4">
-                View and submit your feedbacks
+                View Student Results By Branch and Subject Name
               </p>
               <Link
-                to="/student/feedback"
+                to="/branch-wise/results"
                 className={classNames(
                   "bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2",
                   "text-sm font-medium"
                 )}
               >
-                Feedbacks
+                View Student Results
               </Link>
             </div>
 

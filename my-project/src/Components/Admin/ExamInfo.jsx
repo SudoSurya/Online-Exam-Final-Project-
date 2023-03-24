@@ -37,12 +37,14 @@ const ExamInfo = ({
       </div>
       <Link
         to={`/stats/${branch}/${subjectID}/${facultyName}`}
+        target="_blank"
         className="bg-green-500  hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
         View Stats
       </Link>
       <Link
         to={`/exam/result/${subjectID}/${facultyName}`}
+        target="_blank"
         className="bg-blue-500 hover:bg-blue-700 mx-6 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
         View Exam Results

@@ -35,6 +35,7 @@ import ResultsTable from "./Components/Admin/ResultsTable";
 import AdminReports from "./Components/Admin/AdminReports";
 import ConductedExams from "./Components/Faculty/ConductedExams";
 import SubjectStats from "./Components/Admin/SubjectStats";
+import UserList from "./Components/Admin/UserList";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -179,6 +180,7 @@ function App() {
                 path="/exam/result/:subjectID/:facultyName"
                 element={<ResultsTable />}
               />
+              <Route path="/branch-wise/results" element={<UserList />} />
             </Routes>
           </BrowserRouter>
         </store.Provider>
