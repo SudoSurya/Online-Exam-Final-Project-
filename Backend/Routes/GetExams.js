@@ -30,4 +30,14 @@ router.get("/exam/:id", async (req, res) => {
   }
 });
 
+router.get("/exams/:Branch/subjects", async (req, res) => {
+  try {
+    const subjects = await ExamSchema.find().distinct("subjectName");
+    res.json(subjects);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
