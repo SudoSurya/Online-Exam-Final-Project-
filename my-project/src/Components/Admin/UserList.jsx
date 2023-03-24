@@ -9,6 +9,7 @@ export default function UserList() {
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [result, setResult] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
   console.log(result);
 
   useEffect(() => {
@@ -35,6 +36,10 @@ export default function UserList() {
         `http://localhost:8088/${selectedUserId}/${selectedBranch}/${selectedSubject}`
       )
       .then((res) => setResult(res.data));
+
+    if (result.length == 0) {
+      setErrorMsg("Student Did not Attempted The Exam");
+    }
   };
   useEffect(() => {
     if (selectedBranch !== "") {
@@ -126,8 +131,11 @@ export default function UserList() {
           </button>
         </div>
       </div>
-      {result.length && <SingleSubjectResult results={result} />}
+      {result.length > 0 ? (
+        <SingleSubjectResult results={result} />
+      ) : (
+        <h1 className="text-center text-red-500">{errorMsg}</h1>
+      )}
     </>
   );
 }
-
