@@ -20,6 +20,7 @@ const UnitResults = new mongoose.Schema({
   Results: {
     type: [
       {
+        studentID: { type: String, required: true },
         SubjectID: { type: String, required: true },
         SubjectName: { type: String, required: true },
         unit: { type: String, required: true },
