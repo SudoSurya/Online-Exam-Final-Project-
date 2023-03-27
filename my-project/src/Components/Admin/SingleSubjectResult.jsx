@@ -39,38 +39,37 @@ export default function SingleSubjectResult({ results }) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {results.map((result) => {
-                const scorePercentage =
-                  (result.Results[0].score / result.Results[0].marks) * 100;
+              {results[0].Results.map((result) => {
+                const scorePercentage = (result.score / result.marks) * 100;
                 const passOrFail = scorePercentage >= 35 ? "Pass" : "Fail";
                 return (
                   <tr key={result._id}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].studentID}
+                      {result.studentID}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].SubjectID}
+                      {result.SubjectID}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].SubjectName}
+                      {result.SubjectName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].totalQuestions}
+                      {result.totalQuestions}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].duration} sec
+                      {result.duration} sec
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].timeTaken} sec
+                      {result.timeTaken} sec
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].marks}
+                      {result.marks}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].score}
+                      {result.score}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {result.Results[0].facultyName}
+                      {result.facultyName}
                     </td>
                     <td
                       className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${

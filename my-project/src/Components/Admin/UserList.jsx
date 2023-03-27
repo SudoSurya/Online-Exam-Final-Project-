@@ -31,16 +31,19 @@ export default function UserList() {
   // Get the user object for the currently selected user ID
   const selectedUser = users.find((user) => user.userID === selectedUserId);
   const handleButtonClick = () => {
-    axios
-      .get(
-        `http://localhost:8088/${selectedUserId}/${selectedBranch}/${selectedSubject}`
-      )
-      .then((res) => setResult(res.data));
-
-    if (result.length == 0) {
-      setErrorMsg("Student Did not Attempted The Exam");
+    if (selectedSubject === "all") {
+      axios
+        .get(`http://localhost:8088/${selectedUserId}/${selectedBranch}/all`)
+        .then((res) => setResult(res.data));
+    } else {
+      axios
+        .get(
+          `http://localhost:8088/${selectedUserId}/${selectedBranch}/${selectedSubject}`
+        )
+        .then((res) => setResult(res.data));
     }
   };
+
   useEffect(() => {
     if (selectedBranch !== "") {
       axios
@@ -114,6 +117,7 @@ export default function UserList() {
               disabled={!selectedBranch}
             >
               <option value="">Select a subject</option>
+              <option value="all">All Subjects</option>
               {subjects.map((subject) => (
                 <option key={subject} value={subject}>
                   {subject}
