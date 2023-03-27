@@ -17,6 +17,7 @@ export default function UnitExam() {
     facultyname,
     randomQuestions,
   ] = useUnitExam({ id });
+  console.log(facultyname);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [timeRemaining, setTimeRemaining] = useState(duration * 60);

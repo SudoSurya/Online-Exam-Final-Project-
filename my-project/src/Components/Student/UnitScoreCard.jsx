@@ -11,7 +11,7 @@ export default function UnitScoreCard({
   marks,
   score,
   timeTaken,
-  facultyName,
+  facultyname,
 }) {
   const [studentID] = useState(localStorage.getItem("studentid"));
   const [resultSubmited, setResultSubmited] = useState(false);
@@ -19,6 +19,7 @@ export default function UnitScoreCard({
   const seconds = timeTaken % 60;
   const handleSubmit = async () => {
     const data = {
+      studentID: studentID,
       SubjectID: subjectID,
       SubjectName: subjectName,
       unit: unit,
@@ -27,9 +28,9 @@ export default function UnitScoreCard({
       timeTaken: timeTaken,
       marks: marks,
       score: score,
-      facultyName: facultyName,
+      facultyName: facultyname,
     };
-
+    console.log(data);
     try {
       const res = await axios.patch(
         `http://localhost:8088/user/submit/unit/result/${studentID}`,
