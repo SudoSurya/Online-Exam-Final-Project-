@@ -13,22 +13,18 @@ export default function UserList() {
   console.log(result);
 
   useEffect(() => {
-    // Fetch the list of users from your API
     fetch("http://localhost:8088/student/approved")
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch((error) => console.error(error));
   }, []);
 
-  // Get an array of unique branch names from the list of users
   const branches = Array.from(new Set(users.map((user) => user.userBranch)));
 
-  // Get an array of user IDs for the currently selected branch
   const userIds = users
     .filter((user) => user.userBranch === selectedBranch)
     .map((user) => user.userID);
 
-  // Get the user object for the currently selected user ID
   const selectedUser = users.find((user) => user.userID === selectedUserId);
   const handleButtonClick = () => {
     if (selectedSubject === "all") {
