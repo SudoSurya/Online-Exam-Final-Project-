@@ -3,6 +3,16 @@ const StudentResults = require("../Schemas/StudentResults");
 let router = express.Router();
 router.use(express.json());
 
+router.get("/results/:branch", async (req, res) => {
+  try {
+    const { branch } = req.params;
+    const results = await StudentResults.find({ userBranch: branch });
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.get("/:studentID/:branch/:subject", async (req, res) => {
   try {
     const { branch, studentID, subject } = req.params;
