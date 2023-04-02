@@ -36,6 +36,8 @@ import AdminReports from "./Components/Admin/AdminReports";
 import ConductedExams from "./Components/Faculty/ConductedExams";
 import SubjectStats from "./Components/Admin/SubjectStats";
 import UserList from "./Components/Admin/UserList";
+import BranchWiseResults from "./Components/Admin/BranchWiseResults";
+import AllSubjectsResults from "./Components/Admin/AllSubjectResults";
 export const store = createContext();
 export const userStore = createContext();
 export const facultyStore = createContext();
@@ -137,6 +139,10 @@ function App() {
                     />
 
                     <Route path="/admin/reports" element={<AdminReports />} />
+                    <Route
+                      path="/admin/results/branch/"
+                      element={<BranchWiseResults />}
+                    />
                   </>
                 )}
               </Route>
@@ -181,6 +187,7 @@ function App() {
                 element={<ResultsTable />}
               />
               <Route path="/branch-wise/results" element={<UserList />} />
+              <Route path="/:id/allsubjects" element={<AllSubjectsResults />} />
             </Routes>
           </BrowserRouter>
         </store.Provider>
