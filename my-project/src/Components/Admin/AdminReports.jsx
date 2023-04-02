@@ -57,29 +57,19 @@ export default function AdminReports() {
 
             {/* Grades */}
             <div className="bg-white shadow-md rounded-lg p-6">
-              <h2 className="text-xl font-bold mb-2">Grades</h2>
+              <h2 className="text-xl font-bold mb-2">Branch Wise Results</h2>
               <p className="text-gray-600 mb-4">
-                View your grades for your enrolled courses.
+                View Student grades (Branch Wise).
               </p>
               <Link
-                to="/student/results"
+                to="/admin/results/branch/"
                 className={classNames(
                   "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 mr-4 rounded",
                   "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",
                   "text-sm font-medium"
                 )}
               >
-                View Grades
-              </Link>
-              <Link
-                to="/student/unit/results"
-                className={classNames(
-                  "bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 ml-4 rounded",
-                  "focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2",
-                  "text-sm font-medium"
-                )}
-              >
-                View Unit Grades
+                View Branch Wise Results
               </Link>
             </div>
           </div>
