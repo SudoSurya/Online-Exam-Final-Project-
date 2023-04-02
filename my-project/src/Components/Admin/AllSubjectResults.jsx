@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminNav from "./AdminNav";
-import SingleSubjectResult from "./SingleSubjectResult";
 
 export default function AllSubjectsResults() {
   const { id } = useParams();
@@ -12,7 +11,7 @@ export default function AllSubjectsResults() {
       .get(`http://localhost:8088/user/result/${id}`)
       .then((res) => setResults(res.data))
       .catch((error) => console.error(error));
-  }, [id]);  <SingleSubjectResult results={results} />;
+  }, [id]);
 
   return (
     <>
