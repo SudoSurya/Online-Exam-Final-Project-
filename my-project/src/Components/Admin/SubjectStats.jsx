@@ -19,9 +19,7 @@ export default function SubjectStats() {
       .get("http://localhost:8088/student/approved")
       .then((response) => {
         const users = response.data;
-        const csUsers = users.filter(
-          (user) => user.userBranch === "Computer Science and Engineering"
-        );
+        const csUsers = users.filter((user) => user.userBranch === branch);
         const csUserCount = csUsers.length;
         setUserCount(csUserCount);
       })
