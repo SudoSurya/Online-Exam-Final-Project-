@@ -4,7 +4,6 @@ import axios from "axios";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 export default function ApproveFaculty() {
   const [pendingRequests, setPendingRequests] = useState([]);
-  console.log(pendingRequests);
   useEffect(() => {
     axios
       .get("http://localhost:8088/faculty/pending")
