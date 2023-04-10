@@ -28,7 +28,7 @@ export default function AdminNav() {
             Faculty
           </Link>
           <Link
-            to="/admin/results"
+            to="/admin/reports"
             className="text-gray-100 hover:text-white mr-4 font-medium tracking-wide"
           >
             Results
