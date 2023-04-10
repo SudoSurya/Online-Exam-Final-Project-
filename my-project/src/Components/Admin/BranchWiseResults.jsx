@@ -7,8 +7,6 @@ export default function BranchWiseResults() {
   const [users, setUsers] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("");
   const [result, setResult] = useState([]);
-  console.log(result);
-  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8088/student/approved")
@@ -23,7 +21,9 @@ export default function BranchWiseResults() {
     if (selectedBranch !== "") {
       axios
         .get(`http://localhost:8088/results/${selectedBranch}`)
-        .then((res) => setResult(res.data));
+        .then((res) => {
+          setResult(res.data);
+        });
     } else {
       setResult([]);
     }
@@ -59,7 +59,7 @@ export default function BranchWiseResults() {
       {result.length > 0 ? (
         <TestTable data={result} />
       ) : (
-        <h1 className="text-center text-red-500">{errorMsg}</h1>
+        <h1 className="text-center text-red-500">No Result Found</h1>
       )}
     </>
   );
