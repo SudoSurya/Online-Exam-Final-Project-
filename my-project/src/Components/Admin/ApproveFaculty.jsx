@@ -37,9 +37,9 @@ export default function ApproveFaculty() {
       });
   };
 
-  const filterRequests = pendingRequests.filter(
-    (user) => user.status == "PENDING"
-  );
+  const filterRequests =
+    pendingRequests.length &&
+    pendingRequests.filter((user) => user.status == "PENDING");
 
   return (
     <section>
