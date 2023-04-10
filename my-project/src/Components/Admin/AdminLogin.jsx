@@ -14,10 +14,15 @@ function AdminLogin() {
   const [loginError, setLoginError] = useState("");
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:8088/admin/login", data).then((res) => {
-      localStorage.setItem("admintoken", res.data.token);
-      setAdminToken(localStorage.getItem("admintoken"));
-    });
+    axios
+      .post("http://localhost:8088/admin/login", data)
+      .then((res) => {
+        localStorage.setItem("admintoken", res.data.token);
+        setAdminToken(localStorage.getItem("admintoken"));
+      })
+      .catch((err) => {
+        setLoginError(err.response.data);
+      });
   };
 
   if (adminToken) {
