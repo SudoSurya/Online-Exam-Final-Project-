@@ -3,12 +3,11 @@ import React from "react";
 import axios from "axios";
 import useFeedback from "../Student/useFeedback";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ExamInfo from "./ExamInfo";
 export default function FacultyExams() {
   const [conductedExams, setConductedExams] = useState([]);
-  console.log(conductedExams);
   const [error, setError] = useState("");
   const [faculty] = useFeedback();
   const {
@@ -18,16 +17,15 @@ export default function FacultyExams() {
     reset,
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
+    setError("");
     axios
       .get(`http://localhost:8088/admin/exams/${data.facultyName}`)
       .then((response) => {
         setConductedExams(response.data);
         setError(`"No Exams Conducted by"${data.facultyName}`);
-        console.log(response);
       })
       .catch((error) => {
-        console.log(error);
+        setError("No Exams Conducted by this faculty");
       });
   };
   return (
@@ -76,7 +74,7 @@ export default function FacultyExams() {
         </div>
       </div>
       <h1 className="text-2xl font-semibold my-10 text-center">
-        Conducted Exams
+        {conductedExams.length ? " Conducted Exams" : ""}
       </h1>
       <div className="flex justify-center m-10">
         {conductedExams.length ? (
