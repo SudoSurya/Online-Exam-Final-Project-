@@ -4,7 +4,7 @@ import axios from "axios";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 export default function ApproveStudents() {
   const [pendingRequests, setPendingRequests] = useState([]);
-  console.log(pendingRequests);
+
   useEffect(() => {
     axios
       .get("http://localhost:8088/student/pending")
@@ -37,9 +37,9 @@ export default function ApproveStudents() {
       });
   };
 
-  const filterRequests = pendingRequests.filter(
-    (user) => user.status == "PENDING"
-  );
+  const filterRequests =
+    pendingRequests.length &&
+    pendingRequests.filter((user) => user.status == "PENDING");
 
   return (
     <section>
