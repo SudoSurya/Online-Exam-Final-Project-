@@ -32,7 +32,7 @@ export default function GetExams() {
     <>
       <StudentNav />
       <h1 className="text-2xl font-semibold my-10">Pending Exams</h1>
-      <div className="flex justify-center m-10">
+      <div className="flex justify-center m-10 flex-wrap">
         {examsNotIncluded.length > 0 ? (
           examsNotIncluded.map((item) => (
             <QuizInfo
@@ -50,7 +50,7 @@ export default function GetExams() {
         )}
       </div>
       <h1 className="text-2xl font-semibold my-10">Completed Exams</h1>
-      <div className="flex justify-center m-10">
+      <div className="flex justify-center m-10 flex-wrap">
         {exams.length > 0 &&
           exams.map((item) => {
             if (subjectIDS.includes(item.subjectID)) {
