@@ -141,7 +141,7 @@ export default function ResultsTable() {
                     {result.Results[0].totalQuestions}
                   </td>
                   <td className="border px-4 py-2">
-                    {result.Results[0].duration} seconds
+                    {result.Results[0].duration} Minutes
                   </td>
                   <td className="border px-4 py-2">
                     {result.Results[0].timeTaken} seconds
