@@ -10,6 +10,7 @@ export default function SubjectStats() {
   const [subjectName, setSubjectName] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
   const [error, setError] = useState("");
+  const [facultyAnalysis, setFacultyAnalysis] = useState("");
 
   const { branch, subjectID, facultyName } = useParams();
   const [userCount, setUserCount] = useState(0);
@@ -59,6 +60,11 @@ export default function SubjectStats() {
         setTotalPassed(passed);
         setTotalFailed(failed);
         setAvgScore((scoreSum / total).toFixed(2));
+        if (avgScore <= 5) {
+          setFacultyAnalysis("The faculty needs to teach again.");
+        } else {
+          setFacultyAnalysis("The faculty is doing well.");
+        }
       } catch (error) {
         setError("Error fetching results.");
       }
@@ -135,6 +141,15 @@ export default function SubjectStats() {
           </div>
         </div>
       </section>
+      {facultyAnalysis && (
+        <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/3 mx-auto mt-10 p-10 rounded-lg overflow-hidden shadow-lg bg-white">
+          <h1 class="text-4xl font-bold text-green-400">
+            {avgScore <= 6
+              ? "The faculty needs to teach again."
+              : "Students Are Doing Well"}
+          </h1>
+        </div>
+      )}
     </section>
   );
 }
