@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test":"vitest "
   },
   "dependencies": {
     "@headlessui/react": "^1.7.9",
@@ -26,12 +27,15 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
+    "@testing-library/react": "^13.4.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.13",
+    "happy-dom": "^7.6.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
-    "vite": "^4.1.0"
+    "vite": "^4.1.0",
+    "vitest": "^0.24.3"
   }
 }
