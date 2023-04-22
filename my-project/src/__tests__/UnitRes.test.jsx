@@ -1,9 +1,8 @@
-import { mount,test,expect,it} from "vitest";
+import { mount, test, expect, it } from "vitest";
 import UnitResults from "../Components/Student/UnitResults";
 test("UnitResults component", () => {
   it('should render "Result Not Found" message when no results are passed', () => {
     const wrapper = mount(UnitResults, { results: [] });
-   
 
     expect(wrapper.find(".text-red-500").text()).toBe("Result Not Found");
   });
