@@ -179,11 +179,11 @@ function App() {
               {/* Testing Routes */}
               <Route path="/test" element={<Test />} />
               <Route
-                path="/stats/:branch/:subjectID/:facultyName"
+                path="/stats/:branch/:subjectID/:facultyName/:subjectName1"
                 element={<SubjectStats />}
               />
               <Route
-                path="/exam/result/:subjectID/:facultyName"
+                path="/exam/result/:subjectID/:facultyName/:subjectName"
                 element={<ResultsTable />}
               />
               <Route path="/branch-wise/results" element={<UserList />} />

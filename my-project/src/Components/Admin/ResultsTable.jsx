@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function ResultsTable() {
-  const { subjectID, facultyName } = useParams();
+  const { subjectID, facultyName, subjectName } = useParams();
   const [results, setResults] = useState([]);
   const [sortType, setSortType] = useState(null);
   const [sortByStudentID, setSortByStudentID] = useState(false);
@@ -134,9 +134,7 @@ export default function ResultsTable() {
                   <td className="border px-4 py-2">
                     {result.Results[0].SubjectID}
                   </td>
-                  <td className="border px-4 py-2">
-                    {result.Results[0].SubjectName}
-                  </td>
+                  <td className="border px-4 py-2">{subjectName}</td>
                   <td className="border px-4 py-2">
                     {result.Results[0].totalQuestions}
                   </td>

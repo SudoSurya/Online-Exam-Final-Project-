@@ -11,8 +11,8 @@ export default function SubjectStats() {
   const [totalMarks, setTotalMarks] = useState(0);
   const [error, setError] = useState("");
   const [facultyAnalysis, setFacultyAnalysis] = useState("");
-
-  const { branch, subjectID, facultyName } = useParams();
+  console.log(subjectName);
+  const { branch, subjectID, facultyName, subjectName1 } = useParams();
   const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function SubjectStats() {
         <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/3 rounded-lg overflow-hidden shadow-lg bg-white">
           <div className="bg-indigo-600 py-4 px-6">
             <h1 className="text-white text-xl font-bold">
-              {subjectName + " -> Exam Stats"}
+              {subjectName1 + " -> Exam Stats"}
             </h1>
           </div>
           <div className="p-6">

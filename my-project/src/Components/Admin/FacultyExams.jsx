@@ -10,6 +10,7 @@ export default function FacultyExams() {
   const [conductedExams, setConductedExams] = useState([]);
   const [error, setError] = useState("");
   const [faculty] = useFeedback();
+  console.log(conductedExams);
   const {
     register,
     handleSubmit,
