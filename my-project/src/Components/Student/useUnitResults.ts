@@ -3,8 +3,8 @@ import axios from "axios";
 
 export default function useUnitResults() {
   const studentID = localStorage.getItem("studentid");
-  const [unitResults, setUnitResults] = useState([]);
-  const [subjectData, setSubjectData] = useState([]);
+  const [unitResults, setUnitResults] = useState<any[]>([]);
+  const [subjectData, setSubjectData] = useState<any>([]);
 
   const fetchData = async () => {
     const response = await axios.get(
