@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+
+import axios, { AxiosResponse } from "axios";
 import Papa from "papaparse";
 import Dropzone from "react-dropzone";
 import FacultyNav from "./FacultyNav";

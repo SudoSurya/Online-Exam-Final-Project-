@@ -25,7 +25,6 @@ import PostFeedback from "./Components/Student/PostFeedback";
 import Feedbacks from "./Components/Faculty/Feedbacks";
 import FacultyFeedbacks from "./Components/Admin/FacultyFeedbacks";
 import CreateUnitExam from "./Components/Faculty/CreateUnitExam";
-import GetUnitExams from "./Components/Student/GetUnitExams";
 import UnitExam from "./Components/Student/UnitExam";
 import GetUnitResults from "./Components/Student/GetUnitResult";
 import UnitExamSearch from "./Components/Student/UnitExamSearch";

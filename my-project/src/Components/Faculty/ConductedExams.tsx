@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import FacultyNav from "./FacultyNav";
 import ExamInfo from "../Admin/ExamInfo";
+import { IConductedExam } from "../../Types/ApiResponses";
 export default function ConductedExams() {
-  const [facultyName] = useState(localStorage.getItem("facultyname"));
-  const [conductedExams, setConductedExams] = useState([]);
+  const [facultyName] = useState<string | null>(
+    localStorage.getItem("facultyname")
+  );
+  const [conductedExams, setConductedExams] = useState<IConductedExam[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     axios
       .get(`http://localhost:8088/admin/exams/${facultyName}`)
-      .then((response) => {
+      .then((response: AxiosResponse<IConductedExam[]>) => {
         setConductedExams(response.data);
         setError(`"No Exams Conducted by"${facultyName}`);
         console.log(response);
