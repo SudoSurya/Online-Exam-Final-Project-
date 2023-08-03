@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-import axios, { AxiosResponse } from "axios";
+import { Questions } from "../../Types/ApiResponses";
+import axios from "axios";
 import Papa from "papaparse";
 import Dropzone from "react-dropzone";
 import FacultyNav from "./FacultyNav";
 import useFaculty from "./useFaculty";
+import {
+  AxiosErrorRes,
+  FormData,
+  IExam,
+  PostExamResponse,
+} from "../../Types/FormDataTypes";
+interface CsvDataItem {
+  [key: string]: string | number | boolean | null;
+}
+
 const CreateExam = () => {
   const {
     register,
@@ -14,45 +24,62 @@ const CreateExam = () => {
     reset,
   } = useForm();
 
-  const [csvData, setCsvData] = useState([]);
-  const [error, setError] = useState(null);
+  const [csvData, setCsvData] = useState<Questions[]>([]);
+  console.log(csvData);
+
+  const [error, setError] = useState<string | null>(null);
   const [subjectList] = useFaculty();
-  let subjectIDs = [];
-  let subjectNames = [];
+  let subjectIDs: string[] | [] = [];
+  let subjectNames: string[] | [] = [];
   if (subjectList) {
     subjectIDs = subjectList.map((subject) => subject.subjectID);
     subjectNames = subjectList.map((subject) => subject.subjectName);
   }
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     console.log(data);
     setError(null);
 
     try {
-      let filterData = csvData.filter((item) => item.Question != null);
-      let NewData = { ...data, Questions: filterData };
-      const response = await axios.post(
+      const filterData: Questions[] = csvData.filter(
+        (item) => item.Question != null
+      );
+      const NewData: IExam = { ...data, Questions: filterData };
+      const response: PostExamResponse = await axios.post(
         "http://localhost:8088/faculty/add-exam",
         NewData
       );
       alert(response.data.message);
       reset();
-    } catch (err) {
-      alert(err.response.data.message);
+    } catch (err: unknown) {
+      alert((err as AxiosErrorRes).response?.data.message);
       console.error(err);
       setError("Something went wrong. Please try again later.");
     }
   };
 
-  const handleCsvUpload = (files) => {
-    Papa.parse(files[0], {
-      complete: (result) => {
+  const handleCsvUpload = (files: FileList) => {
+    if (files.length === 0) return alert("Please upload a file");
+   const file = files[0];
+
+  Papa.parse(file, {
+    complete: (result: Papa.ParseResult<Questions>) => {
+      // The 'result' object contains the parsed data.
+      // 'result.data' contains the parsed data as an array of CsvDataItem objects.
+
+      if (result.errors.length > 0) {
+        // Handle parsing errors, if any.
+        console.error("CSV parsing errors:", result.errors);
+      } else {
+        // Here, we set the 'csvData' state to the parsed data.
         setCsvData(result.data);
-      },
-      header: true,
-      dynamicTyping: true,
-    });
-  };
+      }
+    },
+
+    header: true,
+    // 'header: true' indicates that the first row of the CSV file contains headers, and PapaParse will use them as keys in the resulting array of objects.
+
+    dynamicTyping: true,
+  });
 
   return (
     <>

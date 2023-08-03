@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { createContext, useContext, useState } from "react";
+import { useContext } from "react";
 import HomePage from "./Components/HomePage";
 import StudentReg from "./Components/Student/StudentReg";
 import AdminLogin from "./Components/Admin/AdminLogin";
@@ -37,23 +37,23 @@ import SubjectStats from "./Components/Admin/SubjectStats";
 import UserList from "./Components/Admin/UserList";
 import BranchWiseResults from "./Components/Admin/BranchWiseResults";
 import AllSubjectsResults from "./Components/Admin/AllSubjectResults";
-export const store = createContext();
-export const userStore = createContext();
-export const facultyStore = createContext();
+import {
+  AdminContext,
+  AdminProvider,
+  FacultyContext,
+  FacultyProvider,
+  UserContext,
+  UserProvider,
+} from "./Types/StoresContext";
+
 function App() {
-  const [adminToken, setAdminToken] = useState(
-    localStorage.getItem("admintoken")
-  );
-  const [studentToken, setStudentToken] = useState(
-    localStorage.getItem("studenttoken")
-  );
-  const [facultyToken, setFacultyToken] = useState(
-    localStorage.getItem("facultytoken")
-  );
+  const { studentToken } = useContext(UserContext);
+  const { facultyToken } = useContext(FacultyContext);
+  const { adminToken } = useContext(AdminContext);
   return (
-    <facultyStore.Provider value={[facultyToken, setFacultyToken]}>
-      <userStore.Provider value={[studentToken, setStudentToken]}>
-        <store.Provider value={[adminToken, setAdminToken]}>
+    <UserProvider>
+      <FacultyProvider>
+        <AdminProvider>
           <BrowserRouter>
             <Routes>
               <Route path="/*" element={<HomePage />} />
@@ -147,34 +147,26 @@ function App() {
               </Route>
               {/* Faculty Routes */}
               <Route path="/faculty/login" element={<FacultyLogin />} />
-              <Route to="/faculty">
-                {facultyToken ? (
-                  <>
-                    <Route
-                      path="/faculty/dashboard"
-                      element={<FacultyDashboard />}
-                    />
-                    <Route
-                      path="/faculty/create-exam"
-                      element={<CreateExam />}
-                    />
-                    <Route
-                      path="/faculty/add-unit-exam"
-                      element={<CreateUnitExam />}
-                    />
-                    <Route path="/faculty/feebacks" element={<Feedbacks />} />
-                    <Route
-                      path="/faculty/conducted-exams"
-                      element={<ConductedExams />}
-                    />
-                  </>
-                ) : (
+              {facultyToken ? (
+                <>
                   <Route
-                    path="/faculty/register"
-                    element={<FacultyRegister />}
+                    path="/faculty/dashboard"
+                    element={<FacultyDashboard />}
                   />
-                )}
-              </Route>
+                  <Route path="/faculty/create-exam" element={<CreateExam />} />
+                  <Route
+                    path="/faculty/add-unit-exam"
+                    element={<CreateUnitExam />}
+                  />
+                  <Route path="/faculty/feebacks" element={<Feedbacks />} />
+                  <Route
+                    path="/faculty/conducted-exams"
+                    element={<ConductedExams />}
+                  />
+                </>
+              ) : (
+                <Route path="/faculty/register" element={<FacultyRegister />} />
+              )}
               {/* Testing Routes */}
               <Route path="/test" element={<Test />} />
               <Route
@@ -189,9 +181,9 @@ function App() {
               <Route path="/:id/allsubjects" element={<AllSubjectsResults />} />
             </Routes>
           </BrowserRouter>
-        </store.Provider>
-      </userStore.Provider>
-    </facultyStore.Provider>
+        </AdminProvider>
+      </FacultyProvider>
+    </UserProvider>
   );
 }
 

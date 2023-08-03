@@ -9,7 +9,7 @@ export interface IConductedExam {
     facultyName: string;
     questions: Questions[];
 }
-interface Questions {
+export type Questions = {
     Question: string;
     option1: string;
     option2: string;

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState, useContext, useEffect } from "react";
-import { facultyStore } from "../../App";
+import { FacultyContext } from "../../Types/StoresContext";
 
 export default function useFaculty() {
   const [faculty, setFaculty] = useState();
-  const [facultyToken, setFacultyToken] = useContext(facultyStore);
+  const { facultyToken } = useContext(FacultyContext);
   const [subjectList, setSubjectList] = useState();
 
   useEffect(() => {
