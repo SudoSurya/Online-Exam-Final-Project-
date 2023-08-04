@@ -1,12 +1,10 @@
 import FacultyNav from "./FacultyNav";
 import { Link, Navigate } from "react-router-dom";
-import { facultyStore } from "../../App";
 import classNames from "classnames";
 import { useContext } from "react";
-import useFaculty from "./useFaculty";
+import { FacultyContext } from "../../Types/StoresContext";
 export default function FacultyDashboard() {
-  const [subjectList] = useFaculty();
-  const [facultyToken, setFacultyToken] = useContext(facultyStore);
+  const { facultyToken } = useContext(FacultyContext);
   if (!facultyToken) {
     return <Navigate to="/" />;
   }

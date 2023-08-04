@@ -1,34 +1,43 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
+import {
+  AxiosErrorRes,
+  AxiosOkRes,
+  FacultyRegistrationFormData,
+} from "../../Types/FormDataTypes";
 
 const FacultyRegister = () => {
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FacultyRegistrationFormData>();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FacultyRegistrationFormData> = (
+    data: FacultyRegistrationFormData
+  ) => {
     setSubmitting(true);
     axios
       .post("http://localhost:8088/faculty/register", data)
-      .then((response) => {
+      .then((response: AxiosOkRes) => {
         console.log(response);
         alert(response.data.message);
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.log(error);
-        alert(error.response.data.message);
-        console.log(error.response.data.message);
+        alert((error as AxiosErrorRes).response?.data.message);
+        setSubmitting(false);
       });
-    setSubmitting(false);
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={(event) => {
+        event.preventDefault();
+        void handleSubmit(onSubmit)(event);
+      }}
       className="bg-gradient-to-r from-green-400 to-blue-500 p-8 rounded-lg shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-4 text-white">

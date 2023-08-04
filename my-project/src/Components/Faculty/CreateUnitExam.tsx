@@ -1,50 +1,66 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Papa from "papaparse";
-import Dropzone from "react-dropzone";
+import * as Papa from "papaparse";
 import FacultyNav from "./FacultyNav";
 import useFaculty from "./useFaculty";
+import { Questions } from "../../Types/ApiResponses";
+import {
+  AxiosErrorRes,
+  AxiosOkRes,
+  IUExam,
+  UnitTestFormData,
+} from "../../Types/FormDataTypes";
 const CreateUnitExam = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
-  const [csvData, setCsvData] = useState([]);
-  const [error, setError] = useState(null);
+  } = useForm<UnitTestFormData>();
+  const [csvData, setCsvData] = useState<Questions[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const [subjectList] = useFaculty();
-  let subjectIDs = [];
-  let subjectNames = [];
+  let subjectIDs: string[] | [] = [];
+  let subjectNames: string[] | [] = [];
   if (subjectList) {
     subjectIDs = subjectList.map((subject) => subject.subjectID);
     subjectNames = subjectList.map((subject) => subject.subjectName);
   }
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: UnitTestFormData) => {
     console.log(data);
     setError(null);
 
     try {
-      let filterData = csvData.filter((item) => item.Question != null);
-      let NewData = { ...data, Questions: filterData };
-      const response = await axios.post(
+      const filterData: Questions[] = csvData.filter(
+        (item) => item.Question != null
+      );
+      const NewData: IUExam = { ...data, Questions: filterData };
+      const response: AxiosOkRes = await axios.post(
         "http://localhost:8088/faculty/add-exam/unit",
         NewData
       );
       alert(response.data.message);
       reset();
-    } catch (err) {
-      alert(err.response.data.message);
+    } catch (err: unknown) {
+      alert((err as AxiosErrorRes).response?.data.message);
       console.error(err);
       setError("Something went wrong. Please try again later.");
     }
   };
 
-  const handleCsvUpload = (files) => {
-    Papa.parse(files[0], {
-      complete: (result) => {
-        setCsvData(result.data);
+  const handleCsvUpload = (files: FileList | null) => {
+    if (!files) return;
+    if (files.length === 0) return alert("Please upload a file");
+    const file = files[0];
+
+    Papa.parse(file, {
+      complete: (result: Papa.ParseResult<Questions>) => {
+        if (result.errors.length > 0) {
+          console.error("CSV parsing errors:", result.errors);
+        } else {
+          setCsvData(result.data);
+        }
       },
       header: true,
       dynamicTyping: true,
@@ -57,7 +73,10 @@ const CreateUnitExam = () => {
       <FacultyNav />
       <div className="flex items-center justify-center py-10 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(event) => {
+            event.preventDefault();
+            void handleSubmit(onSubmit)(event);
+          }}
           className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8 mb-4"
         >
           <h2 className="text-2xl font-extrabold text-gray-900 mb-4">
@@ -220,7 +239,7 @@ const CreateUnitExam = () => {
               <input
                 type="text"
                 id="facultyName"
-                value={localStorage.getItem("facultyname")}
+                value={localStorage.getItem("facultyname") as string}
                 className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 {...register("facultyName", { required: true })}
               />
@@ -254,7 +273,7 @@ const CreateUnitExam = () => {
               <input
                 type="text"
                 id="facultyName"
-                value={localStorage.getItem("facultyname")}
+                value={localStorage.getItem("facultyname") as string}
                 className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 {...register("facultyName", { required: true })}
               />
@@ -266,23 +285,10 @@ const CreateUnitExam = () => {
               >
                 Questions:
               </label>
-              <Dropzone onDrop={handleCsvUpload}>
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    {...getRootProps()}
-                    className="border-dashed border-2 border-gray-300 rounded-lg p-8 text-center"
-                  >
-                    <input {...getInputProps()} />
-
-                    <p className="text-lg text-gray-500">
-                      Drag and drop a CSV file, or click to select a file
-                    </p>
-                  </div>
-                )}
-              </Dropzone>
-              {errors.Questions && (
-                <span className="text-red-500"> Question Bank is Required</span>
-              )}
+              <input
+                type="file"
+                onChange={(e) => handleCsvUpload(e.target.files)}
+              />
             </div>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="mt-8">

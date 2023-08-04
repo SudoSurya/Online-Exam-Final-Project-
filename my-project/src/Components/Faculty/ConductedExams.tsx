@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import { IConductedExam } from "../../Types/ApiResponses";
 import FacultyNav from "./FacultyNav";
 import ExamInfo from "../Admin/ExamInfo";
-import { IConductedExam } from "../../Types/ApiResponses";
 export default function ConductedExams() {
   const [facultyName] = useState<string | null>(
     localStorage.getItem("facultyname")
@@ -34,7 +34,6 @@ export default function ConductedExams() {
             return (
               <ExamInfo
                 key={item._id}
-                examID={item._id}
                 subjectID={item.subjectID}
                 subjectName={item.subjectName}
                 marks={item.marks}

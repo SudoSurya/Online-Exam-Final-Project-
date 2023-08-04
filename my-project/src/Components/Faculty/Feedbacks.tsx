@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-// import FacultyNav from "./FacultyNav";
+import FacultyNav from "./FacultyNav";
 interface FeedbackResponse {
   _id: string;
   feedback: string;
@@ -25,7 +25,7 @@ function Feedbacks() {
 
   return (
     <>
-      {/* <FacultyNav /> */}
+      <FacultyNav />
       <div className="grid grid-cols-1 gap-4 place-items-center py-10 bg-gray-200  mx-auto ">
         <h1 className="text-2xl">Student Feedbacks</h1>
         {feedbacks &&

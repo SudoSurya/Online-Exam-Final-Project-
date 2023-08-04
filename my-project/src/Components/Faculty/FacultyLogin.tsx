@@ -1,27 +1,40 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
-import { facultyStore } from "../../App";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { FacultyContext } from "../../Types/StoresContext";
+interface FacultyLoginProps {
+  facultyEmail: string;
+  password: string;
+}
+interface ResponseData {
+  token: string;
+}
+
 export default function FacultyLogin() {
-  const [facultyToken, setFacultyToken] = useContext(facultyStore);
+  const { facultyToken, login } = useContext(FacultyContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const [loginError, setLoginError] = useState("");
+  } = useForm<FacultyLoginProps>();
+  const [loginError, setLoginError] = useState<string>("");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FacultyLoginProps) => {
     axios
       .post("http://localhost:8088/faculty/login", data)
-      .then((res) => {
-        localStorage.setItem("facultytoken", res.data.token);
-        setFacultyToken(localStorage.getItem("facultytoken"));
+      .then((res: AxiosResponse<ResponseData>) => {
+        if (res.data.token) {
+          login(res.data.token);
+        }
       })
-      .catch((error) => {
-        alert(error.response.data);
-        console.log(error.response.data);
+      .catch((error: unknown) => {
+        const axiosError = error as AxiosError;
+        const responseData =
+          axiosError?.response?.data ?? "Unknown error occurred";
+        setLoginError(responseData as string);
+        alert(responseData);
+        console.log(responseData);
       });
   };
   if (facultyToken) {
@@ -31,7 +44,10 @@ export default function FacultyLogin() {
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(event) => {
+          event.preventDefault();
+          void handleSubmit(onSubmit)(event);
+        }}
         className="bg-white p-10 rounded-lg shadow-md"
       >
         <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">

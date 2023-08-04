@@ -2,19 +2,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Questions } from "../../Types/ApiResponses";
 import axios from "axios";
-import Papa from "papaparse";
-import Dropzone from "react-dropzone";
-import FacultyNav from "./FacultyNav";
-import useFaculty from "./useFaculty";
+import * as Papa from "papaparse";
 import {
   AxiosErrorRes,
+  AxiosOkRes,
   FormData,
   IExam,
-  PostExamResponse,
 } from "../../Types/FormDataTypes";
-interface CsvDataItem {
-  [key: string]: string | number | boolean | null;
-}
+import FacultyNav from "./FacultyNav";
+import useFaculty from "./useFaculty";
 
 const CreateExam = () => {
   const {
@@ -22,7 +18,7 @@ const CreateExam = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<FormData>();
 
   const [csvData, setCsvData] = useState<Questions[]>([]);
   console.log(csvData);
@@ -44,7 +40,7 @@ const CreateExam = () => {
         (item) => item.Question != null
       );
       const NewData: IExam = { ...data, Questions: filterData };
-      const response: PostExamResponse = await axios.post(
+      const response: AxiosOkRes = await axios.post(
         "http://localhost:8088/faculty/add-exam",
         NewData
       );
@@ -57,29 +53,23 @@ const CreateExam = () => {
     }
   };
 
-  const handleCsvUpload = (files: FileList) => {
+  const handleCsvUpload = (files: FileList | null) => {
+    if (!files) return;
     if (files.length === 0) return alert("Please upload a file");
-   const file = files[0];
+    const file = files[0];
 
-  Papa.parse(file, {
-    complete: (result: Papa.ParseResult<Questions>) => {
-      // The 'result' object contains the parsed data.
-      // 'result.data' contains the parsed data as an array of CsvDataItem objects.
-
-      if (result.errors.length > 0) {
-        // Handle parsing errors, if any.
-        console.error("CSV parsing errors:", result.errors);
-      } else {
-        // Here, we set the 'csvData' state to the parsed data.
-        setCsvData(result.data);
-      }
-    },
-
-    header: true,
-    // 'header: true' indicates that the first row of the CSV file contains headers, and PapaParse will use them as keys in the resulting array of objects.
-
-    dynamicTyping: true,
-  });
+    Papa.parse(file, {
+      complete: (result: Papa.ParseResult<Questions>) => {
+        if (result.errors.length > 0) {
+          console.error("CSV parsing errors:", result.errors);
+        } else {
+          setCsvData(result.data);
+        }
+      },
+      header: true,
+      dynamicTyping: true,
+    });
+  };
 
   return (
     <>
@@ -87,7 +77,10 @@ const CreateExam = () => {
       <FacultyNav />
       <div className="flex items-center justify-center py-10 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(event) => {
+            event.preventDefault();
+            void handleSubmit(onSubmit)(event);
+          }}
           className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8 mb-4"
         >
           <h2 className="text-2xl font-extrabold text-gray-900 mb-4">
@@ -250,7 +243,7 @@ const CreateExam = () => {
               <input
                 type="text"
                 id="facultyName"
-                value={localStorage.getItem("facultyname")}
+                value={localStorage.getItem("facultyname") as string}
                 className="border-2 border-gray-400 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 {...register("facultyName", { required: true })}
               />
@@ -263,23 +256,10 @@ const CreateExam = () => {
               >
                 Questions:
               </label>
-              <Dropzone onDrop={handleCsvUpload}>
-                {({ getRootProps, getInputProps }) => (
-                  <div
-                    {...getRootProps()}
-                    className="border-dashed border-2 border-gray-300 rounded-lg p-8 text-center"
-                  >
-                    <input {...getInputProps()} />
-
-                    <p className="text-lg text-gray-500">
-                      Drag and drop a CSV file, or click to select a file
-                    </p>
-                  </div>
-                )}
-              </Dropzone>
-              {errors.Questions && (
-                <span className="text-red-500"> Question Bank is Required</span>
-              )}
+              <input
+                type="file"
+                onChange={(e) => handleCsvUpload(e.target.files)}
+              />
             </div>
 
             {error && <div className="text-red-500 mb-4">{error}</div>}
