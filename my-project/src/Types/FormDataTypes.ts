@@ -33,3 +33,7 @@ export type FacultyRegistrationFormData = {
     password: string;
     confirmPassword: string;
 }
+
+export interface ResponseToken {
+    token: string;
+}

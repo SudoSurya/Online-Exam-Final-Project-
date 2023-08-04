@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -21,25 +21,6 @@ export default function ResultsTable() {
     } else {
       return true;
     }
-  });
-
-  const sortedResults = filteredResults.sort((result1, result2) => {
-    if (sortType === "ranking") {
-      const score1 = result1.Results[0].score;
-      const time1 = result1.Results[0].timeTaken;
-      const score2 = result2.Results[0].score;
-      const time2 = result2.Results[0].timeTaken;
-      const ranking1 = score1 / time1;
-      const ranking2 = score2 / time2;
-      return ranking2 - ranking1;
-    } else if (sortType === "studentID") {
-      const studentID1 = result1.Results[0].studentID;
-      const studentID2 = result2.Results[0].studentID;
-      return sortByStudentID
-        ? studentID2.localeCompare(studentID1)
-        : studentID1.localeCompare(studentID2);
-    }
-    return 0;
   });
 
   useEffect(() => {

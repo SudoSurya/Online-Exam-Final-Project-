@@ -1,20 +1,27 @@
 import AdminNav from "./AdminNav";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+export interface Student {
+  _id: string;
+  userID: string;
+  userName: string;
+  userBranch: string;
+  status: string;
+}
 export default function ApproveStudents() {
-  const [pendingRequests, setPendingRequests] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState<Student[]>([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8088/student/pending")
-      .then((res) => setPendingRequests(res.data))
+      .then((res: AxiosResponse<Student[]>) => setPendingRequests(res.data))
       .catch((error) => console.log(error));
   }, []);
-  const handleApprove = (id) => {
+  const handleApprove = (id: string) => {
     axios
       .put(`http://localhost:8088/admin/${id}/approve/student`)
-      .then((response) => {
+      .then(() => {
         setPendingRequests((prevUsers) =>
           prevUsers.filter((user) => user._id !== id)
         );
@@ -24,10 +31,10 @@ export default function ApproveStudents() {
       });
   };
 
-  const handleReject = (id) => {
+  const handleReject = (id: string) => {
     axios
       .put(`http://localhost:8088/admin/${id}/reject/student`)
-      .then((response) => {
+      .then(() => {
         setPendingRequests((prevUsers) =>
           prevUsers.filter((user) => user._id !== id)
         );
@@ -37,9 +44,9 @@ export default function ApproveStudents() {
       });
   };
 
-  const filterRequests =
-    pendingRequests.length &&
-    pendingRequests.filter((user) => user.status == "PENDING");
+  let filterRequests: Student[] = [];
+  if (pendingRequests.length)
+    filterRequests = pendingRequests.filter((user) => user.status == "PENDING");
 
   return (
     <section>

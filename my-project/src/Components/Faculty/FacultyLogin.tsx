@@ -3,12 +3,10 @@ import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { FacultyContext } from "../../Types/StoresContext";
+import { ResponseToken } from "../../Types/FormDataTypes";
 interface FacultyLoginProps {
   facultyEmail: string;
   password: string;
-}
-interface ResponseData {
-  token: string;
 }
 
 export default function FacultyLogin() {
@@ -23,7 +21,7 @@ export default function FacultyLogin() {
   const onSubmit = (data: FacultyLoginProps) => {
     axios
       .post("http://localhost:8088/faculty/login", data)
-      .then((res: AxiosResponse<ResponseData>) => {
+      .then((res: AxiosResponse<ResponseToken>) => {
         if (res.data.token) {
           login(res.data.token);
         }

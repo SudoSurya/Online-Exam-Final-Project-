@@ -1,15 +1,16 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminNav from "./AdminNav";
+import { IResult } from "../../Types/ResultTypes";
 
 export default function AllSubjectsResults() {
   const { id } = useParams();
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<IResult[]>([]);
   useEffect(() => {
     axios
       .get(`http://localhost:8088/user/result/${id}`)
-      .then((res) => setResults(res.data))
+      .then((res: AxiosResponse<IResult[]>) => setResults(res.data))
       .catch((error) => console.error(error));
   }, [id]);
 

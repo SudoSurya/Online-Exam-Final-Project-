@@ -1,7 +1,9 @@
-import { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
+interface FormData {
+  SubjectID: string;
+  SubjectName: string;
+}
 export default function SubjectForm({
   selectedFaculty,
   setFaculty,
@@ -11,10 +13,10 @@ export default function SubjectForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
   console.log(selectedFaculty);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     try {
       const res = await axios.patch(
         `http://localhost:8088/admin/add-subject/faculty/${selectedFaculty._id}`,
@@ -30,7 +32,7 @@ export default function SubjectForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={void handleSubmit(onSubmit)}>
       <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
         <div className="mb-4">
           <label
@@ -42,7 +44,6 @@ export default function SubjectForm({
           <input
             type="text"
             id="SubjectID"
-            name="SubjectID"
             {...register("SubjectID", { required: true })}
             className={`w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
               errors.SubjectID ? "border-red-500" : ""
@@ -64,7 +65,6 @@ export default function SubjectForm({
           <input
             type="text"
             id="SubjectName"
-            name="SubjectName"
             {...register("SubjectName", { required: true })}
             className={`w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
               errors.SubjectName ? "border-red-500" : ""

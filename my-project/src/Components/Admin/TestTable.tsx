@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SResult, UserData } from "../../Types/ResultTypes";
+interface TestTableProps {
+  data: UserData[];
+}
 
-function TestTable({ data }) {
-  const [sortedData, setSortedData] = useState([]);
+const TestTable: React.FC<TestTableProps> = ({ data }) => {
+  const [sortedData, setSortedData] = useState<UserData[]>([]);
+  console.log("data", sortedData);
+
   const [sortBy, setSortBy] = useState("studentId");
 
   useEffect(() => {
@@ -17,8 +23,12 @@ function TestTable({ data }) {
     } else if (sortBy === "passFail") {
       // sort by pass/fail
       const sortedByPassFail = [...data].sort((a, b) => {
-        const aPassFail = checkFailedSubjects(a.Results).hasFailedSubject;
-        const bPassFail = checkFailedSubjects(b.Results).hasFailedSubject;
+        const aPassFail = Number(
+          checkFailedSubjects(a.Results).hasFailedSubject
+        );
+        const bPassFail = Number(
+          checkFailedSubjects(b.Results).hasFailedSubject
+        );
         return aPassFail - bPassFail;
       });
       setSortedData(sortedByPassFail);
@@ -32,14 +42,14 @@ function TestTable({ data }) {
     }
   }, [data, sortBy]);
 
-  const getAverageScore = (results) => {
+  const getAverageScore = (results: SResult[]) => {
     const totalScore = results.reduce((acc, result) => {
       return acc + result.score;
     }, 0);
     return totalScore / results.length;
   };
 
-  const checkFailedSubjects = (results) => {
+  const checkFailedSubjects = (results: SResult[]) => {
     let hasFailedSubject = false;
     const resultsWithFailures = results.map((result) => {
       const percentage = (result.score / result.marks) * 100;
@@ -130,6 +140,6 @@ function TestTable({ data }) {
       </table>
     </div>
   );
-}
+};
 
 export default TestTable;

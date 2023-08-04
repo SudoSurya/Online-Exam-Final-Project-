@@ -1,26 +1,10 @@
-import { store } from "../../App";
 import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import AdminNav from "./AdminNav";
 import classNames from "classnames";
-
+import { AdminContext } from "../../Types/StoresContext";
 export default function AdminDashboard() {
-  const [adminToken, setAdminToken] = useContext(store);
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8088/admin/dashboard", {
-        headers: {
-          "x-token": adminToken,
-        },
-      })
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const { adminToken } = useContext(AdminContext);
 
   if (!adminToken) {
     return <Navigate to="/admin/login" />;

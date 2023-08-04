@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { Student } from "./ApproveStudents";
+import { UserData } from "../../Types/ResultTypes";
 export default function SubjectStats() {
-  const [results, setResults] = useState([]);
   const [totalStudents, setTotalStudents] = useState(0);
   const [totalPassed, setTotalPassed] = useState(0);
   const [totalFailed, setTotalFailed] = useState(0);
-  const [avgScore, setAvgScore] = useState(0);
+  const [avgScore, setAvgScore] = useState<string>("");
   const [subjectName, setSubjectName] = useState("");
   const [totalMarks, setTotalMarks] = useState(0);
   const [error, setError] = useState("");
@@ -18,8 +19,8 @@ export default function SubjectStats() {
   useEffect(() => {
     axios
       .get("http://localhost:8088/student/approved")
-      .then((response) => {
-        const users = response.data;
+      .then((response: AxiosResponse<Student[]>) => {
+        const users: Student[] = response.data;
         const csUsers = users.filter((user) => user.userBranch === branch);
         const csUserCount = csUsers.length;
         setUserCount(csUserCount);
@@ -30,14 +31,13 @@ export default function SubjectStats() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const response: AxiosResponse<UserData[]> = await axios.get(
           `http://localhost:8088/admin/result/${subjectID}/${facultyName}`
         );
         if (response.data.length === 0) {
           setError("No results found.");
           return;
         }
-        setResults(response.data);
 
         let total = 0;
         let passed = 0;
@@ -60,7 +60,7 @@ export default function SubjectStats() {
         setTotalPassed(passed);
         setTotalFailed(failed);
         setAvgScore((scoreSum / total).toFixed(2));
-        if (avgScore <= 5) {
+        if (Number(avgScore) <= 5) {
           setFacultyAnalysis("The faculty needs to teach again.");
         } else {
           setFacultyAnalysis("The faculty is doing well.");
@@ -70,7 +70,7 @@ export default function SubjectStats() {
       }
     };
 
-    fetchData();
+    fetchData().catch((error) => console.log(error));
   }, []);
 
   if (error) {
@@ -143,8 +143,8 @@ export default function SubjectStats() {
       </section>
       {facultyAnalysis && (
         <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/3 mx-auto mt-10 p-10 rounded-lg overflow-hidden shadow-lg bg-white">
-          <h1 class="text-4xl font-bold text-green-400">
-            {avgScore <= 6
+          <h1 className="text-4xl font-bold text-green-400">
+            {Number(avgScore) <= 6
               ? "The faculty needs to teach again."
               : "Students Are Doing Well"}
           </h1>

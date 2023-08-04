@@ -1,27 +1,37 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
-import { store } from "../../App";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { AdminContext } from "../../Types/StoresContext";
+import { ResponseToken } from "../../Types/FormDataTypes";
+interface FormData {
+  adminID: string;
+  adminPass: string;
+}
 
 function AdminLogin() {
-  const [adminToken, setAdminToken] = useContext(store);
+  const { adminToken, login } = useContext(AdminContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const [loginError, setLoginError] = useState("");
+  } = useForm<FormData>();
+  const [loginError, setLoginError] = useState<string>("");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormData) => {
     axios
       .post("http://localhost:8088/admin/login", data)
-      .then((res) => {
+      .then((res: AxiosResponse<ResponseToken>) => {
         localStorage.setItem("admintoken", res.data.token);
-        setAdminToken(localStorage.getItem("admintoken"));
+        login(res.data.token);
       })
-      .catch((err) => {
-        setLoginError(err.response.data);
+      .catch((error: unknown) => {
+        const axiosError = error as AxiosError;
+        const responseData =
+          axiosError?.response?.data ?? "Unknown error occurred";
+        setLoginError(responseData as string);
+        alert(responseData);
+        console.log(responseData);
       });
   };
 
@@ -32,7 +42,7 @@ function AdminLogin() {
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={void handleSubmit(onSubmit)}
         className="bg-white p-10 rounded-lg shadow-md w-80"
       >
         <h2 className="text-2xl font-medium mb-6 text-center text-gray-800">
@@ -80,7 +90,7 @@ function AdminLogin() {
           Login
         </button>
         <p className="text-center text-gray-800 mt-4">
-          Don't have an account?{" "}
+          Dont have an account?{" "}
           <Link
             to="/admin/register"
             className="text-blue-600 hover:text-blue-700"

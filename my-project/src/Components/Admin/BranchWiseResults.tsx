@@ -1,29 +1,36 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import AdminNav from "./AdminNav";
-import SingleSubjectResult from "./SingleSubjectResult";
+import { Student } from "./ApproveStudents";
 import TestTable from "./TestTable";
+import { UserData } from "../../Types/ResultTypes";
 export default function BranchWiseResults() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<Student[]>([]);
   const [selectedBranch, setSelectedBranch] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<UserData[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:8088/student/approved")
       .then((response) => response.json())
-      .then((data) => setUsers(data))
+      .then((data: Student[]) => setUsers(data))
       .catch((error) => console.error(error));
   }, []);
 
   const branches = Array.from(new Set(users.map((user) => user.userBranch)));
 
+  const fetchResults = async (selectedBranch: string) => {
+    try {
+      const response: AxiosResponse<UserData[]> = await axios.get(
+        `http://localhost:8088/results/${selectedBranch}`
+      );
+      setResult(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     if (selectedBranch !== "") {
-      axios
-        .get(`http://localhost:8088/results/${selectedBranch}`)
-        .then((res) => {
-          setResult(res.data);
-        });
+      fetchResults(selectedBranch).catch((error) => console.log(error));
     } else {
       setResult([]);
     }
