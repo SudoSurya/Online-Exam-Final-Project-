@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { userStore } from "../../App";
+import { UserContext } from "../../Types/StoresContext";
 export default function StudentNav() {
-  const [studentToken, setStudentToken] = useContext(userStore);
+  const { logout } = useContext(UserContext);
 
   return (
     <nav className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow-md">
@@ -46,17 +46,16 @@ export default function StudentNav() {
             </div>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <Link
+            <button
               onClick={() => {
-                setStudentToken(null);
-                localStorage.clear("studenttoken");
-                localStorage.clear("studentid");
-                localStorage.clear("studentbranch");
+                logout();
+                localStorage.removeItem("studentid");
+                localStorage.removeItem("studentbranch");
               }}
               className="bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-md text-sm font-medium"
             >
               Logout
-            </Link>
+            </button>
           </div>
         </div>
       </div>

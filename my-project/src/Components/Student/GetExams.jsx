@@ -6,7 +6,7 @@ import useResults from "./useResults";
 import CompletedExamInfo from "./CompletedExamInfo";
 export default function GetExams() {
   const [exams, setExams] = useState([]);
-  const [results, subjectIDS] = useResults();
+  const [ subjectIDS] = useResults();
   const [Branch] = useState(localStorage.getItem("studentbranch"));
   console.log(subjectIDS);
   console.log(exams);

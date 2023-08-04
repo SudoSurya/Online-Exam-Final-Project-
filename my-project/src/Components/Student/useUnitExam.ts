@@ -1,50 +1,76 @@
 import { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { AxiosErrorRes } from "../../Types/FormDataTypes";
+export interface ExamResponse {
+  _id: string;
+  subjectID: string;
+  subjectName: string;
+  unit: string;
+  Branch: string;
+  TotalQuestions: number;
+  marks: number;
+  time: number;
+  facultyName: string;
+  Questions: Questions[];
+}
+type Questions = {
+  Question: string;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
+  answer: string;
+}
 
-export default function useExam({ id }) {
+export default function useUnitExam(id: string) {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [subjectID, setSubjectID] = useState(null);
+  const [error, setError] = useState("");
+  const [subjectID, setSubjectID] = useState("");
   const [subjectName, setSubjectName] = useState("");
+  const [unit, setUnit] = useState("");
   const [branch, setBranch] = useState("");
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [marks, setMarks] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<Questions[]>([]);
   const [facultyName, setFacultyName] = useState("");
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8088/user/exam/${id}`
+        const response: AxiosResponse<ExamResponse> = await axios.get(
+          `http://localhost:8088/user/unit/exam/${id}`
         );
         const {
           subjectID,
           subjectName,
+          unit,
           Branch,
           TotalQuestions,
           marks,
           time,
           facultyName,
           Questions,
-        } = response.data;
+        }: ExamResponse = response.data;
         setSubjectID(subjectID);
         setSubjectName(subjectName);
+        setUnit(unit);
         setBranch(Branch);
         setTotalQuestions(TotalQuestions);
         setMarks(marks);
         setDuration(time);
         setFacultyName(facultyName);
         setQuestions(Questions);
-      } catch (error) {
-        setError(error.message);
+      } catch (error: unknown) {
+        setError((error as AxiosErrorRes).message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchData().catch((error: AxiosErrorRes) => {
+      setError(error.message);
+      setLoading(false);
+    })
   }, [id]);
 
   const formattedQuestions = useMemo(
@@ -65,8 +91,8 @@ export default function useExam({ id }) {
     [questions]
   );
 
-  function generateRandomQuestions(number) {
-    const randomIndices = [];
+  function generateRandomQuestions(number: number) {
+    const randomIndices: number[] = [];
     while (randomIndices.length < number) {
       const index = Math.floor(Math.random() * formattedQuestions.length);
       if (!randomIndices.includes(index)) {
@@ -87,6 +113,7 @@ export default function useExam({ id }) {
     error,
     subjectID,
     subjectName,
+    unit,
     branch,
     totalQuestions,
     marks,

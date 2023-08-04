@@ -2,6 +2,17 @@ import classNames from "classnames";
 import { useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+interface UnitScoreCardProps {
+  subjectID: string;
+  subjectName: string;
+  unit: string;
+  duration: number;
+  totalQuestions: number;
+  marks: number;
+  score: number;
+  timeTaken: number;
+  facultyname: string;
+}
 export default function UnitScoreCard({
   subjectID,
   subjectName,
@@ -12,7 +23,7 @@ export default function UnitScoreCard({
   score,
   timeTaken,
   facultyname,
-}) {
+}: UnitScoreCardProps) {
   const [studentID] = useState(localStorage.getItem("studentid"));
   const [resultSubmited, setResultSubmited] = useState(false);
   const minutes = Math.floor(timeTaken / 60);
@@ -169,7 +180,7 @@ export default function UnitScoreCard({
                   "rounded-md",
                   "hover:bg-blue-600"
                 )}
-                onClick={handleSubmit}
+                onClick={void handleSubmit}
               >
                 Submit
               </button>

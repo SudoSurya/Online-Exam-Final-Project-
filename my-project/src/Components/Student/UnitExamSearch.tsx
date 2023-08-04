@@ -1,31 +1,36 @@
 import { useState, useEffect } from "react";
-import StudentNav from "./StudentNav";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
+import { ExamResponse } from "./useUnitExam";
+import StudentNav from "./StudentNav";
 import GetUnitExams from "./GetUnitExams";
+interface FormData {
+  subjectName: string;
+}
 export default function UnitExamSearch() {
   const [studentbranch] = useState(localStorage.getItem("studentbranch"));
-  const [subjects, setSubjects] = useState();
-  const [exams, setExams] = useState();
+  const [subjects, setSubjects] = useState<string[]>();
+  const [exams, setExams] = useState<ExamResponse[]>();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<FormData>();
   useEffect(() => {
     axios
       .get(`http://localhost:8088/user/unit/exams/${studentbranch}/subjects`)
-      .then((res) => setSubjects(res.data));
+      .then((res: AxiosResponse<string[]>) => setSubjects(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios
+      await axios
         .get(
           `http://localhost:8088/user/get-unit-exams/${studentbranch}/${data.subjectName}`
         )
-        .then((res) => setExams(res.data));
+        .then((res: AxiosResponse<ExamResponse[]>) => setExams(res.data));
       //   alert(response.data.message);
       reset();
     } catch (error) {
@@ -44,7 +49,7 @@ export default function UnitExamSearch() {
                 Get Unit Tests
               </h2>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={void handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label
                   htmlFor="subjectName"
@@ -56,7 +61,7 @@ export default function UnitExamSearch() {
                   id="subjectName"
                   {...register("subjectName", { required: true })}
                   className={`border border-gray-400 rounded w-full py-2 px-3 ${
-                    errors.faculty ? "border-red-500" : ""
+                    errors.subjectName ? "border-red-500" : ""
                   }`}
                 >
                   <option value="">Select Subject Name</option>

@@ -1,14 +1,18 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+interface CompletedExamInfoProps {
+  subjectID: string;
+  subjectName: string;
+  marks: number;
+  totalDuration: number;
+  totalQuestions: number;
+}
 const CompletedExamInfo = ({
-  examID,
   subjectID,
   subjectName,
   marks,
   totalDuration,
   totalQuestions,
-}) => {
+}: CompletedExamInfoProps) => {
   const handleViewResult = () => {};
   return (
     <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4 w-1/3">
@@ -31,9 +35,9 @@ const CompletedExamInfo = ({
           <p>{totalQuestions}</p>
         </div>
       </div>
-      <Link className="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block">
+      <button className="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block">
         Exam Completed
-      </Link>
+      </button>
       <Link
         to={`/student/result/${subjectID}`}
         onClick={handleViewResult}

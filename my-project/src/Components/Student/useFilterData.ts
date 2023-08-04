@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
+import { ExamResponse } from "./useUnitExam";
+import { TSubjectData } from "./useUnitResults";
 
-export default function useFilterData({ exams, subjectData }) {
-  const [CompletedExams, setFilteredData] = useState([]);
-  const [PendingExams, setPending] = useState([]);
+interface ExamResponseT {
+  exams: ExamResponse[];
+  subjectData: TSubjectData
+}
+
+
+export default function useFilterData({ exams, subjectData }: ExamResponseT) {
+  const [CompletedExams, setFilteredData] = useState<ExamResponse[]>([]);
+  const [PendingExams, setPending] = useState<ExamResponse[]>([]);
   useEffect(() => {
     setFilteredData(
       exams.filter((obj) => {
@@ -32,5 +40,5 @@ export default function useFilterData({ exams, subjectData }) {
     );
   }, [exams, subjectData]);
 
-  return [CompletedExams, PendingExams];
+  return { CompletedExams, PendingExams }
 }

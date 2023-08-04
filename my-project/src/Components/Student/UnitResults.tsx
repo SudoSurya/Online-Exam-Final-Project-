@@ -1,4 +1,19 @@
-const UnitResults = ({ results }) => {
+interface UnitResultsProps {
+  results: Result[];
+}
+
+interface Result {
+  _id: string;
+  SubjectID: string;
+  SubjectName: string;
+  unit: string;
+  totalQuestions: number;
+  duration: number;
+  timeTaken: number;
+  score: number;
+}
+
+const UnitResults = ({ results }: UnitResultsProps) => {
   if (!results.length) {
     return (
       <>
@@ -45,7 +60,7 @@ const UnitResults = ({ results }) => {
               </tr>
             ))}
             <tr>
-              <td colSpan="5" className="border px-4 py-2 font-bold">
+              <td colSpan={5} className="border px-4 py-2 font-bold">
                 Average Score:
               </td>
               <td className="border px-4 py-2 font-bold">

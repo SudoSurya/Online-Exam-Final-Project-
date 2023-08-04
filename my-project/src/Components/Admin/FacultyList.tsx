@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AdminNav from "./AdminNav";
 import SubjectForm from "./SubjectForm";
+
 export interface IFacultyList {
   _id: string;
   facultyName: string;

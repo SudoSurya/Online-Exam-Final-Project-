@@ -1,6 +1,15 @@
-import React from "react";
 import { Link } from "react-router-dom";
-const CompletedUnitExam = ({
+import { useState } from "react";
+interface UnitTestInfoProps {
+  examID: string;
+  subjectID: string;
+  subjectName: string;
+  unit: string;
+  marks: number;
+  totalDuration: number;
+  totalQuestions: number;
+}
+const UnitTestInfo = ({
   examID,
   subjectID,
   subjectName,
@@ -8,13 +17,27 @@ const CompletedUnitExam = ({
   marks,
   totalDuration,
   totalQuestions,
-}) => {
-  console.log(unit);
-  const handleViewResult = () => {};
+}: UnitTestInfoProps) => {
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const handleFullScreen = () => {
+    const element = document.documentElement;
+    if (!isFullScreen) {
+      element
+        .requestFullscreen()
+        .then(() => {
+          setIsFullScreen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
+    // <div className="flex flex-wrap justify-center">
     <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4 w-1/3">
       <h2 className="text-2xl font-bold mb-4">
-        {subjectName} {unit}
+        {subjectName} ( {unit} )
       </h2>
       <div className="flex flex-col">
         <div className="flex justify-between mb-4">
@@ -34,18 +57,16 @@ const CompletedUnitExam = ({
           <p>{totalQuestions}</p>
         </div>
       </div>
-      <Link className="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block">
-        Exam Completed
-      </Link>
       <Link
-        to={`/student/unit/result/${subjectName}`}
-        onClick={handleViewResult}
-        className="bg-blue-500 hover:bg-blue-700 mx-6 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
+        to={`/student/unit/exam/${examID}`}
+        onClick={handleFullScreen}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
-        View Exam Result
+        Start Exam
       </Link>
     </div>
+    // </div>
   );
 };
 
-export default CompletedUnitExam;
+export default UnitTestInfo;

@@ -1,20 +1,40 @@
 import classNames from "classnames";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Link, useParams } from "react-router-dom";
+export interface UnitExamResult {
+  studentID: string;
+  SubjectID: string;
+  SubjectName: string;
+  unit: string;
+  totalQuestions: number;
+  duration: number;
+  timeTaken: number;
+  marks: number;
+  score: number;
+  facultyName: string;
+  _id: string;
+}
+
 export default function UnitResult() {
   const { subjectName } = useParams();
-  const [subjectResult, setSubjectResult] = useState();
+
+  const [subjectResult, setSubjectResult] = useState<UnitExamResult>();
   const [studentID] = useState(localStorage.getItem("studentid"));
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `http://localhost:8088/user/unit/result/${studentID}/${subjectName}`
-      );
-      setSubjectResult(response.data[0]);
+      await axios
+        .get(
+          `http://localhost:8088/user/unit/result/${studentID}/${subjectName}`
+        )
+        .then((response: AxiosResponse<UnitExamResult[]>) => {
+          setSubjectResult(response.data[0]);
+        });
     };
-    fetchData();
+    fetchData().catch((err) => {
+      console.log(err);
+    });
   }, [subjectName]);
   return (
     <div

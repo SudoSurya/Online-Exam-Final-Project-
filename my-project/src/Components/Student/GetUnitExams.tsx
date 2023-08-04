@@ -1,11 +1,18 @@
-import StudentNav from "./StudentNav";
 import UnitTestInfo from "./UnitTestInfo";
 import useUnitResults from "./useUnitResults";
 import useFilterData from "./useFilterData";
+import StudentNav from "./StudentNav";
+import { ExamResponse } from "./useUnitExam";
 import CompletedUnitExam from "./CompletedUnitExam";
-export default function GetUnitExams({ exams }) {
-  const [unitResults, subjectData] = useUnitResults();
-  const [CompletedExams, PendingExams] = useFilterData({ exams, subjectData });
+interface GetUnitExamsProps {
+  exams: ExamResponse[];
+}
+export default function GetUnitExams({ exams }: GetUnitExamsProps) {
+  const { subjectData } = useUnitResults();
+  const { CompletedExams, PendingExams } = useFilterData({
+    exams,
+    subjectData,
+  });
 
   if (exams.length < 1) {
     return (
@@ -47,7 +54,6 @@ export default function GetUnitExams({ exams }) {
             return (
               <CompletedUnitExam
                 key={item._id}
-                examID={item._id}
                 subjectID={item.subjectID}
                 subjectName={item.subjectName}
                 unit={item.unit}

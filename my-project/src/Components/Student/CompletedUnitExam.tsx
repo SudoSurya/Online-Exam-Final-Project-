@@ -1,29 +1,26 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-const UnitTestInfo = ({
-  examID,
+interface CompletedUnitExamProps {
+  subjectID: string;
+  subjectName: string;
+  unit: string;
+  marks: number;
+  totalDuration: number;
+  totalQuestions: number;
+}
+const CompletedUnitExam = ({
   subjectID,
   subjectName,
   unit,
   marks,
   totalDuration,
   totalQuestions,
-}) => {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const handleFullScreen = () => {
-    const element = document.documentElement;
-    if (!isFullScreen) {
-      element.requestFullscreen();
-      setIsFullScreen(true);
-    }
-  };
-
+}: CompletedUnitExamProps) => {
+  console.log(unit);
+  const handleViewResult = () => {};
   return (
-    // <div className="flex flex-wrap justify-center">
     <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4 w-1/3">
       <h2 className="text-2xl font-bold mb-4">
-        {subjectName} ( {unit} )
+        {subjectName} {unit}
       </h2>
       <div className="flex flex-col">
         <div className="flex justify-between mb-4">
@@ -43,16 +40,18 @@ const UnitTestInfo = ({
           <p>{totalQuestions}</p>
         </div>
       </div>
+      <button className="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block">
+        Exam Completed
+      </button>
       <Link
-        to={`/student/unit/exam/${examID}`}
-        onClick={handleFullScreen}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
+        to={`/student/unit/result/${subjectName}`}
+        onClick={handleViewResult}
+        className="bg-blue-500 hover:bg-blue-700 mx-6 text-white font-bold py-2 px-4 rounded mt-4 self-center inline-block"
       >
-        Start Exam
+        View Exam Result
       </Link>
     </div>
-    // </div>
   );
 };
 
-export default UnitTestInfo;
+export default CompletedUnitExam;
