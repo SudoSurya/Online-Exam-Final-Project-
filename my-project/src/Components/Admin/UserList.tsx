@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import AdminNav from "./AdminNav";
+import { Tuserdata } from "../../Types/UserTypes";
+import { IResult } from "../../Types/ResultTypes";
 import SingleSubjectResult from "./SingleSubjectResult";
 export default function UserList() {
-  const [users, setUsers] = useState([]);
-  const [selectedBranch, setSelectedBranch] = useState("");
-  const [selectedUserId, setSelectedUserId] = useState("");
-  const [subjects, setSubjects] = useState([]);
+  const [users, setUsers] = useState<Tuserdata[]>([]);
+  const [selectedBranch, setSelectedBranch] = useState<string>("");
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [subjects, setSubjects] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<IResult[]>([]);
   const [errorMsg, setErrorMsg] = useState("");
   console.log(result);
 
   useEffect(() => {
     fetch("http://localhost:8088/student/approved")
       .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error(error));
+      .then((data: Tuserdata[]) => setUsers(data))
+      .catch((error) => {
+        console.error(error);
+        setErrorMsg("");
+      });
   }, []);
 
   const branches = Array.from(new Set(users.map((user) => user.userBranch)));
@@ -25,26 +30,34 @@ export default function UserList() {
     .filter((user) => user.userBranch === selectedBranch)
     .map((user) => user.userID);
 
-  const selectedUser = users.find((user) => user.userID === selectedUserId);
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (selectedSubject === "all") {
-      axios
+      await axios
         .get(`http://localhost:8088/${selectedUserId}/${selectedBranch}/all`)
-        .then((res) => setResult(res.data));
+        .then((res: AxiosResponse<IResult[]>) => setResult(res.data));
     } else {
-      axios
+      await axios
         .get(
           `http://localhost:8088/${selectedUserId}/${selectedBranch}/${selectedSubject}`
         )
-        .then((res) => setResult(res.data));
+        .then((res: AxiosResponse<IResult[]>) => setResult(res.data));
+    }
+  };
+
+  const fetchSubjects = async () => {
+    try {
+      const response: AxiosResponse<string[]> = await axios.get(
+        `http://localhost:8088/user/exams/${selectedBranch}/subjects`
+      );
+      setSubjects(response.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     if (selectedBranch !== "") {
-      axios
-        .get(`http://localhost:8088/user/exams/${selectedBranch}/subjects`)
-        .then((res) => setSubjects(res.data));
+      fetchSubjects().catch((error) => console.log(error));
     } else {
       setSubjects([]);
     }
@@ -124,7 +137,7 @@ export default function UserList() {
         </div>
         <div className="flex justify-center mt-4">
           <button
-            onClick={handleButtonClick}
+            onClick={void handleButtonClick}
             className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Get Result

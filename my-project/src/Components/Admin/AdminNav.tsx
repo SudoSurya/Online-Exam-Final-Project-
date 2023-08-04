@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { store } from "../../App";
+import { AdminContext } from "../../Types/StoresContext";
 
 export default function AdminNav() {
-  const [adminToken, setAdminToken] = useContext(store);
+  const { logout } = useContext(AdminContext);
 
   return (
     <nav className="bg-gradient-to-r from-purple-700 via-pink-500 to-red-500 py-4  px-4">
@@ -41,8 +41,7 @@ export default function AdminNav() {
           </Link>
           <button
             onClick={() => {
-              setAdminToken(null);
-              localStorage.removeItem("admintoken");
+              logout();
             }}
             className="bg-pink-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium"
           >

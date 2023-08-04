@@ -1,15 +1,21 @@
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import AdminNav from "./AdminNav";
-
+interface Student {
+  _id: string;
+  userID: string;
+  userName: string;
+  userBranch: string;
+  status: string;
+}
 export default function ViewStudents() {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<Student[]>([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8088/student/approved")
-      .then((res) => setStudents(res.data))
+      .then((res: AxiosResponse<Student[]>) => setStudents(res.data))
       .catch((error) => console.log(error));
   }, []);
   return (

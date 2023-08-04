@@ -1,4 +1,6 @@
-export default function SingleSubjectResult({ results }) {
+import { IResult } from "../../Types/ResultTypes";
+
+const SingleSubjectResult: React.FC<{ results: IResult[] }> = ({ results }) => {
   return (
     <div className="shadow overflow-x-auto">
       <div className="min-w-screen md:min-w-0 md:w-full inline-block align-middle">
@@ -39,7 +41,7 @@ export default function SingleSubjectResult({ results }) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {results[0].Results.map((result) => {
+              {results.map((result) => {
                 const scorePercentage = (result.score / result.marks) * 100;
                 const passOrFail = scorePercentage >= 35 ? "Pass" : "Fail";
                 return (
@@ -89,4 +91,5 @@ export default function SingleSubjectResult({ results }) {
       </div>
     </div>
   );
-}
+};
+export default SingleSubjectResult;

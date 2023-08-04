@@ -17,3 +17,25 @@ export type Questions = {
     option4: string;
     answer: string;
 }
+
+export type TSubjectList = {
+    subjectID: string;
+    subjectName: string;
+}
+export interface TFaculty {
+    _id: string;
+    facultyName: string;
+    facultyNumber: number;
+    facultyEmail: string;
+    password: string;
+    confirmPassword: string;
+    status: "approved" | "pending" | "rejected"; // Assuming the status can have these three values
+    Subjects: Subject[];
+    __v: number;
+}
+
+interface Subject {
+    SubjectID: string;
+    SubjectName: string;
+    _id: string;
+}

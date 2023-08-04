@@ -1,7 +1,14 @@
-import React from "react";
 import { Link } from "react-router-dom";
+interface ExamInfoProps {
+  subjectID: string;
+  subjectName: string;
+  marks: number;
+  totalDuration: number;
+  totalQuestions: number;
+  facultyName: string;
+  branch: string;
+}
 const ExamInfo = ({
-  examID,
   subjectID,
   subjectName,
   marks,
@@ -9,7 +16,7 @@ const ExamInfo = ({
   totalQuestions,
   facultyName,
   branch,
-}) => {
+}: ExamInfoProps) => {
   return (
     <div className="bg-white rounded-lg p-8 mb-8 shadow-md mx-4 w-1/3">
       <h2 className="text-2xl font-bold mb-4">{subjectName}</h2>
