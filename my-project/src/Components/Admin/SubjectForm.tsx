@@ -1,14 +1,20 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
+import { IFacultyList } from "./FacultyList";
 interface FormData {
   SubjectID: string;
   SubjectName: string;
+}
+interface SubjectFormProps {
+  selectedFaculty: IFacultyList | null;
+  setFaculty: React.Dispatch<React.SetStateAction<IFacultyList[]>>;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function SubjectForm({
   selectedFaculty,
   setFaculty,
   setShowModal,
-}) {
+}: SubjectFormProps) {
   const {
     register,
     handleSubmit,
@@ -18,14 +24,21 @@ export default function SubjectForm({
 
   const onSubmit = async (data: FormData) => {
     try {
-      const res = await axios.patch(
-        `http://localhost:8088/admin/add-subject/faculty/${selectedFaculty._id}`,
-        { Subjects: [data] }
-      );
-      setFaculty((prevFaculty) =>
-        prevFaculty.map((f) => (f._id === selectedFaculty._id ? res.data : f))
-      );
-      setShowModal(false);
+      if (selectedFaculty) {
+        await axios
+          .patch(
+            `http://localhost:8088/admin/add-subject/faculty/${selectedFaculty._id}`,
+            { Subjects: [data] }
+          )
+          .then((res:AxiosResponse<IFacultyList>) => {
+            setFaculty((prevFaculty: IFacultyList[]) =>
+              prevFaculty.map((f: IFacultyList) =>
+                f._id === selectedFaculty._id ? res.data : f
+              )
+            );
+          });
+        setShowModal(false);
+      }
     } catch (error) {
       console.log(error);
     }

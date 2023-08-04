@@ -1,18 +1,31 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AdminNav from "./AdminNav";
 import SubjectForm from "./SubjectForm";
+export interface IFacultyList {
+  _id: string;
+  facultyName: string;
+  facultyEmail: string;
+  facultyNumber: number;
+  Subjects: Subject[];
+}
+interface Subject {
+  _id: string;
+  SubjectName: string;
+  SubjectID: string;
+}
 function FacultyList() {
-  const [faculty, setFaculty] = useState([]);
+  const [faculty, setFaculty] = useState<IFacultyList[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [selectedFaculty, setSelectedFaculty] = useState<IFacultyList>();
   console.log(faculty);
   useEffect(() => {
     fetch("http://localhost:8088/faculty/approved")
       .then((response) => response.json())
-      .then((data) => setFaculty(data));
+      .then((data: IFacultyList[]) => setFaculty(data))
+      .catch((err) => console.log(err));
   }, []);
 
-  const handleAddSubject = (faculty) => {
+  const handleAddSubject = (faculty: IFacultyList) => {
     setSelectedFaculty(faculty);
     setShowModal(true);
   };
@@ -70,11 +83,13 @@ function FacultyList() {
                 &#8203;
               </span>
               <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <SubjectForm
-                  setShowModal={setShowModal}
-                  selectedFaculty={selectedFaculty}
-                  setFaculty={setFaculty}
-                />
+                {selectedFaculty && (
+                  <SubjectForm
+                    setShowModal={setShowModal}
+                    selectedFaculty={selectedFaculty}
+                    setFaculty={setFaculty}
+                  />
+                )}
               </div>
             </div>
           </div>

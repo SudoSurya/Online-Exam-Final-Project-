@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-interface ExamInfoProps {
+export interface ExamInfoProps {
   subjectID: string;
   subjectName: string;
   marks: number;

@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useParams } from "react-router-dom";
+import { IResult } from "../../Types/ResultTypes";
+interface ResultResponse {
+  _id: string;
+  Results: IResult[];
+}
 
 export default function ResultsTable() {
   const { subjectID, facultyName, subjectName } = useParams();
-  const [results, setResults] = useState([]);
-  const [sortType, setSortType] = useState(null);
+  const [results, setResults] = useState<ResultResponse[]>([]);
+  const [sortType, setSortType] = useState("");
   const [sortByStudentID, setSortByStudentID] = useState(false);
-  const [filterOption, setFilterOption] = useState(null);
+  const [filterOption, setFilterOption] = useState("all");
 
   const filteredResults = results.filter((result) => {
     const passPercentage =
@@ -23,12 +28,15 @@ export default function ResultsTable() {
     }
   });
 
+  const fetchResults = async () => {
+    const response: AxiosResponse<ResultResponse[]> = await axios.get(
+      `http://localhost:8088/admin/result/${subjectID}/${facultyName}`
+    );
+    setResults(response.data);
+  };
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:8088/admin/result/${subjectID}/${facultyName}`)
-      .then((response) => {
-        setResults(response.data);
-      });
+    fetchResults().catch((error) => console.log(error));
   }, []);
 
   return (
