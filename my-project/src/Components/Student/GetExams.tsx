@@ -1,19 +1,28 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import StudentNav from "./StudentNav";
-import QuizInfo from "./QuizInfo";
 import useResults from "./useResults";
 import CompletedExamInfo from "./CompletedExamInfo";
+import QuizInfo from "./QuizInfo";
+interface Exam {
+  _id: string;
+  subjectID: string;
+  subjectName: string;
+  marks: number;
+  time: number;
+  totalDuration: number;
+  TotalQuestions: number;
+}
 export default function GetExams() {
-  const [exams, setExams] = useState([]);
-  const [ subjectIDS] = useResults();
+  const [exams, setExams] = useState<Exam[]>([]);
+  const { subjectIDS } = useResults();
   const [Branch] = useState(localStorage.getItem("studentbranch"));
   console.log(subjectIDS);
   console.log(exams);
   useEffect(() => {
     axios
       .get(`http://localhost:8088/user/get-exams/${Branch}`)
-      .then((res) => setExams(res.data))
+      .then((res: AxiosResponse<Exam[]>) => setExams(res.data))
       .catch((error) => console.log(error));
   }, [Branch]);
   if (exams.length < 1) {
@@ -24,9 +33,9 @@ export default function GetExams() {
       </>
     );
   }
-  const examsNotIncluded = exams.filter(
-    (item) => !subjectIDS.includes(item.subjectID)
-  );
+  const examsNotIncluded = exams.filter((item) => {
+    !(subjectIDS as string[]).includes(item.subjectID);
+  });
   console.log(examsNotIncluded.length);
   return (
     <>
@@ -53,11 +62,10 @@ export default function GetExams() {
       <div className="flex justify-center m-10 flex-wrap">
         {exams.length > 0 &&
           exams.map((item) => {
-            if (subjectIDS.includes(item.subjectID)) {
+            if ((subjectIDS as string[]).includes(item.subjectID)) {
               return (
                 <CompletedExamInfo
                   key={item._id}
-                  examID={item._id}
                   subjectID={item.subjectID}
                   subjectName={item.subjectName}
                   marks={item.marks}

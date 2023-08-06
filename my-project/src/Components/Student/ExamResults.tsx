@@ -1,8 +1,8 @@
 import StudentNav from "./StudentNav";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import useResults from "./useResults";
 const ExamResults = () => {
-  const [results] = useResults();
+  const { results } = useResults();
   const [totalScore, setTotalScore] = useState(0);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const ExamResults = () => {
               </tr>
             ))}
             <tr>
-              <td colSpan="5" className="border px-4 py-2 font-bold">
+              <td colSpan={5} className="border px-4 py-2 font-bold">
                 Average Score:
               </td>
               <td className="border px-4 py-2 font-bold">

@@ -16,5 +16,5 @@ export default function useResults() {
     };
     fetchData().catch((err) => console.log(err));
   }, []);
-  return [results, subjectIDS];
+  return { results, subjectIDS };
 }

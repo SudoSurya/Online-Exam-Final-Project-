@@ -1,48 +1,50 @@
 import { useParams } from "react-router-dom";
-import useExam from "./useExam";
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import ScoreCard from "./ScoreCard";
-export default function Exam() {
+import { useState, useEffect, useRef, useMemo } from "react";
+import useUnitExam from "./useUnitExam";
+import UnitScoreCard from "./UnitScoreCard";
+type UserAnswers = { [key: string]: string };
+
+export default function UnitExam() {
   const { id } = useParams();
-  const [
-    loading,
-    error,
+  const {
     subjectID,
     subjectName,
-    branch,
+    unit,
     totalQuestions,
     marks,
     duration,
     facultyName,
     randomQuestions,
-  ] = useExam({ id });
+  } = useUnitExam(id as string);
+  console.log(facultyName);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState({});
+  const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [timeRemaining, setTimeRemaining] = useState(duration * 60);
-  const [timeTaken, setTimeTaken] = useState(null);
+  const [timeTaken, setTimeTaken] = useState<number>(0);
 
   useEffect(() => {
     setTimeRemaining(duration * 60);
   }, [duration]);
 
-  const intervalIdRef = useRef(null);
+  const intervalIdRef = useRef<number | null>(null);
   console.log(timeRemaining);
   useEffect(() => {
     if (timeRemaining <= 0 || currentQuestionIndex >= randomQuestions.length) {
-      clearInterval(intervalIdRef.current);
+      clearInterval(intervalIdRef.current as number);
+      setTimeRemaining(0);
     } else {
       intervalIdRef.current = setInterval(() => {
         setTimeRemaining((timeRemaining) => timeRemaining - 1);
-      }, 1000);
+      }, 1000) as unknown as number;
     }
 
-    return () => clearInterval(intervalIdRef.current);
+    return () => clearInterval(intervalIdRef.current as number);
   }, [timeRemaining, currentQuestionIndex, randomQuestions.length]);
 
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = timeRemaining % 60;
 
-  const handleAnswerSelect = (questionIndex, answerIndex) => {
+  const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
     setUserAnswers({ ...userAnswers, [questionIndex]: answerIndex });
   };
 
@@ -53,13 +55,15 @@ export default function Exam() {
   const handlePrevQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex - 1);
   };
-
   const score = useMemo(() => {
     const score = Object.entries(userAnswers).reduce(
       (totalScore, [questionIndex, answerIndex]) => {
         const correctAnswerIndex =
-          randomQuestions[questionIndex].correctAnswerIndex;
-        return totalScore + (answerIndex === correctAnswerIndex ? 1 : 0);
+          randomQuestions[parseInt(questionIndex, 10)].correctAnswerIndex;
+        return (
+          totalScore +
+          (answerIndex.toString() === correctAnswerIndex.toString() ? 1 : 0)
+        );
       },
       0
     );
@@ -69,18 +73,18 @@ export default function Exam() {
 
     return score;
   }, [duration, timeRemaining, randomQuestions, userAnswers]);
-
   if (timeRemaining <= 0 || currentQuestionIndex >= randomQuestions.length) {
     return (
-      <ScoreCard
+      <UnitScoreCard
         subjectID={subjectID}
         subjectName={subjectName}
+        unit={unit}
         duration={duration * 60}
         totalQuestions={totalQuestions}
         marks={marks}
         score={score}
         timeTaken={timeTaken}
-        facultyName={facultyName}
+        facultyname={facultyName}
       />
     );
   }
@@ -126,7 +130,10 @@ export default function Exam() {
                 name={`question${currentQuestionIndex}`}
                 value={index}
                 onChange={() => handleAnswerSelect(currentQuestionIndex, index)}
-                checked={userAnswers[currentQuestionIndex] === index}
+                checked={
+                  userAnswers[currentQuestionIndex].toString() ===
+                  index.toString()
+                }
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-2 text-gray-900 text-lg font-medium">

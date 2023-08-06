@@ -1,7 +1,23 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Navigate, Link } from "react-router-dom";
+
+interface StudentRegForm {
+  userID: string;
+  userName: string;
+  userEmail: string;
+  userBranch: string;
+  userNumber: number;
+  userPassword: string;
+  confirmPassword: string;
+}
+
+interface IAxiosErrorRes {
+  data: {
+    message: string;
+  };
+}
 
 export default function StudentReg() {
   const [loading, setLoading] = useState(false);
@@ -10,18 +26,26 @@ export default function StudentReg() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<StudentRegForm>();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: StudentRegForm) => {
+    setLoading(true);
     axios
       .post("http://localhost:8088/user/register", data)
       .then((response) => {
         alert(response.data);
         setRegistered(true);
       })
-      .catch((error) => {
-        alert(error.response.data.message);
+      .catch((error: unknown) => {
+        const err = error as AxiosError;
+        if (err.response) {
+          const errorRes = err.response as IAxiosErrorRes;
+          alert(errorRes.data.message);
+        } else {
+          alert("Something went wrong");
+        }
       });
+    setLoading(false);
   };
   if (registered) {
     return <Navigate to="/student/login" />;
@@ -29,7 +53,7 @@ export default function StudentReg() {
   return (
     <div className="flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={void handleSubmit(onSubmit)}
         className="max-w-sm mx-auto mt-8 bg-white rounded-lg shadow-md p-6"
       >
         <div className="mb-4">
@@ -42,7 +66,6 @@ export default function StudentReg() {
           <input
             type="text"
             id="userID"
-            name="userID"
             {...register("userID", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.userID ? "border-red-500" : "border-gray-300"
@@ -62,7 +85,6 @@ export default function StudentReg() {
           <input
             type="text"
             id="userName"
-            name="userName"
             {...register("userName", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.userName ? "border-red-500" : "border-gray-300"
@@ -82,7 +104,6 @@ export default function StudentReg() {
           <input
             type="email"
             id="userEmail"
-            name="userEmail"
             {...register("userEmail", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.userEmail ? "border-red-500" : "border-gray-300"
@@ -101,7 +122,6 @@ export default function StudentReg() {
           </label>
           <select
             id="userBranch"
-            name="userBranch"
             {...register("userBranch", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.userBranch ? "border-red-500" : "border-gray-300"
@@ -134,7 +154,6 @@ export default function StudentReg() {
           <input
             type="text"
             id="userNumber"
-            name="userNumber"
             {...register("userNumber", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.userNumber ? "border-red-500" : "border-gray-300"
@@ -154,7 +173,6 @@ export default function StudentReg() {
           <input
             type="password"
             id="userPassword"
-            name="userPassword"
             {...register("userPassword", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.userPassword ? "border-red-500" : "border-gray-300"
@@ -174,7 +192,6 @@ export default function StudentReg() {
           <input
             type="password"
             id="confirmPassword"
-            name="confirmPassword"
             {...register("confirmPassword", { required: true })}
             className={`w-full p-2 border rounded ${
               errors.confirmPassword ? "border-red-500" : "border-gray-300"

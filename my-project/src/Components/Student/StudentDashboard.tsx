@@ -1,13 +1,12 @@
 import StudentNav from "./StudentNav";
-import { userStore } from "../../App";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
+import { UserContext } from "../../Types/StoresContext";
 
 function StudentDashboard() {
-  const [studentToken, setStudentToken] = useContext(userStore);
+  const { studentToken } = useContext(UserContext);
 
   if (!studentToken) {
     return <Navigate to="/" />;

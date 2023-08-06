@@ -1,51 +1,33 @@
 import classNames from "classnames";
-import { useState } from "react";
-import axios from "axios";
-import { Navigate } from "react-router-dom";
-export default function ScoreCard({
-  subjectID,
-  subjectName,
-  duration,
-  totalQuestions,
-  marks,
-  score,
-  timeTaken,
-  facultyName,
-}) {
+import { useState, useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
+import { Link, useParams } from "react-router-dom";
+interface SubjectExamResult {
+  studentID: string;
+  SubjectID: string;
+  SubjectName: string;
+  totalQuestions: number;
+  duration: number;
+  timeTaken: number;
+  score: number;
+  _id: string;
+}
+export default function SubjectResult() {
+  const { subjectID } = useParams();
+  const [subjectResult, setSubjectResult] = useState<SubjectExamResult>();
   const [studentID] = useState(localStorage.getItem("studentid"));
-  const [resultSubmited, setResultSubmited] = useState(false);
-  const minutes = Math.floor(timeTaken / 60);
-  const seconds = timeTaken % 60;
-  const handleSubmit = async () => {
-    const data = {
-      studentID: studentID,
-      SubjectID: subjectID,
-      SubjectName: subjectName,
-      totalQuestions: totalQuestions,
-      duration: duration,
-      timeTaken: timeTaken,
-      marks: marks,
-      score: score,
-      facultyName: facultyName,
-    };
-    console.log(data);
-
-    try {
-      const res = await axios.patch(
-        `http://localhost:8088/user/submit/result/${studentID}`,
-        { Results: [data] }
+  console.log(subjectResult);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: AxiosResponse<SubjectExamResult[]> = await axios.get(
+        `http://localhost:8088/user/result/${studentID}/${subjectID}`
       );
-      alert("Exam result submitted successfully!");
-      setResultSubmited(true);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  if (resultSubmited) {
-    return <Navigate to="/student/dashboard" />;
-  }
-
+      setSubjectResult(response.data[0]);
+    };
+    fetchData().catch((err) => {
+      console.log(err);
+    });
+  }, [subjectID]);
   return (
     <div
       className={classNames(
@@ -92,7 +74,7 @@ export default function ScoreCard({
               "mb-2"
             )}
           >
-            Subject ID: {subjectID}
+            Subject ID: {subjectResult && subjectResult.SubjectID}
           </div>
           <div
             className={classNames(
@@ -102,7 +84,7 @@ export default function ScoreCard({
               "mb-2"
             )}
           >
-            Subject: {subjectName}
+            Subject: {subjectResult && subjectResult.SubjectName}
           </div>
           <div
             className={classNames(
@@ -112,7 +94,7 @@ export default function ScoreCard({
               "mb-2"
             )}
           >
-            Time: {duration / 60} Minutes
+            Time: {subjectResult && subjectResult.duration} Minutes
           </div>
           <div
             className={classNames(
@@ -122,7 +104,7 @@ export default function ScoreCard({
               "mb-2"
             )}
           >
-            Total Questions: {totalQuestions}
+            Total Questions: {subjectResult && subjectResult.totalQuestions}
           </div>
           <div
             className={classNames(
@@ -132,7 +114,7 @@ export default function ScoreCard({
               "mb-2"
             )}
           >
-            Time Taken: {minutes}:{seconds} Minutes
+            Time Taken: {subjectResult && subjectResult.timeTaken} Minutes
           </div>
           <div
             className={classNames("text-gray-800", "font-medium", "text-lg")}
@@ -146,22 +128,22 @@ export default function ScoreCard({
                 "mb-4"
               )}
             >
-              Your score is: {score}
+              Your score is: {subjectResult && subjectResult.score}
             </h2>
             <div className={classNames("text-center", "my-4")}>
-              <button
+              <Link
+                to="/student/exams"
                 className={classNames(
-                  "bg-blue-500",
+                  "bg-green-500",
                   "text-white",
                   "py-2",
                   "px-4",
                   "rounded-md",
-                  "hover:bg-blue-600"
+                  "hover:bg-green-600"
                 )}
-                onClick={handleSubmit}
               >
-                Submit
-              </button>
+                GoTo Exams
+              </Link>
             </div>
           </div>
         </div>

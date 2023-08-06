@@ -1,11 +1,10 @@
 import StudentNav from "./StudentNav";
-import { userStore } from "../../App";
-import { useContext, useState, useEffect } from "react";
+import { useContext} from "react";
 import { Navigate } from "react-router-dom";
-import React from "react";
 import useStudent from "./useStudent";
+import { UserContext } from "../../Types/StoresContext";
 export default function StudentProfile() {
-  const [studentToken, setStudentToken] = useContext(userStore);
+  const { studentToken } = useContext(UserContext);
   const [student] = useStudent();
 
   if (!studentToken) {

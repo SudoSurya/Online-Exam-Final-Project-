@@ -95,7 +95,7 @@ export default function useExam(id: string) {
     [totalQuestions, formattedQuestions]
   );
 
-  return [
+  return {
     loading,
     error,
     subjectID,
@@ -106,5 +106,5 @@ export default function useExam(id: string) {
     duration,
     facultyName,
     randomQuestions,
-  ];
+  };
 }

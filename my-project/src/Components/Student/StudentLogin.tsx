@@ -1,28 +1,37 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
-import { userStore } from "../../App";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { UserContext } from "../../Types/StoresContext";
+import { ResponseToken } from "../../Types/FormDataTypes";
+interface StudentLoginProps {
+  userID: string;
+  userPassword: string;
+}
 
 export default function StudentLogin() {
-  const [studentToken, setStudentToken] = useContext(userStore);
+  const {studentToken,login} = useContext(UserContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<StudentLoginProps>();
   const [loginError, setLoginError] = useState("");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data:StudentLoginProps) => {
     axios
       .post("http://localhost:8088/user/login", data)
-      .then((res) => {
+      .then((res:AxiosResponse<ResponseToken>) => {
         localStorage.setItem("studenttoken", res.data.token);
-        setStudentToken(localStorage.getItem("studenttoken"));
+        login(res.data.token);
       })
-      .catch((res) => {
-        // alert(res.message);
-        alert(res.response.data.message);
+      .catch((error: unknown) => {
+        const axiosError = error as AxiosError;
+        const responseData =
+          axiosError?.response?.data ?? "Unknown error occurred";
+        setLoginError(responseData as string);
+        alert(responseData);
+        console.log(responseData);
       });
   };
   if (studentToken) {
@@ -32,7 +41,7 @@ export default function StudentLogin() {
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={void handleSubmit(onSubmit)}
         className="bg-white p-10 rounded-lg shadow-md"
       >
         <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">

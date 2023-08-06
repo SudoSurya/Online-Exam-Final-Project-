@@ -1,8 +1,8 @@
-interface UnitResultsProps {
+ interface UnitResultsProps {
   results: Result[];
 }
 
-interface Result {
+export interface Result {
   _id: string;
   SubjectID: string;
   SubjectName: string;

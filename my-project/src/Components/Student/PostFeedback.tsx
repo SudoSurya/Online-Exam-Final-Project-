@@ -1,8 +1,12 @@
-import React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import useFeedback from "./useFeedback";
 import StudentNav from "./StudentNav";
+import { AxiosOkRes } from "../../Types/FormDataTypes";
+interface Feedback {
+  facultyName: string;
+  feedback: string;
+}
 function PostFeedback() {
   const [faculty] = useFeedback();
   console.log(faculty);
@@ -11,11 +15,11 @@ function PostFeedback() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<Feedback>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:Feedback) => {
     try {
-      const response = await axios.post(
+      const response:AxiosOkRes = await axios.post(
         "http://localhost:8088/user/post/feedback",
         data
       );
@@ -38,7 +42,7 @@ function PostFeedback() {
                 Submit Feedback
               </h2>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={void handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label
                   htmlFor="faculty"
@@ -50,7 +54,7 @@ function PostFeedback() {
                   id="facultyName"
                   {...register("facultyName", { required: true })}
                   className={`border border-gray-400 rounded w-full py-2 px-3 ${
-                    errors.faculty ? "border-red-500" : ""
+                    errors.facultyName ? "border-red-500" : ""
                   }`}
                 >
                   <option value="">Select a faculty member</option>

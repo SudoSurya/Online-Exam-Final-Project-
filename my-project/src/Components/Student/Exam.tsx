@@ -1,50 +1,46 @@
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import useUnitExam from "./useUnitExam";
-import UnitScoreCard from "./UnitScoreCard";
-export default function UnitExam() {
+import useExam from "./useExam";
+import { useState, useEffect, useRef, useMemo } from "react";
+import ScoreCard from "./ScoreCard";
+type UserAnswers = { [key: string]: string };
+export default function Exam() {
   const { id } = useParams();
-  const [
-    loading,
-    error,
+  const {
     subjectID,
     subjectName,
-    unit,
-    branch,
     totalQuestions,
     marks,
     duration,
-    facultyname,
+    facultyName,
     randomQuestions,
-  ] = useUnitExam({ id });
-  console.log(facultyname);
+  } = useExam(id as string);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState({});
+  const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [timeRemaining, setTimeRemaining] = useState(duration * 60);
-  const [timeTaken, setTimeTaken] = useState(null);
+  const [timeTaken, setTimeTaken] = useState<number>(0);
 
   useEffect(() => {
     setTimeRemaining(duration * 60);
   }, [duration]);
 
-  const intervalIdRef = useRef(null);
+  const intervalIdRef = useRef<number | null>(null);
   console.log(timeRemaining);
   useEffect(() => {
     if (timeRemaining <= 0 || currentQuestionIndex >= randomQuestions.length) {
-      clearInterval(intervalIdRef.current);
+      clearInterval(intervalIdRef.current as number);
     } else {
       intervalIdRef.current = setInterval(() => {
         setTimeRemaining((timeRemaining) => timeRemaining - 1);
-      }, 1000);
+      }, 1000) as unknown as number;
     }
 
-    return () => clearInterval(intervalIdRef.current);
+    return () => clearInterval(intervalIdRef.current as number);
   }, [timeRemaining, currentQuestionIndex, randomQuestions.length]);
 
   const minutes = Math.floor(timeRemaining / 60);
   const seconds = timeRemaining % 60;
 
-  const handleAnswerSelect = (questionIndex, answerIndex) => {
+  const handleAnswerSelect = (questionIndex: number, answerIndex: number) => {
     setUserAnswers({ ...userAnswers, [questionIndex]: answerIndex });
   };
 
@@ -60,8 +56,11 @@ export default function UnitExam() {
     const score = Object.entries(userAnswers).reduce(
       (totalScore, [questionIndex, answerIndex]) => {
         const correctAnswerIndex =
-          randomQuestions[questionIndex].correctAnswerIndex;
-        return totalScore + (answerIndex === correctAnswerIndex ? 1 : 0);
+          randomQuestions[parseInt(questionIndex, 10)].correctAnswerIndex;
+        return (
+          totalScore +
+          (answerIndex.toString() === correctAnswerIndex.toString() ? 1 : 0)
+        );
       },
       0
     );
@@ -74,16 +73,15 @@ export default function UnitExam() {
 
   if (timeRemaining <= 0 || currentQuestionIndex >= randomQuestions.length) {
     return (
-      <UnitScoreCard
+      <ScoreCard
         subjectID={subjectID}
         subjectName={subjectName}
-        unit={unit}
         duration={duration * 60}
         totalQuestions={totalQuestions}
         marks={marks}
         score={score}
         timeTaken={timeTaken}
-        facultyname={facultyname}
+        facultyName={facultyName}
       />
     );
   }
@@ -129,7 +127,10 @@ export default function UnitExam() {
                 name={`question${currentQuestionIndex}`}
                 value={index}
                 onChange={() => handleAnswerSelect(currentQuestionIndex, index)}
-                checked={userAnswers[currentQuestionIndex] === index}
+                checked={
+                  userAnswers[currentQuestionIndex].toString() ===
+                  index.toString()
+                }
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-2 text-gray-900 text-lg font-medium">

@@ -1,6 +1,13 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+interface QuizInfoProps {
+  examID: string;
+  subjectID: string;
+  subjectName: string;
+  marks: number;
+  totalDuration: number;
+  totalQuestions: number;
+}
 const QuizInfo = ({
   examID,
   subjectID,
@@ -8,13 +15,19 @@ const QuizInfo = ({
   marks,
   totalDuration,
   totalQuestions,
-}) => {
+}: QuizInfoProps) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const handleFullScreen = () => {
-    const element = document.documentElement; // get the root element of the document
+    const element = document.documentElement;
     if (!isFullScreen) {
-      element.requestFullscreen(); // request full screen mode
-      setIsFullScreen(true); // update the state variable
+      element
+        .requestFullscreen()
+        .then(() => {
+          setIsFullScreen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

@@ -1,21 +1,61 @@
 import classNames from "classnames";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-export default function SubjectResult() {
-  const { subjectID } = useParams();
-  const [subjectResult, setSubjectResult] = useState();
+import { Navigate } from "react-router-dom";
+interface Props {
+  subjectID: string;
+  subjectName: string;
+  duration: number;
+  totalQuestions: number;
+  marks: number;
+  score: number;
+  timeTaken: number;
+  facultyName: string;
+}
+export default function ScoreCard({
+  subjectID,
+  subjectName,
+  duration,
+  totalQuestions,
+  marks,
+  score,
+  timeTaken,
+  facultyName,
+}: Props) {
   const [studentID] = useState(localStorage.getItem("studentid"));
-  console.log(subjectResult);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `http://localhost:8088/user/result/${studentID}/${subjectID}`
-      );
-      setSubjectResult(response.data[0]);
+  const [resultSubmited, setResultSubmited] = useState(false);
+  const minutes = Math.floor(timeTaken / 60);
+  const seconds = timeTaken % 60;
+  const handleSubmit = async () => {
+    const data = {
+      studentID: studentID,
+      SubjectID: subjectID,
+      SubjectName: subjectName,
+      totalQuestions: totalQuestions,
+      duration: duration,
+      timeTaken: timeTaken,
+      marks: marks,
+      score: score,
+      facultyName: facultyName,
     };
-    fetchData();
-  }, [subjectID]);
+    console.log(data);
+
+    try {
+      const res = await axios.patch(
+        `http://localhost:8088/user/submit/result/${studentID}`,
+        { Results: [data] }
+      );
+      alert("Exam result submitted successfully!");
+      setResultSubmited(true);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if (resultSubmited) {
+    return <Navigate to="/student/dashboard" />;
+  }
+
   return (
     <div
       className={classNames(
@@ -62,7 +102,7 @@ export default function SubjectResult() {
               "mb-2"
             )}
           >
-            Subject ID: {subjectResult && subjectResult.SubjectID}
+            Subject ID: {subjectID}
           </div>
           <div
             className={classNames(
@@ -72,7 +112,7 @@ export default function SubjectResult() {
               "mb-2"
             )}
           >
-            Subject: {subjectResult && subjectResult.SubjectName}
+            Subject: {subjectName}
           </div>
           <div
             className={classNames(
@@ -82,7 +122,7 @@ export default function SubjectResult() {
               "mb-2"
             )}
           >
-            Time: {subjectResult && subjectResult.duration} Minutes
+            Time: {duration / 60} Minutes
           </div>
           <div
             className={classNames(
@@ -92,7 +132,7 @@ export default function SubjectResult() {
               "mb-2"
             )}
           >
-            Total Questions: {subjectResult && subjectResult.totalQuestions}
+            Total Questions: {totalQuestions}
           </div>
           <div
             className={classNames(
@@ -102,7 +142,7 @@ export default function SubjectResult() {
               "mb-2"
             )}
           >
-            Time Taken: {subjectResult && subjectResult.timeTaken} Minutes
+            Time Taken: {minutes}:{seconds} Minutes
           </div>
           <div
             className={classNames("text-gray-800", "font-medium", "text-lg")}
@@ -116,22 +156,22 @@ export default function SubjectResult() {
                 "mb-4"
               )}
             >
-              Your score is: {subjectResult && subjectResult.score}
+              Your score is: {score}
             </h2>
             <div className={classNames("text-center", "my-4")}>
-              <Link
-                to="/student/exams"
+              <button
                 className={classNames(
-                  "bg-green-500",
+                  "bg-blue-500",
                   "text-white",
                   "py-2",
                   "px-4",
                   "rounded-md",
-                  "hover:bg-green-600"
+                  "hover:bg-blue-600"
                 )}
+                onClick={void handleSubmit}
               >
-                GoTo Exams
-              </Link>
+                Submit
+              </button>
             </div>
           </div>
         </div>
