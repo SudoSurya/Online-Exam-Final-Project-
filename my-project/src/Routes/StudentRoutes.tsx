@@ -17,10 +17,10 @@ import { RequireStudentAuth } from "../Auth/Student";
 export default function StudentRoutesConfig() {
   return (
     <Routes>
-      <Route path="/student/login" element={<StudentLogin />} />
+      <Route path="login" element={<StudentLogin />} />
 
       <Route
-        path="/student/dashboard"
+        path="dashboard"
         element={
           <RequireStudentAuth>
             <StudentDashboard />
@@ -28,7 +28,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/profile"
+        path="profile"
         element={
           <RequireStudentAuth>
             <StudentProfile />
@@ -36,7 +36,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/exams"
+        path="exams"
         element={
           <RequireStudentAuth>
             <GetExams />
@@ -44,7 +44,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/unit/exams"
+        path="unit/exams"
         element={
           <RequireStudentAuth>
             <UnitExamSearch />
@@ -52,7 +52,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/exam/:id"
+        path="exam/:id"
         element={
           <RequireStudentAuth>
             <Exam />
@@ -60,7 +60,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/unit/exam/:id"
+        path="unit/exam/:id"
         element={
           <RequireStudentAuth>
             <UnitExam />
@@ -68,7 +68,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/result/:subjectID"
+        path="result/:subjectID"
         element={
           <RequireStudentAuth>
             <SubjectResult />
@@ -76,7 +76,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/unit/result/:subjectName"
+        path="unit/result/:subjectName"
         element={
           <RequireStudentAuth>
             <UnitResult />
@@ -84,7 +84,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/results"
+        path="results"
         element={
           <RequireStudentAuth>
             <ExamResults />
@@ -92,7 +92,7 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/unit/results"
+        path="unit/results"
         element={
           <RequireStudentAuth>
             <GetUnitResult />
@@ -100,21 +100,14 @@ export default function StudentRoutesConfig() {
         }
       />
       <Route
-        path="/student/feedback"
+        path="feedback"
         element={
           <RequireStudentAuth>
             <PostFeedback />
           </RequireStudentAuth>
         }
       />
-      <Route
-        path="/student/register"
-        element={
-          <RequireStudentAuth>
-            <StudentReg />
-          </RequireStudentAuth>
-        }
-      />
+      <Route path="register" element={<StudentReg />} />
     </Routes>
   );
 }

@@ -14,9 +14,9 @@ import { RequireAdminAuth } from "../Auth/AdminAuth";
 export default function AdminRoutesConfig() {
   return (
     <Routes>
-      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="login" element={<AdminLogin />} />
       <Route
-        path="/admin/approve/students"
+        path="approve/students"
         element={
           <RequireAdminAuth>
             <ApproveStudents />
@@ -24,7 +24,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/approve/faculty"
+        path="approve/faculty"
         element={
           <RequireAdminAuth>
             <ApproveFaculty />
@@ -32,7 +32,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/dashboard"
+        path="dashboard"
         element={
           <RequireAdminAuth>
             <AdminDashboard />
@@ -40,7 +40,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/view/faculty"
+        path="view/faculty"
         element={
           <RequireAdminAuth>
             <FacultyList />
@@ -48,7 +48,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/view/students"
+        path="view/students"
         element={
           <RequireAdminAuth>
             <ViewStudents />
@@ -56,7 +56,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/view/feedbacks"
+        path="view/feedbacks"
         element={
           <RequireAdminAuth>
             <FacultyFeedbacks />
@@ -64,7 +64,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/faculty/exams"
+        path="faculty/exams"
         element={
           <RequireAdminAuth>
             <FacultyExams />
@@ -72,7 +72,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/reports"
+        path="reports"
         element={
           <RequireAdminAuth>
             <AdminReports />
@@ -80,7 +80,7 @@ export default function AdminRoutesConfig() {
         }
       />
       <Route
-        path="/admin/results/branch/"
+        path="results/branch/"
         element={
           <RequireAdminAuth>
             <BranchWiseResults />

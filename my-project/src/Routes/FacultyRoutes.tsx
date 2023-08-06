@@ -11,18 +11,18 @@ import CreateExam from "../Components/Faculty/CreateExam";
 export default function FacultyRoutesConfig() {
   return (
     <Routes>
-      <Route path="/faculty/login" element={<FacultyLogin />} />
+      <Route path="login" element={<FacultyLogin />} />
       <Route
-        path="/faculty/dashboard"
+        path="dashboard"
         element={
           <Requireauth>
             <FacultyDashboard />
           </Requireauth>
         }
       />
-      <Route path="/faculty/create-exam" element={<CreateExam />} />
+      <Route path="create-exam" element={<CreateExam />} />
       <Route
-        path="/faculty/add-unit-exam"
+        path="add-unit-exam"
         element={
           <Requireauth>
             <CreateUnitExam />
@@ -30,7 +30,7 @@ export default function FacultyRoutesConfig() {
         }
       />
       <Route
-        path="/faculty/feebacks"
+        path="feebacks"
         element={
           <Requireauth>
             <Feedbacks />
@@ -38,14 +38,14 @@ export default function FacultyRoutesConfig() {
         }
       />
       <Route
-        path="/faculty/conducted-exams"
+        path="conducted-exams"
         element={
           <Requireauth>
             <ConductedExams />
           </Requireauth>
         }
       />
-      <Route path="/faculty/register" element={<FacultyRegister />} />
+      <Route path="register" element={<FacultyRegister />} />
     </Routes>
   );
 }

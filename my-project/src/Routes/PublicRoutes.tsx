@@ -8,7 +8,6 @@ import AllSubjectsResults from "../Components/Admin/AllSubjectResults";
 export default function PublicRouteConfig() {
   return (
     <Routes>
-      <Route path="/*" element={<HomePage />} />
       <Route path="/" element={<HomePage />} />
       <Route
         path="/stats/:branch/:subjectID/:facultyName/:subjectName1"
