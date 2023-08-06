@@ -48,7 +48,7 @@ export default function GetUnitResult() {
                 Get Unit Result
               </h2>
             </div>
-            <form onSubmit={void handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label
                   htmlFor="subjectName"

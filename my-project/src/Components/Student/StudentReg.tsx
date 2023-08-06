@@ -53,7 +53,7 @@ export default function StudentReg() {
   return (
     <div className="flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
       <form
-        onSubmit={void handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="max-w-sm mx-auto mt-8 bg-white rounded-lg shadow-md p-6"
       >
         <div className="mb-4">

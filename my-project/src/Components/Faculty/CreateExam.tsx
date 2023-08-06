@@ -53,18 +53,10 @@ const CreateExam = () => {
     }
   };
 
-  const handleCsvUpload = (files: FileList | null) => {
-    if (!files) return;
-    if (files.length === 0) return alert("Please upload a file");
-    const file = files[0];
-
-    Papa.parse(file, {
-      complete: (result: Papa.ParseResult<Questions>) => {
-        if (result.errors.length > 0) {
-          console.error("CSV parsing errors:", result.errors);
-        } else {
-          setCsvData(result.data);
-        }
+  const handleCsvUpload = (files: any) => {
+    Papa.parse(files[0], {
+      complete: (result) => {
+        setCsvData(result.data as Questions[]);
       },
       header: true,
       dynamicTyping: true,

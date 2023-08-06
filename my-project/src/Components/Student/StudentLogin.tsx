@@ -10,7 +10,7 @@ interface StudentLoginProps {
 }
 
 export default function StudentLogin() {
-  const {studentToken,login} = useContext(UserContext);
+  const { studentToken, login } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -18,10 +18,10 @@ export default function StudentLogin() {
   } = useForm<StudentLoginProps>();
   const [loginError, setLoginError] = useState("");
 
-  const onSubmit = (data:StudentLoginProps) => {
+  const onSubmit = (data: StudentLoginProps) => {
     axios
       .post("http://localhost:8088/user/login", data)
-      .then((res:AxiosResponse<ResponseToken>) => {
+      .then((res: AxiosResponse<ResponseToken>) => {
         localStorage.setItem("studenttoken", res.data.token);
         login(res.data.token);
       })
@@ -41,7 +41,7 @@ export default function StudentLogin() {
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
       <form
-        onSubmit={void handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-10 rounded-lg shadow-md"
       >
         <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">

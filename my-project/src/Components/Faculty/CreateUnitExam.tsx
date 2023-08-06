@@ -11,6 +11,7 @@ import {
   IUExam,
   UnitTestFormData,
 } from "../../Types/FormDataTypes";
+import Dropzone from "react-dropzone";
 const CreateUnitExam = () => {
   const {
     register,
@@ -19,6 +20,8 @@ const CreateUnitExam = () => {
     reset,
   } = useForm<UnitTestFormData>();
   const [csvData, setCsvData] = useState<Questions[]>([]);
+  console.log(csvData);
+  
   const [error, setError] = useState<string | null>(null);
   const [subjectList] = useFaculty();
   let subjectIDs: string[] | [] = [];
@@ -49,18 +52,10 @@ const CreateUnitExam = () => {
     }
   };
 
-  const handleCsvUpload = (files: FileList | null) => {
-    if (!files) return;
-    if (files.length === 0) return alert("Please upload a file");
-    const file = files[0];
-
-    Papa.parse(file, {
-      complete: (result: Papa.ParseResult<Questions>) => {
-        if (result.errors.length > 0) {
-          console.error("CSV parsing errors:", result.errors);
-        } else {
-          setCsvData(result.data);
-        }
+  const handleCsvUpload = (files: any) => {
+    Papa.parse(files[0], {
+      complete: (result) => {
+        setCsvData(result.data as Questions[]);
       },
       header: true,
       dynamicTyping: true,
@@ -285,10 +280,20 @@ const CreateUnitExam = () => {
               >
                 Questions:
               </label>
-              <input
-                type="file"
-                onChange={(e) => handleCsvUpload(e.target.files)}
-              />
+              <Dropzone onDrop={handleCsvUpload}>
+                {({ getRootProps, getInputProps }) => (
+                  <div
+                    {...getRootProps()}
+                    className="border-dashed border-2 border-gray-300 rounded-lg p-8 text-center"
+                  >
+                    <input {...getInputProps()} />
+
+                    <p className="text-lg text-gray-500">
+                      Drag and drop a CSV file, or click to select a file
+                    </p>
+                  </div>
+                )}
+              </Dropzone>
             </div>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <div className="mt-8">

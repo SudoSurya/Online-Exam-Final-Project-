@@ -42,7 +42,10 @@ function AdminLogin() {
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
       <form
-        onSubmit={void handleSubmit(onSubmit)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(onSubmit)(e);
+        }}
         className="bg-white p-10 rounded-lg shadow-md w-80"
       >
         <h2 className="text-2xl font-medium mb-6 text-center text-gray-800">

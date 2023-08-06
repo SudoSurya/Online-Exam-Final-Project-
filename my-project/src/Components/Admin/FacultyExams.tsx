@@ -45,7 +45,13 @@ export default function FacultyExams() {
       <div className="flex flex-col justify-center items-center my-10 ">
         <div className="bg-white shadow-md rounded-lg w-full max-w-2xl">
           <div className="py-4 px-8">
-            <form onSubmit={void handleSubmit(onSubmit)} className="space-y-4">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit(onSubmit)(e);
+              }}
+              className="space-y-4"
+            >
               <div>
                 <label
                   htmlFor="faculty"
