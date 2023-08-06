@@ -4,7 +4,7 @@ import { AdminContext } from "../Types/StoresContext";
 type UserProviderProps = {
   children: React.ReactNode;
 };
-export const Requireauth = ({ children }: UserProviderProps) => {
+export const RequireAdminAuth = ({ children }: UserProviderProps) => {
   const { adminToken } = useContext(AdminContext);
   if (!adminToken) {
     return <Navigate to="/faculty/login" />;

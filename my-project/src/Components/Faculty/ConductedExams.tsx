@@ -28,7 +28,7 @@ export default function ConductedExams() {
       <h1 className="text-2xl font-semibold my-10 text-center">
         Conducted Exams
       </h1>
-      <div className="flex justify-center m-10">
+      <div className="flex justify-center m-10 flex-wrap">
         {conductedExams.length ? (
           conductedExams.map((item) => {
             return (

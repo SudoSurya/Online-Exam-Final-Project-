@@ -3,6 +3,7 @@ import { FacultyContext } from "../../Types/StoresContext";
 import { useContext } from "react";
 const FacultyNav = () => {
   const { logout } = useContext(FacultyContext);
+
   return (
     <nav className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,7 +41,9 @@ const FacultyNav = () => {
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <button
-              onClick={() => logout()}
+              onClick={() => {
+                logout();
+              }}
               className="bg-gray-100 hover:bg-gray-200 text-gray-900 py-2 px-4 rounded-md text-sm font-medium"
             >
               Logout

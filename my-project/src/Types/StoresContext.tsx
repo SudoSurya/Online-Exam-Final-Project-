@@ -88,6 +88,7 @@ export const FacultyProvider: React.FC<UserProviderProps> = ({ children }) => {
   const logout = () => {
     setFacultyToken(null);
     localStorage.removeItem("facultytoken");
+    
   };
   useEffect(() => {
     const storedToken = localStorage.getItem("facultytoken");
@@ -114,6 +115,7 @@ export const AdminProvider: React.FC<UserProviderProps> = ({ children }) => {
   const logout = () => {
     setAdminToken(null);
     localStorage.removeItem("admintoken");
+
   };
   useEffect(() => {
     const storedToken = localStorage.getItem("admintoken");

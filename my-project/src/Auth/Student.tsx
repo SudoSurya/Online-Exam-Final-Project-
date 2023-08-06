@@ -4,7 +4,7 @@ import { UserContext } from "../Types/StoresContext";
 type UserProviderProps = {
   children: React.ReactNode;
 };
-export const Requireauth = ({ children }: UserProviderProps) => {
+export const RequireStudentAuth= ({ children }: UserProviderProps) => {
   const { studentToken } = useContext(UserContext);
   if (!studentToken) {
     return <Navigate to="/faculty/login" />;
