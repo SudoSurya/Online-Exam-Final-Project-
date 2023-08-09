@@ -62,6 +62,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const logout = () => {
     setStudentToken(null);
     localStorage.removeItem("studenttoken");
+    localStorage.removeItem("studentbranch");
+    localStorage.removeItem("studentid");
   };
   useEffect(() => {
     const storedToken = localStorage.getItem("studenttoken");
@@ -85,11 +87,13 @@ export const FacultyProvider: React.FC<UserProviderProps> = ({ children }) => {
     setFacultyToken(facultyToken);
     localStorage.setItem("facultytoken", facultyToken);
   };
+
   const logout = () => {
     setFacultyToken(null);
     localStorage.removeItem("facultytoken");
-    
+    localStorage.removeItem("facultyname");
   };
+
   useEffect(() => {
     const storedToken = localStorage.getItem("facultytoken");
     if (storedToken) {
@@ -129,3 +133,5 @@ export const AdminProvider: React.FC<UserProviderProps> = ({ children }) => {
     </AdminContext.Provider>
   );
 };
+
+
